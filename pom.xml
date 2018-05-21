@@ -137,6 +137,27 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.8.3</version>
 		</dependency>
+		<dependency>  
+            <groupId>commons-collections</groupId>  
+            <artifactId>commons-collections</artifactId>  
+            <version>3.2.1</version>  
+        </dependency>  
+         <dependency>  
+            <groupId>commons-logging</groupId>  
+            <artifactId>commons-logging</artifactId>  
+            <version>1.1.1</version>  
+        </dependency>  
+        <dependency>  
+            <groupId>net.sf.ezmorph</groupId>  
+            <artifactId>ezmorph</artifactId>  
+            <version>1.0.6</version>  
+        </dependency>
+        <dependency>  
+            <groupId>net.sf.json-lib</groupId>  
+            <artifactId>json-lib</artifactId>  
+            <version>2.2.3</version>  
+            <classifier>jdk15</classifier><!-- 指定jdk版本 -->  
+        </dependency>    
 	</dependencies>
 	<build>
 		<finalName>oa</finalName>
@@ -147,9 +168,9 @@
 				<version>2.2</version>
 				<configuration>
 					<path>/</path>
-					<port>8082</port>
+					<port>8083</port>
 					<uriEncoding>UTF-8</uriEncoding>
-					<url>http://localhost:8082/</url>
+					<url>http://localhost:8083/</url>
 					<server>tomcat7</server>
 					<username>admin</username>
 					<password>admin</password>

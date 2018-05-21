@@ -14,6 +14,9 @@
 			<result name="save">/WEB-INF/view/dept.jsp</result>			
 		</action>
 		
+		<action name="test_*" class="testAction" method="{1}">
+		</action>
+		
     </package>
  
     
