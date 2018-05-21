@@ -12,6 +12,7 @@ public class SendFile implements Serializable{
 	private String fileTime;//文件发送时间
 	private String fileName;//文件名
 	private String fileText;//文件描述
+	private String filesrc;//附件路径
 	private Integer issend;//发送状态 0：未发送  1：已发送
 	private Employee employee;//外键文件发送人
 	private Set<ReceiveFile> receiveFiles = new HashSet<ReceiveFile>();
@@ -57,6 +58,12 @@ public class SendFile implements Serializable{
 	}
 	public void setReceiveFiles(Set<ReceiveFile> receiveFiles) {
 		this.receiveFiles = receiveFiles;
+	}
+	public String getFilesrc() {
+		return filesrc;
+	}
+	public void setFilesrc(String filesrc) {
+		this.filesrc = filesrc;
 	}
 	
 }

@@ -11,7 +11,8 @@
 		<property name="fileName"/>
 		<property name="fileText"/>
 		<property name="issend"/>
-		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="fileFrom" cascade="delete"/>
+		<property name="filesrc"/>
+		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="employeeID" cascade="delete"/>
 		<set order-by="receiveID" name="receiveFiles" lazy="false" cascade="delete">
 			<key column="fileID"/>
 			<one-to-many class="xcl.oa.receivefile.vo.ReceiveFile"/>
