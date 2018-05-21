@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="xcl.oa.receivefile.vo.ReceiveFile" table="receivefile">
+		<id name="receiveID">
+			<generator class="native"/>
+		</id>
+		<property name="isLook"/>
+		<property name="isDelete"/>
+		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="fileTO" cascade="delete"/>
+		<many-to-one name="sendFile" lazy="false" class="xcl.oa.sendfile.vo.SendFile" column="fileID" cascade="delete"/>
+	</class>
+</hibernate-mapping>

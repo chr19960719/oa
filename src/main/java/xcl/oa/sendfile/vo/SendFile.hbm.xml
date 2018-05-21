@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="xcl.oa.sendfile.vo.SendFile" table="sendfile">
+		<id name="fileID">
+			<generator class="native"/>
+		</id>
+		<property name="fileTime"/>
+		<property name="fileName"/>
+		<property name="fileText"/>
+		<property name="issend"/>
+		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="fileFrom" cascade="delete"/>
+		<set order-by="receiveID" name="receiveFiles" lazy="false" cascade="delete">
+			<key column="fileID"/>
+			<one-to-many class="xcl.oa.receivefile.vo.ReceiveFile"/>
+		</set>
+	</class>
+</hibernate-mapping>

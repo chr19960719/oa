@@ -42,6 +42,12 @@
 		<property name="mappingResources">
 			<list>
 				<value>xcl/oa/dept/vo/Dept.hbm.xml</value>
+				<value>xcl/oa/employee/vo/Employee.hbm.xml</value>
+				<value>xcl/oa/job/vo/Job.hbm.xml</value>
+				<value>xcl/oa/notice/vo/Notice.hbm.xml</value>
+				<value>xcl/oa/task/vo/Task.hbm.xml</value>
+				<value>xcl/oa/sendfile/vo/SendFile.hbm.xml</value>
+				<value>xcl/oa/receivefile/vo/ReceiveFile.hbm.xml</value>
 			</list>
 		</property>
 	</bean>	 
@@ -59,11 +65,29 @@
 	<bean id="deptAction" class="xcl.oa.dept.action.DeptAction" scope="prototype">
 		<property name="deptService" ref="deptService"/>
 	</bean>
+	<bean id="employeeAction" class="xcl.oa.employee.action.EmployeeAction" scope="prototype">
+		<!-- <property name="employeeService" ref="employeeService"/> -->
+	</bean>
+	<bean id="jobAction" class="xcl.oa.job.action.JobAction" scope="prototype">
+		<!-- <property name="jobService" ref="jobService"/> -->
+	</bean>
+	<bean id="noticeAction" class="xcl.oa.notice.action.NoticeAction" scope="prototype">
+		<!-- <property name="noticeService" ref="noticeService"/> -->
+	</bean>
 	
 	
 	<!-- ==============================================Service的配置============================================== -->
 	<bean id="deptService" class="xcl.oa.dept.service.impl.IDeptService">
 		<property name="deptDao" ref="deptDao"/>
+	</bean>
+	<bean id="employeeService" class="xcl.oa.employee.service.impl.IEmployeeService">
+		<!-- <property name="employeeDao" ref="employeeDao"/> -->
+	</bean>
+	<bean id="jobService" class="xcl.oa.job.service.impl.IJobService">
+		<!-- <property name="jobDao" ref="jobDao"/> -->
+	</bean>
+	<bean id="noticeService" class="xcl.oa.notice.service.impl.INoticeService">
+		<!-- <property name="noticeDao" ref="noticeDao"/> -->
 	</bean>
 	
 	
@@ -72,5 +96,15 @@
 	<bean id="deptDao" class="xcl.oa.dept.dao.impl.IDeptDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
-         
+	<bean id="employeeDao" class="xcl.oa.employee.dao.impl.IEmployeeDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>  
+	<bean id="jobDao" class="xcl.oa.job.dao.impl.IJobDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>  
+	<bean id="noticeDao" class="xcl.oa.notice.dao.impl.INoticeDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean> 
+	
+	
 </beans>

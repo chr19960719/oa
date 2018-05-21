@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="xcl.oa.employee.vo.Employee" table="employee">
+		<id name="employeeID">
+			<generator class="native"/>
+		</id>
+		<property name="employeeName"/>
+		<property name="sex"/>
+		<property name="birthday"/>
+		<property name="address"/>
+		<property name="NOcode"/>
+		<property name="learn"/>
+		<property name="mobile"/>
+		<property name="email"/>
+		<property name="workState"/>
+		<property name="photo"/>
+		<property name="agreement"/>
+		<property name="pwd"/>
+		<property name="userLevel"/>
+		<many-to-one name="dept" lazy="false" class="xcl.oa.dept.vo.Dept" column="deptID" cascade="delete"/>
+		<many-to-one name="job" lazy="false" class="xcl.oa.job.vo.Job" column="jobID" cascade="delete"/>
+		<set order-by="receiveID" name="receiveFiles" lazy="false" cascade="delete">
+			<key column="employeeID"/>
+			<one-to-many class="xcl.oa.receivefile.vo.ReceiveFile"/>
+		</set>
+		<set order-by="fileID" name="sendFiles" lazy="false" cascade="delete">
+			<key column="employeeID"/>
+			<one-to-many class="xcl.oa.sendfile.vo.SendFile"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -3,19 +3,16 @@
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="xcl.oa.dept.vo.Dept" table="dept">
-		<id name="deptID">
+	<class name="xcl.oa.job.vo.Job" table="job">
+		<id name="jobID">
 			<generator class="native"/>
 		</id>
-		<property name="deptName"/>
-		<property name="deptText"/>
+		<property name="jobName"/>
+		<property name="jobText"/>
+		<many-to-one name="dept" lazy="false" class="xcl.oa.dept.vo.Dept" column="deptID" cascade="delete"/>
 		<set order-by="employeeID" name="employees" lazy="false" cascade="delete">
-			<key column="deptID"/>
+			<key column="jobID"/>
 			<one-to-many class="xcl.oa.employee.vo.Employee"/>
-		</set>
-		<set order-by="jobID" name="jobs" lazy="false" cascade="delete">
-			<key column="deptID"/>
-			<one-to-many class="xcl.oa.job.vo.Job"/>
 		</set>
 	</class>
 </hibernate-mapping>
