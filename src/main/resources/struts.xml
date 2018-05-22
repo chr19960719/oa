@@ -5,6 +5,8 @@
 	
 <struts>
  
+ 	<!-- 配置上传文件的大小 -->
+	<constant name="struts.multipart.maxSize" value="50000000"/>
     <!-- 默认访问页面 -->
     <package name="oa" extends="struts-default" namespace="/">
 		
@@ -15,6 +17,8 @@
 		</action>
 		
 		<action name="test_*" class="testAction" method="{1}">
+			<interceptor-ref name="fileUpload"/>
+			<interceptor-ref name="defaultStack"/>
 		</action>
 		
     </package>
