@@ -71,7 +71,8 @@
 		<property name="deptService" ref="deptService"/> 
 	</bean>
 	<bean id="jobAction" class="xcl.oa.job.action.JobAction" scope="prototype">
-		<!-- <property name="jobService" ref="jobService"/> -->
+		<property name="jobService" ref="jobService"/>
+		<property name="deptService" ref="deptService"/>
 	</bean>
 	<bean id="noticeAction" class="xcl.oa.notice.action.NoticeAction" scope="prototype">
 		<!-- <property name="noticeService" ref="noticeService"/> -->
@@ -89,7 +90,7 @@
 		<property name="employeeDao" ref="employeeDao"/>
 	</bean>
 	<bean id="jobService" class="xcl.oa.job.service.impl.IJobService">
-		<!-- <property name="jobDao" ref="jobDao"/> -->
+		<property name="jobDao" ref="jobDao"/>
 	</bean>
 	<bean id="noticeService" class="xcl.oa.notice.service.impl.INoticeService">
 		<!-- <property name="noticeDao" ref="noticeDao"/> -->
