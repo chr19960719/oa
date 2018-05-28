@@ -19,6 +19,12 @@ import xcl.oa.dept.vo.Dept;
 
 public class TestAction extends ActionSupport{
 	
+	private String fileText;
+	public void setFileText(String fileText) {
+		this.fileText = fileText;
+	}
+	
+	//图片路径处理
 	private File upload;
 	public void setUpload(File upload) {
 		this.upload = upload;
@@ -27,11 +33,26 @@ public class TestAction extends ActionSupport{
 	public void setUploadFileName(String uploadFileName) {
 		this.uploadFileName = uploadFileName;
 	}
-	private String uploadContentType;
+/*	private String uploadContentType;
 	public void setUploadContentType(String uploadContentType) {
 		this.uploadContentType = uploadContentType;
+	}*/
+	
+	//文件
+	private File file;
+	private String fileFileName;
+	private String fileContentType;	
+	public void setFile(File file) {
+		this.file = file;
 	}
-
+	public void setFileFileName(String fileFileName) {
+		this.fileFileName = fileFileName;
+	}
+	public void setFileContentType(String fileContentType) {
+		this.fileContentType = fileContentType;
+	}
+	
+	
 	
 	@Autowired
 	private DeptService deptService;
@@ -56,6 +77,29 @@ public class TestAction extends ActionSupport{
 	            //log.fatal(e);
 	        }
 		return NONE;
+	}
+	
+	
+	public String file() throws IOException {
+		HttpServletResponse response = ServletActionContext.getResponse();
+        response.setContentType("text/html;charset=utf-8");
+        String path = ServletActionContext.getServletContext().getRealPath(
+				"/indexstatic/sendfile");
+        if(file!=null) {
+        // 创建文件类型对象:
+     	File diskFile = new File(path + "//" + fileFileName);
+     		// 文件上传:
+     	FileUtils.copyFile(file, diskFile);
+     	System.out.println("文件名："+fileFileName);
+        }
+     	System.out.println("文件内容："+fileText);
+     	 try {
+	            response.getWriter().print("你好");
+	            response.getWriter().close();
+	        } catch (Exception e) {
+	            //log.fatal(e);
+	        }
+        return NONE;
 	}
 	
 	public String json() {

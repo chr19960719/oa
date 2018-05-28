@@ -43,3 +43,10 @@ function sendfile(file){
          } 
     });
 }
+var app = new Vue({
+	el:"#app",
+	data:{
+		checkedName:[]
+	}
+})
+

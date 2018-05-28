@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>summernote</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet" href="../../indexstatic/js/plugins/bootstrap/css/bootstrap.css" />
+<link href="../../indexstatic/summernote/dist/summernote.css" rel="stylesheet">
+
+<style>
+.m {
+	width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+</head>
+
+<body>
+		<form action="#" class="form-horizontal" role="form"
+		onsubmit="return false">
+		<div class="m">
+			<div class="form-group">
+				<label for="firstname" class="col-sm-1 control-label">名称</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="firstname"
+						placeholder="请输入消息名称">
+				</div>
+			</div>
+			<div class="summernote">
+				<p>懒人之家欢迎您！</p>
+			</div>
+			<div class="form-group">
+				<label for="exampleInputFile" class="col-sm-1 control-label">附件</label>
+				<div class="col-sm-10">
+					<input type="file" id="exampleInputFile">
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<script src="../../indexstatic/js/jquery-3.3.1.js"></script>
+	<script src="../../indexstatic/summernote/dist/summernote.js"></script>
+	<script
+		src="../../indexstatic/summernote/dist/lang/summernote-zh-CN.js"></script>
+	<!-- 中文-->
+	<script src="../../indexstatic/js/admin/file.js"></script>
+	<script src="../../indexstatic/js/plugins/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,32 +1,113 @@
-﻿<!doctype html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>jQuery+Bootstarp富文本编辑器插件summernote.js</title>
-
-<link rel="stylesheet" type="text/css" href="../../indexstatic/summernote/dist/bootstrap.css">
+<title>summernote</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet" href="../../indexstatic/js/plugins/bootstrap/css/bootstrap.css" />
 <link href="../../indexstatic/summernote/dist/summernote.css" rel="stylesheet">
 <style>
-	.m{ width: 800px; margin-left: auto; margin-right: auto; }
+.m {
+	width: 1300px;
+	margin-left: 10px;
+}
 </style>
 </head>
 
 <body>
+	<form action="#" class="form-horizontal" role="form">
+		<div id="app">
+		
+			<div>
+				<div class="form-group">
+					<label for="firstname" class="col-sm-1 control-label">主题</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="firstname"
+							placeholder="请输入消息名称">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputFile" class="col-sm-1 control-label">正文</label>
+					<div class="col-sm-10">
+						<div class="summernote">
+							<p>正文</p>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputFile" class="col-sm-1 control-label">附件</label>
+					<div class="col-sm-14">
+						<input type="file" id="exampleInputFile">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputFile" class="col-sm-1 control-label">选择收件人</label>
+					<div id="tree" class="col-sm-11">
+						<iframe id="ifram1" align="center" width="100%" height="300" src="tree.html"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-1" style="margin-left: 50px;">
+						<button class="btn btn-info" onclick="findall();return false;">发送</button>
+					</div>
+					<div class="col-sm-14">
+						<button type="submit" class="btn btn-warning">作为草稿</button>
+					</div>
+				</div>
+			</div>
 
-<div class="m">		
-	<div class="summernote">
-		<p>
-			
-			懒人之家欢迎您！
-		</p>
-	</div>
-</div>
+		</div>
 
+	</form>
 
-<script src="../../indexstatic/summernote/js/jquery.min.js"></script>
-<script src="../../indexstatic/summernote/js/bootstrap.min.js"></script>
-<script src="../../indexstatic/summernote/dist/summernote.js"></script>
-<script src="../../indexstatic/summernote/dist/lang/summernote-zh-CN.js"></script>    <!-- 中文-->
-<script src="../../indexstatic/js/admin/file.js"></script>
+	<script src="../../indexstatic/js/jquery-3.3.1.js"></script>
+	<script src="../../indexstatic/js/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../indexstatic/js/plugins/downtree/dropdowntree.js"></script>
+	<script src="../../indexstatic/summernote/dist/summernote.js"></script>
+	<script
+		src="../../indexstatic/summernote/dist/lang/summernote-zh-CN.js"></script>
+	<!-- 中文-->
+		
+	<script src="../../indexstatic/js/vue.js"></script>
+	<script src="../../indexstatic/js/admin/file.js"></script>
+	<script type="text/javascript">
+	function findall(){
+		document.getElementById("ifram1").contentWindow.findall();
+		var formData = new FormData();  
+		var sendFile = $('#exampleInputFile').get(0).files[0];
+		if(typeof(sendFile) != "undefined"){
+			alert("213");
+			formData.append("file", sendFile); 
+		}
+		var markupStr = $('.summernote').summernote('code');
+		formData.append("fileText", markupStr); 
+		$.ajax({                            
+	         type:'post',        
+	         url:'test_file',                        
+	         cache: false,
+	         data:formData, 
+	         processData: false,
+	         contentType: false,
+	         dataType:'text', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
+	         success: function(data) {    
+	      	   alert(data);
+	         },  
+	         error:function(){                                                  
+	            alert("上传失败");                                                     
+	         } 
+	    });
+		return false;
+	}
+	function test(data){
+		for(var i=0;i<data.length;i++)
+		{
+			var t = data.eq(i);
+			alert(t.text());
+		}
+	}
+	</script>
 </body>
 </html>

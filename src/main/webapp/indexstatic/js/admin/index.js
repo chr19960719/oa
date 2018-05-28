@@ -2,6 +2,7 @@ function loadToken(app) {
 	$.ajax({
         type:"get",
         url: "/token",
+        async : true,
         success: function(data){
             if(data.code === 0){
 				app.user=data.token;
@@ -24,6 +25,7 @@ var header_app = new Vue({
 				$.ajax({
 					type:"get",
 					url: "/logout",
+					async : true,
 					success: function(data){
 						if(data.code === 0){
 							window.location.href='/login';
@@ -41,6 +43,7 @@ var header_app = new Vue({
 			$.ajax({
 				type:"get",
 				url: "/indexstatic/data/inboxData.json",
+				async : true,
 				success: function(data){
  					if(data.num){
  						app.newMessages = data;
@@ -117,6 +120,7 @@ var fillPage = function(goal){
 	$.ajax({
 		method:"get",
         dataType: "html",
+        async : true,
 		url: goal,
 		success: function(content) {
 			$("#page-container").html(content)
