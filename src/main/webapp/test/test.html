@@ -1,22 +1,116 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Summernote</title>
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head> 
+	  <meta charset="UTF-8">
+	<title>树形</title> 
+	<link rel="stylesheet" href="../../indexstatic/multiselect/css/common.css" type="text/css" />
+	<link type="text/css" rel="stylesheet" href="../../indexstatic/multiselect/css/themes/smoothness/jquery-ui-1.7.1.custom.css" />
+	<link type="text/css" href="../../indexstatic/multiselect/css/ui.multiselect.css" rel="stylesheet" />
+	
 </head>
 <body>
-  <div id="summernote"><p>Hello Summernote</p></div>
-  <script src="js/bootstrap.min.js"></script>
-<script src="dist/summernote.js"></script>
-<script src="dist/lang/summernote-zh-CN.js"></script>
+<div id="app">
+<div id="wrapper"> 
+	
+	<div id="content">
+	
+		<div id="tabs">
+			<ul>
+				<li v-for="r in dept"><a :href="'#tabs-'+r.deptID">{{r.deptName}}</a></li>
+			</ul>
+			<div id="tabs-1">				
+					<dl>
+						<dt>选择收件人:</dt>
+						<dd>
+							<select id="countries" class="multiselect" multiple="multiple">
+								<option value="小米">AA小米</option>
+								<option value="AFG">Afghanistan</option>
+								<option value="ALB">Albania</option>
+
+								<option value="AUT" selected="selected">Austria</option>
+
+								<option value="BGD">Bangladesh</option>
+								<option value="BLR">Belarus</option>
+								<option value="BGR">Bulgaria</option>
+							</select>
+						</dd>
+					</dl>
+
+			</div>
+			<div id="tabs-4">
+					<dl>
+						<dt>选择收件人:</dt>
+						<dd>
+							<select id="languages" class="multiselect" multiple="multiple">
+								<option value="UZB">Uzbekistan</option>
+								<option value="VAT">Vatican City</option>
+								<option value="VNM">Vietnam</option>
+							</select>
+						</dd>
+					</dl>
+			</div>
+		</div>
+	</div>
+	</div> 
+	<button onclick="findall();">点击</button>
+</div> 
+<script type="text/javascript" src="../../indexstatic/multiselect/js/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="../../indexstatic/multiselect/js/jquery-ui-1.8.custom.min.js"></script>
+	<script type="text/javascript" src="../../indexstatic/multiselect/js/plugins/localisation/jquery.localisation-min.js"></script>
+	<script type="text/javascript" src="../../indexstatic/multiselect/js/plugins/tmpl/jquery.tmpl.1.1.1.js"></script>
+	<script type="text/javascript" src="../../indexstatic/multiselect/js/plugins/blockUI/jquery.blockUI.js"></script>
+	<script type="text/javascript" src="../../indexstatic/multiselect/js/ui.multiselect.js"></script>
+	<script type="text/javascript" src="../../indexstatic/multiselect/js/locale/ui.multiselect-zh-CN.js"></script>
+	<script type="text/javascript" src="../../indexstatic/multiselect/js/page.js"></script>
+	 <script src="../../indexstatic/js/vue.js"></script>
+
 <script>
-$(function(){
- $("#summernote").summernote({
-        height: 200,
-        tabsize: 2,
-        lang: 'zh-CN'
-    });
-});
+var app = new Vue({
+	el:"#app",
+	data:{
+		dept:[],
+		employee:[],
+		datas:[]
+	},
+	created:function(){
+		var self = this;
+		 $.ajax({                            
+	         type:'get',        
+	         url:'test_ajaxjson',                            
+	         async:false,//加上这个，要不是异步执行。 
+	         dataType:'json', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
+	         success: function(data) {    
+	        	 self.datas = data;
+	        	 self.dept = data.depe;
+	      	  	 self.employee = data.employee;
+	         },  
+	         error:function(){                                                  
+	            alert("上传失败");                                                     
+	         } 
+	    });
+		this.updateMessage();
+	},
+	methods:{
+		updateMessage: function (){
+			this.$nextTick(function () {
+				$.localise('ui.multiselect', {/*language: 'es',/* */ path: 'js/locale/'});
+				// local
+				$("#countries").multiselect();
+				// remote
+				$("#languages").multiselect();
+              })
+		}
+	}
+})
+function findall(){
+	//alert($('.multiselect').find('option[selected]').length);
+	var data = $('.multiselect').find('option[selected]');
+		 for(var i=0;i<data.length;i++)
+		{
+			var t = data.eq(i);
+			alert(t.text());
+		}
+}
 </script>
-</body>
+</body> 
 </html>

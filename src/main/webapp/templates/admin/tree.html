@@ -23,7 +23,7 @@
 					<dl>
 						<dt>选择收件人:</dt>
 						<dd>
-							<select id="countries" class="multiselect" multiple="multiple" name="countries[]">
+							<select id="countries" class="multiselect" multiple="multiple">
 								<option value="小米">AA小米</option>
 								<option value="AFG">Afghanistan</option>
 								<option value="ALB">Albania</option>
@@ -42,7 +42,7 @@
 					<dl>
 						<dt>选择收件人:</dt>
 						<dd>
-							<select id="languages" class="multiselect" multiple="multiple" name="languages[]">
+							<select id="languages" class="multiselect" multiple="multiple">
 								<option value="UZB">Uzbekistan</option>
 								<option value="VAT">Vatican City</option>
 								<option value="VNM">Vietnam</option>
@@ -64,20 +64,9 @@
 	<script type="text/javascript">
 		$(function(){
 			$.localise('ui.multiselect', {/*language: 'es',/* */ path: 'js/locale/'});
-
-			// local
 			$("#countries").multiselect();
-			// remote
-			$("#languages").multiselect({
-				remoteUrl: "ajax.php"
-			});
+			$("#languages").multiselect();
 
-			// only if the function is available...
-			if ($.fn.themeswitcher) {
-				$('#switcher')
-					.before('<h4>Use the themeroller to dynamically change look and feel</h4>')
-					.themeswitcher();
-			}
 		});
 	</script>
 	<script type="text/javascript" src="../../indexstatic/multiselect/js/page.js"></script>

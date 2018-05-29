@@ -8,7 +8,7 @@ import xcl.oa.employee.vo.Employee;
 public class IEmployeeDao extends HibernateDaoSupport implements EmployeeDao{
 	//dao层查询所有员工的方法
 	public List<Employee> findAll(){
-		String hql = "from employees";
+		String hql = "from Employee";
 		List<Employee> list = this.getHibernateTemplate().find(hql);
 		if (list != null && list.size() > 0) {
 			return list;

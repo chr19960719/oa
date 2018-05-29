@@ -2,7 +2,9 @@ package xcl.oa.test.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,12 +15,25 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 import xcl.oa.dept.service.DeptService;
 import xcl.oa.dept.vo.Dept;
+import xcl.oa.employee.service.EmployeeService;
+import xcl.oa.employee.vo.Employee;
 
 public class TestAction extends ActionSupport{
 	
+	private Map<String,Object> result;
+	public Map<String, Object> getResult() {
+		return result;
+	}
+	public void setResult(Map<String, Object> result) {
+		this.result = result;
+	}
+
 	private String fileText;
 	public void setFileText(String fileText) {
 		this.fileText = fileText;
@@ -58,6 +73,12 @@ public class TestAction extends ActionSupport{
 	private DeptService deptService;
 	public void setDeptService(DeptService deptService) {
 		this.deptService = deptService;
+	}
+	
+	@Autowired
+	private EmployeeService employeeService;
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
 	}
 	
 	public String upload() throws IOException {
@@ -105,15 +126,48 @@ public class TestAction extends ActionSupport{
 	public String json() {
 		HttpServletResponse response = ServletActionContext.getResponse();
         response.setContentType("text/html;charset=utf-8");
-        JSONObject json = new JSONObject();
+        JsonConfig config = new JsonConfig();
+        config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT); 
+        config.setExcludes(new String[]{"employees","hibernateLazyInitializer"});  
+        config.setExcludes(new String[]{"jobs","hibernateLazyInitializer"});  
         List<Dept> list = deptService.findAll();
-        json.put("list", list);
+        List<Employee> list1 = employeeService.findAll();
+        String json = JSONArray.fromObject(list, config).toString();
+        
+        JsonConfig config1 = new JsonConfig();
+        config1.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT); 
+        config1.setExcludes(new String[]{"dept","hibernateLazyInitializer"});  
+        config1.setExcludes(new String[]{"job","hibernateLazyInitializer"});  
+        String json1 = JSONArray.fromObject(list1,config1).toString();
+        
         try {
-            response.getWriter().print(json.toString());
+            response.getWriter().print(json);
             response.getWriter().close();
         } catch (Exception e) {
             //log.fatal(e);
         }
 		return NONE;
+	}
+	
+	public String ajaxjson() {
+        JsonConfig config = new JsonConfig();
+        config.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT); 
+        config.setExcludes(new String[]{"employees","hibernateLazyInitializer"});  
+        config.setExcludes(new String[]{"jobs","hibernateLazyInitializer"});  
+        List<Dept> list = deptService.findAll();
+        List<Employee> list1 = employeeService.findAll();
+        String json = JSONArray.fromObject(list, config).toString();
+        
+        JsonConfig config1 = new JsonConfig();
+        config1.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT); 
+        config1.setExcludes(new String[]{"dept","hibernateLazyInitializer"});  
+        config1.setExcludes(new String[]{"job","hibernateLazyInitializer"});  
+        String json1 = JSONArray.fromObject(list1,config1).toString();
+        
+        result = new HashMap<String, Object>();
+        result.put("depe", list);
+        result.put("employee", list1);
+    
+		return SUCCESS;
 	}
 }

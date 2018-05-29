@@ -1,0 +1,64 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+<head> 
+	 <meta charset="UTF-8">
+	<title>test1</title> 
+	
+</head>
+<body>
+	<div id="app">
+<div id="wrapper"> 
+	
+	<div id="content">
+	
+		<div id="tabs">
+			<ul>
+				<li v-for="r in dept"><a :href="'#tabs-'+r.deptID">{{r.deptName}}</a></li>
+			</ul>
+			<div v-for="r in dept" :id="'tabs-'+r.deptID">
+			<dl>
+				<dt>选择收件人:</dt>
+				<dd>
+					<select :id="'countries'+r.deptID" class="multiselect" multiple="multiple">
+						<option :value="r.deptID" v-for="i in employee" v-if="i.dept.deptID==r.deptID">{{i.employeeName}}</option>
+					</select>
+				</dd>
+			</dl>
+			</div>
+		</div>
+	</div>
+	</div> 
+	<button onclick="findall();">点击</button>
+</div> 
+	<script type="text/javascript" src="../../indexstatic/multiselect/js/jquery-1.4.2.min.js"></script>
+<script src="../../indexstatic/js/vue.js"></script>
+
+<script>
+var app = new Vue({
+	el:"#app",
+	data:{
+		dept:[],
+		employee:[],
+		datas:[]
+	},
+	created:function(){
+		var self = this;
+		 $.ajax({                            
+	         type:'get',        
+	         url:'test_ajaxjson',                        
+	         async:false,//加上这个，要不是异步执行。 
+	         dataType:'json', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
+	         success: function(data) {    
+	        	 self.datas = data;
+	        	 self.dept = data.depe;
+	      	  	 self.employee = data.employee;
+	         },  
+	         error:function(){                                                  
+	            alert("上传失败");                                                     
+	         } 
+	    });
+	}
+})
+</script>
+</body> 
+</html>

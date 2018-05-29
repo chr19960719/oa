@@ -8,7 +8,7 @@
  	<!-- 配置上传文件的大小 -->
 	<constant name="struts.multipart.maxSize" value="50000000"/>
     <!-- 默认访问页面 -->
-    <package name="oa" extends="struts-default" namespace="/">
+    <package name="oa" extends="struts-default json-default" namespace="/">
 		
 		<!-- 配置部门模块的Action -->
 		<action name="dept_*" class="deptAction" method="{1}">
@@ -17,6 +17,9 @@
 		</action>
 		
 		<action name="test_*" class="testAction" method="{1}">
+			<result type="json" name="success">  
+                <param name="root">result</param>     <!-- 这里的jsonData对应action里要返回的map对象 -->  
+            </result>
 			<interceptor-ref name="fileUpload"/>
 			<interceptor-ref name="defaultStack"/>
 		</action>

@@ -79,6 +79,7 @@
 	</bean>
 	<bean id="testAction" class="xcl.oa.test.action.TestAction" scope="prototype">
 		<property name="deptService" ref="deptService"/>
+		<property name="employeeService" ref="employeeService"/>
 	</bean>
 	
 	
