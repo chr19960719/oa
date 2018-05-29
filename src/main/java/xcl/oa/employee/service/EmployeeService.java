@@ -10,5 +10,7 @@ public interface EmployeeService {
 	public void save(Employee employee);
 	//service层根据id查询员工的方法
 	public Employee findById(Integer employeeID);
+	//service层删除员工的方法
+	public void delete(Employee employee);
 
 }

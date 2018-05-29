@@ -16,6 +16,11 @@
 			<result name="save">/WEB-INF/view/dept.jsp</result>			
 		</action>
 		
+		<!-- 配置员工模块的Action -->
+		<action name="employee_*" class="employeeAction" method="{1}">
+			<result name="findAll">/jsp/index/user.jsp</result>		
+		</action>
+		
 		<action name="test_*" class="testAction" method="{1}">
 			<result type="json" name="success">  
                 <param name="root">result</param>     <!-- 这里的jsonData对应action里要返回的map对象 -->  

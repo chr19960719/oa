@@ -27,4 +27,8 @@ public class IJobDao extends HibernateDaoSupport implements JobDao {
 	public Job findById(Integer jobID) {
 		return this.getHibernateTemplate().get(Job.class, jobID);
 	}
+	//dao层删除职位的方法
+	public void delete(Job job) {
+		this.getHibernateTemplate().delete(job);
+	}
 }

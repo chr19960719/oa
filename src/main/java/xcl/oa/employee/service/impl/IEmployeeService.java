@@ -23,6 +23,9 @@ public class IEmployeeService implements EmployeeService {
 	public Employee findById(Integer employeeID) {
 		return employeeDao.findById(employeeID);
 	}
-	
+	//service层删除员工的方法
+	public void delete(Employee employee) {
+		employeeDao.delete(employee);
+	}
 
 }

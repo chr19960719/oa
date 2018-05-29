@@ -41,5 +41,18 @@ public class JobAction extends ActionSupport implements ModelDriven<Job>{
 		// 页面跳转到编辑页面:
 		return "editSuccess";
 	}
+	//删除职位的方法
+	public String delete() {
+		//根据职位id查询职位
+		job = jobService.findById(job.getJobID());
+		//删除职位
+		jobService.delete(job);
+		return "delete";
+	}
+	//查询所有职位的方法
+	public String findAll() {
+		jobService.findAll();
+		return "findAll";
+	}
 
 }

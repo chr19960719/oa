@@ -11,5 +11,7 @@ public interface JobDao {
 	public List<Job> findAll();
 	//dao层根据id查找职位的方法
 	public Job findById(Integer jobID);
+	//dao层删除职位的方法
+	public void delete(Job job);
 
 }

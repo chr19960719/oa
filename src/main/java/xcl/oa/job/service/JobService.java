@@ -10,5 +10,7 @@ public interface JobService {
 	public void save(Job job);
 	//service层根据id查找职位的方法
 	public Job findById(Integer jobID);
+	//service层删除职位的方法
+	public void delete(Job job);
 
 }

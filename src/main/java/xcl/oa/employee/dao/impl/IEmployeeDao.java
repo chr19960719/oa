@@ -23,5 +23,8 @@ public class IEmployeeDao extends HibernateDaoSupport implements EmployeeDao{
 	public Employee findById(Integer employeeID) {
 		return this.getHibernateTemplate().get(Employee.class,employeeID);
 	}
-	
+	//dao层删除员工的方法
+	public void delete(Employee employee) {
+		this.getHibernateTemplate().delete(employee);
+	}
 }
