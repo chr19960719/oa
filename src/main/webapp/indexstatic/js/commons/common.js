@@ -15,16 +15,16 @@ var url = function(name) {
 };
 T.p = url;
 
-//全局配置
+/*//全局配置
 $.ajaxSetup({
     dataType: "json",
     cache: false,
     error: function (jqXHR, textStatus, errorThrown) {
         alert('请求出错');
     }
-});
+});*/
 
-//重写alert
+/*//重写alert
 window.alert = function(msg, callback) {
 	parent.layer.alert(msg, function(index) {
 		parent.layer.close(index);
@@ -32,9 +32,9 @@ window.alert = function(msg, callback) {
 			callback("ok");
 		}
 	});
-}
+}*/
 
-//重写confirm式样框
+/*//重写confirm式样框
 window.confirm = function(msg, callback) {
 	parent.layer.confirm(msg, {
 			btn: ['确定', '取消']
@@ -45,8 +45,8 @@ window.confirm = function(msg, callback) {
 			}
 			layer.closeAll('dialog');
 		});
-}
-//iframe
+}*/
+/*//iframe
 var promptContent = function() {
 	//iframe窗
 	layer.open({
@@ -72,7 +72,7 @@ var promptContent = function() {
 			});
 		}
 	});
-}
+}*/
 
 //选择一条记录
 /*function getSelectedRow() {

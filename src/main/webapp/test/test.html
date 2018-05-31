@@ -18,7 +18,17 @@
 			<ul>
 				<li v-for="r in dept"><a :href="'#tabs-'+r.deptID">{{r.deptName}}</a></li>
 			</ul>
-			<div id="tabs-1">				
+			<div v-for="r in dept" :id="'tabs-'+r.deptID">
+			<dl>
+				<dt>选择收件人:</dt>
+				<dd>
+					<select :id="'countries'+r.deptID" class="multiselect" multiple="multiple">
+						<option :value="r.deptID" v-for="i in employee" v-if="i.dept.deptID==r.deptID">{{i.employeeName}}</option>
+					</select>
+				</dd>
+			</dl>
+			</div>
+			<!-- <div id="tabs-1">				
 					<dl>
 						<dt>选择收件人:</dt>
 						<dd>
@@ -48,7 +58,7 @@
 							</select>
 						</dd>
 					</dl>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	</div> 
@@ -94,9 +104,8 @@ var app = new Vue({
 		updateMessage: function (){
 			this.$nextTick(function () {
 				$.localise('ui.multiselect', {/*language: 'es',/* */ path: 'js/locale/'});
-				// local
-				$("#countries").multiselect();
-				// remote
+				$("#countries1").multiselect();
+				$("#countries4").multiselect();
 				$("#languages").multiselect();
               })
 		}

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -23,8 +24,16 @@ import xcl.oa.dept.service.DeptService;
 import xcl.oa.dept.vo.Dept;
 import xcl.oa.employee.service.EmployeeService;
 import xcl.oa.employee.vo.Employee;
+import xcl.oa.receivefile.service.ReceiveFileService;
+import xcl.oa.sendfile.service.SendFileService;
+import xcl.oa.sendfile.vo.SendFile;
 
-public class TestAction extends ActionSupport{
+public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
+	
+	private SendFile sendFile = new SendFile();
+	public SendFile getModel() {
+		return sendFile;
+	}
 	
 	private Map<String,Object> result;
 	public Map<String, Object> getResult() {
@@ -32,11 +41,6 @@ public class TestAction extends ActionSupport{
 	}
 	public void setResult(Map<String, Object> result) {
 		this.result = result;
-	}
-
-	private String fileText;
-	public void setFileText(String fileText) {
-		this.fileText = fileText;
 	}
 	
 	//图片路径处理
@@ -67,6 +71,10 @@ public class TestAction extends ActionSupport{
 		this.fileContentType = fileContentType;
 	}
 	
+	private String employees;
+	public void setEmployees(String employees) {
+		this.employees = employees;
+	}
 	
 	
 	@Autowired
@@ -79,6 +87,18 @@ public class TestAction extends ActionSupport{
 	private EmployeeService employeeService;
 	public void setEmployeeService(EmployeeService employeeService) {
 		this.employeeService = employeeService;
+	}
+	
+	@Autowired
+	private SendFileService sendFileService;
+	public void setSendFileService(SendFileService sendFileService) {
+		this.sendFileService = sendFileService;
+	}
+	
+	@Autowired
+	private ReceiveFileService receiveFileService;
+	public void setReceiveFileService(ReceiveFileService receiveFileService) {
+		this.receiveFileService = receiveFileService;
 	}
 	
 	public String upload() throws IOException {
@@ -103,24 +123,27 @@ public class TestAction extends ActionSupport{
 	
 	public String file() throws IOException {
 		HttpServletResponse response = ServletActionContext.getResponse();
-        response.setContentType("text/html;charset=utf-8");
-        String path = ServletActionContext.getServletContext().getRealPath(
-				"/indexstatic/sendfile");
-        if(file!=null) {
-        // 创建文件类型对象:
-     	File diskFile = new File(path + "//" + fileFileName);
-     		// 文件上传:
-     	FileUtils.copyFile(file, diskFile);
-     	System.out.println("文件名："+fileFileName);
-        }
-     	System.out.println("文件内容："+fileText);
-     	 try {
-	            response.getWriter().print("你好");
-	            response.getWriter().close();
-	        } catch (Exception e) {
-	            //log.fatal(e);
-	        }
-        return NONE;
+		response.setContentType("text/html;charset=utf-8");
+		String path = ServletActionContext.getServletContext().getRealPath("/indexstatic/sendfile");
+		if (file != null) {
+			// 创建文件类型对象:
+			File diskFile = new File(path + "//" + fileFileName);
+			// 文件上传:
+			FileUtils.copyFile(file, diskFile);
+			/*System.out.println("文件名：" + fileFileName);*/
+		}
+		/*System.out.println("文件内容：" + sendFile.getFileText());
+		System.out.println("数组：" + employees);*/
+		sendFile.setFilesrc(fileFileName);
+		try {
+			sendFile = sendFileService.save(sendFile);
+			receiveFileService.save(sendFile, employees);
+			response.getWriter().print("上传成功");
+			response.getWriter().close();
+		} catch (Exception e) {
+			// log.fatal(e);
+		}
+		return NONE;
 	}
 	
 	public String json() {

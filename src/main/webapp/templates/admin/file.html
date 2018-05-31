@@ -9,10 +9,15 @@
 	name="viewport">
 <link rel="stylesheet" href="../../indexstatic/js/plugins/bootstrap/css/bootstrap.css" />
 <link href="../../indexstatic/summernote/dist/summernote.css" rel="stylesheet">
-<style>
-.m {
-	width: 1300px;
-	margin-left: 10px;
+<style> 
+#employee
+{
+text-align:center;
+border:2px solid #a1a1a1;
+padding:10px 40px; 
+width:350px;
+border-radius:25px;
+-moz-border-radius:25px; /* 老的 Firefox */
 }
 </style>
 </head>
@@ -21,11 +26,11 @@
 	<form action="#" class="form-horizontal" role="form">
 		<div id="app">
 		
-			<div>
+			<div style="width:1300px;height:400px;float:left;">
 				<div class="form-group">
 					<label for="firstname" class="col-sm-1 control-label">主题</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="firstname"
+						<input type="text" class="form-control" id="fileName"
 							placeholder="请输入消息名称">
 					</div>
 				</div>
@@ -43,12 +48,12 @@
 						<input type="file" id="exampleInputFile">
 					</div>
 				</div>
-				<div class="form-group">
+<!-- 				<div class="form-group">
 					<label for="exampleInputFile" class="col-sm-1 control-label">选择收件人</label>
 					<div id="tree" class="col-sm-11">
 						<iframe id="ifram1" align="center" width="100%" height="300" src="tree.html"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 					</div>
-				</div>
+				</div> -->
 				<div class="form-group">
 					<div class="col-sm-1" style="margin-left: 50px;">
 						<button class="btn btn-info" onclick="findall();return false;">发送</button>
@@ -57,6 +62,9 @@
 						<button type="submit" class="btn btn-warning">作为草稿</button>
 					</div>
 				</div>
+			</div>
+			<div style="width:300px;height:800px;float:left;" id="employee">
+				<iframe id="ifram1" align="center" width="100%" height="100%" src="test.html"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 			</div>
 
 		</div>
@@ -74,16 +82,19 @@
 	<script src="../../indexstatic/js/vue.js"></script>
 	<script src="../../indexstatic/js/admin/file.js"></script>
 	<script type="text/javascript">
+	var employees = new Array();
 	function findall(){
 		document.getElementById("ifram1").contentWindow.findall();
 		var formData = new FormData();  
 		var sendFile = $('#exampleInputFile').get(0).files[0];
 		if(typeof(sendFile) != "undefined"){
-			alert("213");
 			formData.append("file", sendFile); 
 		}
-		var markupStr = $('.summernote').summernote('code');
-		formData.append("fileText", markupStr); 
+		var fileText = $('.summernote').summernote('code');
+		formData.append("fileText", fileText); 
+		var fileName = $('#fileName').val();
+		formData.append("fileName", fileName); 
+		formData.append("employees", employees);
 		$.ajax({                            
 	         type:'post',        
 	         url:'test_file',                        
@@ -98,15 +109,12 @@
 	         error:function(){                                                  
 	            alert("上传失败");                                                     
 	         } 
-	    });
+	    }); 
 		return false;
 	}
-	function test(data){
-		for(var i=0;i<data.length;i++)
-		{
-			var t = data.eq(i);
-			alert(t.text());
-		}
+	function test(elements){
+		employees = elements;
+		//alert("测试"+employees);
 	}
 	</script>
 </body>

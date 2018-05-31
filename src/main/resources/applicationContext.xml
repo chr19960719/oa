@@ -80,6 +80,8 @@
 	<bean id="testAction" class="xcl.oa.test.action.TestAction" scope="prototype">
 		<property name="deptService" ref="deptService"/>
 		<property name="employeeService" ref="employeeService"/>
+		<property name="sendFileService" ref="sendFileService"/>
+		<property name="receiveFileService" ref="receiveFileService"/>
 	</bean>
 	
 	
@@ -96,6 +98,13 @@
 	<bean id="noticeService" class="xcl.oa.notice.service.impl.INoticeService">
 		<property name="noticeDao" ref="noticeDao"/>
 	</bean>
+	<bean id="sendFileService" class="xcl.oa.sendfile.service.impl.ISendFileService">
+		<property name="sendFileDao" ref="sendFileDao"/>
+	</bean>
+	<bean id="receiveFileService" class="xcl.oa.receivefile.service.impl.IReceiveFileService">
+		<property name="receiveFileDao" ref="receiveFileDao"/>
+		<property name="employeeDao" ref="employeeDao"/>
+	</bean>
 	
 	
 	
@@ -110,6 +119,12 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>  
 	<bean id="noticeDao" class="xcl.oa.notice.dao.impl.INoticeDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean> 
+	<bean id="sendFileDao" class="xcl.oa.sendfile.dao.impl.ISendFileDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean> 
+	<bean id="receiveFileDao" class="xcl.oa.receivefile.dao.impl.IReceiveFileDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean> 
 	
