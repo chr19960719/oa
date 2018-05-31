@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-select@2.0.0/dist/vue-select.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />  
+  <meta charset="utf-8">
+  <meta employeeName="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+  <div id="app" class="container-fluid">
+    <h2>人事部</h2>
+    <v-select :placeholder="placeholder" 
+              multiple 
+              :options="options"
+              label="employeeName"
+              @input="selecte_employee"
+              :value.sync="employee_obj"></v-select>
+    <div id="value" v-if="employees!=''">{{employees}}</div>    
+  </div>
+  
+  <div id="app1" class="container-fluid">
+    <h2>财政部</h2>
+    <v-select :placeholder="placeholder" 
+              multiple 
+              :options="options"
+              label="employeeName"
+              @input="selecte_employee"
+              :value.sync="employee_obj"></v-select>
+    <div id="value" v-if="employees!=''">{{employees}}</div>    
+  </div>
+  
+  
+<script type="text/javascript" src="../../indexstatic/multiselect/js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+Vue.component('v-select', VueSelect.VueSelect);
+
+new Vue({
+   el: '#app',
+   data: function() {
+     return {
+       options: [],
+       placeholder: 'Choose a employee..',
+       employees: [],
+       employee_obj: [],
+       datas:[]
+     }
+   },
+  mounted: function() {
+    var employee_filter = function (obj) {
+     return this.employees.indexOf(obj.employeeID) > -1
+   }
+    this.employee_obj = this.options.filter(employee_filter, this);
+    var self = this;
+	 $.ajax({                            
+        type:'get',        
+        url:'test_ajaxjson',                            
+        async:false,//加上这个，要不是异步执行。 
+        dataType:'json', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
+        success: function(data) {    
+     	  	for(var i=0;i<data.employee.length;i++){
+     	  		if(data.employee[i].dept.deptID==1){
+     	  			self.options.push(data.employee[i]);
+     	  		}
+     	  	}
+        },  
+        error:function(){                                                  
+           alert("上传失败");                                                     
+        } 
+   });
+  },
+  methods:{
+    selecte_employee: function(values){
+      this.employees =values.map(function(obj){
+        return obj.employeeID
+      })
+    }
+  }
+ });
+ 
+new Vue({
+	   el: '#app1',
+	   data: function() {
+	     return {
+	       options: [],
+	       placeholder: 'Choose a employee..',
+	       employees: [],
+	       employee_obj: [],
+	       datas:[]
+	     }
+	   },
+	  mounted: function() {
+	    var employee_filter = function (obj) {
+	     return this.employees.indexOf(obj.employeeID) > -1
+	   }
+	    this.employee_obj = this.options.filter(employee_filter, this);
+	    var self = this;
+		 $.ajax({                            
+	        type:'get',        
+	        url:'test_ajaxjson',                            
+	        async:false,//加上这个，要不是异步执行。 
+	        dataType:'json', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
+	        success: function(data) {    
+	     	  	for(var i=0;i<data.employee.length;i++){
+	     	  		if(data.employee[i].dept.deptID==4){
+	     	  			self.options.push(data.employee[i]);
+	     	  			alert(data.employee[i].job.jobName);
+	     	  		}
+	     	  	}
+	        },  
+	        error:function(){                                                  
+	           alert("上传失败");                                                     
+	        } 
+	   });
+	  },
+	  methods:{
+	    selecte_employee: function(values){
+	      this.employees =values.map(function(obj){
+	        return obj.employeeID
+	      })
+	    }
+	  }
+	 });
+</script>
+</body>
+</html>
