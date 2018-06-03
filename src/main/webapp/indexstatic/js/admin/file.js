@@ -7,7 +7,7 @@ $(function(){
             // [groupName, [list of button]]
             ['style', ['bold', 'italic', 'underline', 'clear']],
             ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['fontsize', ['fontsize']],
+            ['fontsize', ['12', '14', '18', '24', '36']],
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
             ['height', ['height']],

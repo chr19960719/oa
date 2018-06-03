@@ -1,0 +1,103 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>配置权限</title>
+	<link href="../../indexstatic/assets/css/bootstrap.css" rel="stylesheet">
+
+</head>
+<body>
+<div id="detail" v-cloak>
+<dl class="dl-horizontal" contenteditable="false">
+	<dt>主题</dt>
+	<dd>{{details.fileName}}</dd>
+	<dd>
+	<hr></dd>
+	<dt>正文</dt>
+	<dd id="fileText"></dd>
+	<dd>
+	<hr></dd>
+	<dt>附件</dt>
+	<dd v-if="details.filesrc">{{details.filesrc}}&nbsp;&nbsp;&nbsp;
+		<a :href="'receive_download?fileName='+details.filesrc"><button type="button" class="btn btn-primary">提取文件</button></a></dd>
+	<dd v-else>没有附件</dd>
+	<dd>
+	<hr></dd>
+	<dt>发件时间</dt>
+	<dd>{{details.fileTime}}</dd>
+	<dd>
+	<hr></dd>
+	<dt>发件人</dt>
+	<dd>{{details.employee.dept.deptName}}{{details.employee.job.jobName}}{{details.employee.employeeName}}</dd>
+	<dd>
+	<hr></dd>
+	<dt></dt>
+	<dd>
+		<a onclick="updatemsg();"><button type="button" class="btn btn-info">已阅</button></a>&nbsp;&nbsp;&nbsp;
+		<a><button type="button" class="btn btn-warning">返回</button></a>
+	</dd>
+</dl>
+</div>
+<script src="../../indexstatic/js/jquery-3.3.1.js"></script>
+<script src="../../indexstatic/js/commons/common.js"></script>
+<script src="../../indexstatic/js/vue.js"></script>
+<script>
+var id = localStorage.id;
+var rid = localStorage.rid;
+var mes = "123";
+var app = new Vue({
+	el:"#detail",
+	data:{
+		details:[]
+	},
+	created:function(){
+		var self = this;
+		var formData = new FormData();  
+		formData.append("fileID", id); 
+		$.ajax({                            
+			 type:'post',        
+	         url:'test_getMeassage',   
+	         cache: false,
+	         data:formData, 
+	         processData: false,
+	         contentType: false,
+	         dataType:'json',
+	         success: function(data) {  
+	        	 self.details = data.details;
+	        	 mes = data.details;
+	        	 self.updateMessage();
+	         },  
+	         error:function(){                                                  
+	            alert("详细信息获取失败");                                                     
+	         } 
+	    });
+	},
+	methods:{
+		updateMessage: function (){
+			var self = this;
+			this.$nextTick(function () {
+				document.getElementById("fileText").innerHTML = app.details.fileText; 				
+              })
+		}
+	}
+})
+function updatemsg(){
+	$.ajax({                            
+		type:'GET',        
+        url:'receive_isLook',   
+        data:{
+        	receiveID : rid
+        	}, 
+        dataType:'json',
+        success: function(data) {  
+			alert(data.msg);
+			header_app.loadNewMessages();
+			sidebar_app.go('1.html','主页');
+        },  
+        error:function(){                                                  
+           alert("设置已读失败");                                                     
+        } 
+   });
+}
+</script>
+</body>
+</html>

@@ -16,4 +16,9 @@ public class ISendFileDao extends HibernateDaoSupport implements SendFileDao{
 		return sendFile;
 	}
 
+	@Override
+	public SendFile findById(Integer fileID) {
+		return this.getHibernateTemplate().get(SendFile.class, fileID);
+	}
+
 }

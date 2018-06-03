@@ -21,9 +21,40 @@
 			<result name="findAll">/jsp/index/user.jsp</result>		
 		</action>
 		
+		<!-- 配置接收消息的Action -->
+		<action name="receive_*" class="receiveFileAction" method="{1}">
+			<result type="json" name="success">  
+                <param name="root">result</param>     <!-- 这里的jsonData对应action里要返回的map对象 -->  
+            </result>
+			<!-- 下载操作 -->
+            <result name="download" type="stream">
+               <!-- 允许下载的文件的类型：指定为所有的二进制的文件类型，去tomcat的wen.xml里面搜索.exe -->    
+               <param name="contentType">application/octet-stream</param>
+               <!-- 对应的就是Action种的属性，返回流的属性，【其实就是getAttrInputStream()】 -->
+               <param name="inputName">attrInputStream</param>
+               <!-- 下载头，包括：浏览器显示的文件名 -->
+               <param name="contentDisposition">attachment;filename="${downFileName}"</param>
+               <!-- 缓冲区大小设置 -->
+               <param name="bufferSize">1024</param>          
+            </result>
+			<interceptor-ref name="fileUpload"/>
+			<interceptor-ref name="defaultStack"/>
+		</action>
+		
 		<action name="test_*" class="testAction" method="{1}">
 			<result type="json" name="success">  
                 <param name="root">result</param>     <!-- 这里的jsonData对应action里要返回的map对象 -->  
+            </result>
+             <!-- 下载操作 -->
+            <result name="download" type="stream">
+               <!-- 允许下载的文件的类型：指定为所有的二进制的文件类型，去tomcat的wen.xml里面搜索.exe -->    
+               <param name="contentType">application/octet-stream</param>
+               <!-- 对应的就是Action种的属性，返回流的属性，【其实就是getAttrInputStream()】 -->
+               <param name="inputName">attrInputStream</param>
+               <!-- 下载头，包括：浏览器显示的文件名 -->
+               <param name="contentDisposition">attachment;filename="${downFileName}"</param>
+               <!-- 缓冲区大小设置 -->
+               <param name="bufferSize">1024</param>          
             </result>
 			<interceptor-ref name="fileUpload"/>
 			<interceptor-ref name="defaultStack"/>

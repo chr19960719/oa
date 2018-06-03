@@ -2,178 +2,62 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>配置权限</title>
-    <link rel="stylesheet" href="http://static.runoob.com/assets/js/jquery-treeview/jquery.treeview.css" />
+	<link href="../../indexstatic/assets/css/bootstrap.css" rel="stylesheet">
 
-	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="http://static.runoob.com/assets/js/jquery-treeview/jquery.treeview.js" type="text/javascript"></script>
-
-    <style>
-        span.folder{
-            background-image: url("../../indexstatic/assets/img/用户.png");
-            background-repeat: no-repeat;
-            font-size: 14px;
-            padding-left: 20px;
-            height: 17px;
-        }
-
-        /*ul li{
-            list-style: none;
-        }*/
-    </style>
-
-    <script type="text/javascript">
-
-        $(function(){
-
-            $("[name=chkbox]").click(function(){
-
-                //当选中或取消一个权限时，也同时选中或取消所有的下级权限
-                $(this).siblings("ul").find("input").prop("checked",this.checked);
-
-                //当某一个父权限下的子权限都不选中时，该父权限也不选中
-                var elements=$(this).parent("li").parent("ul").find("input");
-                var num=elements.length;
-                /*alert(num);*/
-                var a=0;
-                for(var i=0;i<num;i++){
-                    if(elements[i].checked==false){
-                        a++;
-                    }
-                }
-                if(a==num){
-                    $(this).parent("li").parent("ul").siblings("input").prop("checked",false);
-                }
-
-
-            });
-        });
-    </script>
 </head>
 <body>
-<div id="app">
-<!-- 标题显示 -->
-<div id="Title_bar">
-    <div id="Title_bar_Head">
-        <div id="Title_Head"></div>
-        <div id="Title"><!--页面标题-->
-            <label for="chkAll">全选</label>
-           选择收件人
-        </div>
-        <div id="Title_End"></div>
-    </div>
-</div>
-
-<!--显示表单内容-->
-<div id=MainArea>
-
-
-    <ul id="tree">
-        <li>
-            <input type="checkbox" id="cb0" name="chkbox">
-            <label for="cb0"><span class="folder">全选</span></label>
-        <ul>
-            <li v-for="r in dept">
-                <input type="checkbox" id="cb1" name="chkbox">
-                <label for="cb1"><span class="folder">{{r.deptName}}</span></label>
-                <ul :id="'employee-'+r.deptID">
-                    <li v-for="i in employee" v-if="i.dept.deptID==r.deptID"><input type="checkbox" :id="i.employeeID" name="chkbox">
-                        <label for="cb11"><span class="folder">{{i.job.jobName}}{{i.employeeName}}</span></label></li>
-                </ul>
-            </li>
-            <!-- <li>
-                <input type="checkbox" id="cb2" name="chkbox">
-                <label for="cb2"><span class="folder">部门管理</span></label>
-                <ul>
-                    <li><input type="checkbox" id="cb21" name="chkbox">
-                        <label for="cb21"><span class="folder">部门列表</span></label></li>
-                    <li><input type="checkbox" id="cb22" name="chkbox">
-                        <label for="cb22"><span class="folder">新增部门</span></label></li>
-                    <li><input type="checkbox" id="cb23" name="chkbox">
-                        <label for="cb23"><span class="folder">修改部门</span></label></li>
-                    <li><input type="checkbox" id="cb24" name="chkbox">
-                        <label for="cb24"><span class="folder">删除部门</span></label></li>
-                </ul>
-            </li>
-            <li>
-                <input type="checkbox" id="cb3" name="chkbox">
-                <label for="cb3"><span class="folder">岗位管理</span></label>
-                <ul>
-                    <li><input type="checkbox" id="cb31" name="chkbox">
-                        <label for="cb31"><span class="folder">岗位列表</span></label></li>
-                    <li><input type="checkbox" id="cb32" name="chkbox">
-                        <label for="cb32"><span class="folder">新增岗位</span></label></li>
-                    <li><input type="checkbox" id="cb33" name="chkbox">
-                        <label for="cb33"><span class="folder">修改岗位</span></label></li>
-                    <li><input type="checkbox" id="cb34" name="chkbox">
-                        <label for="cb34"><span class="folder">删除岗位</span></label></li>
-                </ul>
-            </li>
-            <li>
-                <input type="checkbox" id="cb4" name="chkbox">
-                <label for="cb4"><span class="folder">审批流转</span></label>
-            <ul>
-                <li><input type="checkbox" id="cb41" name="chkbox">
-                    <label for="cb41"><span class="folder">审批</span></label></li>
-            </ul>
-            </li> -->
-        </ul>
-        </li>
-
-    </ul>
+<div id="details">
+<dl class="dl-horizontal" contenteditable="false">
+	<dt>主题</dt>
+	<dd>{{details.fileName}}</dd>
+	<dd>
+	<hr></dd>
+	<dt>正文</dt>
+	<dd><code>{{details.fileText}}</code></dd>
+	<dd>
+	<hr></dd>
+	<dt>附件</dt>
+	<dd>{{details.filesrc}}</dd>
+	<dd>
+	<hr></dd>
+	<dt>发件人</dt>
+	<dd>{{details.employee.dept.deptName}}{{details.employee.job.jobName}}{{details.employee.employeeName}}</dd>
+</dl>
 
 </div>
-<button onclick="findall();">点击</button>
-</div>
+<script src="../../indexstatic/js/jquery-3.3.1.js"></script>
+<script src="../../indexstatic/js/commons/common.js"></script>
 <script src="../../indexstatic/js/vue.js"></script>
-<script language="javascript">
+<script>
+var id = localStorage.id;
 var app = new Vue({
-	el:"#app",
+	el:"#details",
 	data:{
-		dept:[],
-		employee:[],
-		datas:[]
+		details:[]
 	},
 	created:function(){
 		var self = this;
-		 $.ajax({                            
-	         type:'get',        
-	         url:'test_ajaxjson',                            
-	         async:false,//加上这个，要不是异步执行。 
-	         dataType:'json', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
-	         success: function(data) {    
-	        	 self.datas = data;
-	        	 self.dept = data.depe;
-	      	  	 self.employee = data.employee;
+		alert("fileID:"+id);
+		var formData = new FormData();  
+		formData.append("fileID", id); 
+		$.ajax({                            
+			 type:'post',        
+	         url:'test_getMeassage',   
+	         cache: false,
+	         data:formData, 
+	         processData: false,
+	         contentType: false,
+	         dataType:'json',
+	         success: function(data) {  
+	        	 self.details = data.details;
+	        	 alert(data.details);
 	         },  
 	         error:function(){                                                  
 	            alert("上传失败");                                                     
 	         } 
 	    });
-		this.updateMessage();
-	},
-	methods:{
-		updateMessage: function (){
-			this.$nextTick(function () {
-				$("#tree").treeview();
-              })
-		}
 	}
 })
-var arrayObj = new Array();
-function findall(){
-	var elements =  $("ul[id^='employee-']").find("input");
-	//parent.test(elements);
-	//alert(elements.length);
-	var num=elements.length;
-	for(var i=0;i<num;i++){
-        if(elements[i].checked==true){
-            //alert(elements[i].id);
-            arrayObj.push(elements[i].id);
-        }
-    }
-	parent.test(arrayObj);
-}
 </script>
-
 </body>
 </html>

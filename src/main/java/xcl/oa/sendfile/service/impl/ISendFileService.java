@@ -19,4 +19,9 @@ public class ISendFileService implements SendFileService{
 		return sendFileDao.save(sendFile);
 	}
 
+	@Override
+	public SendFile findById(Integer fileID) {
+		return sendFileDao.findById(fileID);
+	}
+
 }

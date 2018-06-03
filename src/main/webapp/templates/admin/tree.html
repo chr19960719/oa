@@ -1,86 +1,179 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
-<head> 
-	  <meta charset="UTF-8">
-	<title>树形</title> 
-	<link rel="stylesheet" href="../../indexstatic/multiselect/css/common.css" type="text/css" />
-	<link type="text/css" rel="stylesheet" href="../../indexstatic/multiselect/css/themes/smoothness/jquery-ui-1.7.1.custom.css" />
-	<link type="text/css" href="../../indexstatic/multiselect/css/ui.multiselect.css" rel="stylesheet" />
-	
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>配置权限</title>
+    <link rel="stylesheet" href="http://static.runoob.com/assets/js/jquery-treeview/jquery.treeview.css" />
+
+	<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://static.runoob.com/assets/js/jquery-treeview/jquery.treeview.js" type="text/javascript"></script>
+
+    <style>
+        span.folder{
+            background-image: url("../../indexstatic/assets/img/用户.png");
+            background-repeat: no-repeat;
+            font-size: 14px;
+            padding-left: 20px;
+            height: 17px;
+        }
+
+        /*ul li{
+            list-style: none;
+        }*/
+    </style>
+
+    <script type="text/javascript">
+
+        $(function(){
+
+            $("[name=chkbox]").click(function(){
+
+                //当选中或取消一个权限时，也同时选中或取消所有的下级权限
+                $(this).siblings("ul").find("input").prop("checked",this.checked);
+
+                //当某一个父权限下的子权限都不选中时，该父权限也不选中
+                var elements=$(this).parent("li").parent("ul").find("input");
+                var num=elements.length;
+                /*alert(num);*/
+                var a=0;
+                for(var i=0;i<num;i++){
+                    if(elements[i].checked==false){
+                        a++;
+                    }
+                }
+                if(a==num){
+                    $(this).parent("li").parent("ul").siblings("input").prop("checked",false);
+                }
+
+
+            });
+        });
+    </script>
 </head>
 <body>
- 
-<div id="wrapper"> 
-	
-	<div id="content">
+<div id="app">
+<!-- 标题显示 -->
+<div id="Title_bar">
+    <div id="Title_bar_Head">
+        <div id="Title_Head"></div>
+        <div id="Title"><!--页面标题-->
+            <label for="chkAll">全选</label>
+           选择收件人
+        </div>
+        <div id="Title_End"></div>
+    </div>
+</div>
 
-		<div id="tabs">
-			<ul>
-				<li><a href="#tabs-1">人事部</a></li>
-				<li><a href="#tabs-2">销售部</a></li>
-			</ul>
-			<div id="tabs-1">				
-					<dl>
-						<dt>选择收件人:</dt>
-						<dd>
-							<select id="countries" class="multiselect" multiple="multiple">
-								<option value="小米">AA小米</option>
-								<option value="AFG">Afghanistan</option>
-								<option value="ALB">Albania</option>
+<!--显示表单内容-->
+<div id=MainArea>
 
-								<option value="AUT" selected="selected">Austria</option>
 
-								<option value="BGD">Bangladesh</option>
-								<option value="BLR">Belarus</option>
-								<option value="BGR">Bulgaria</option>
-							</select>
-						</dd>
-					</dl>
+    <ul id="tree">
+        <li>
+            <input type="checkbox" id="cb0" name="chkbox">
+            <label for="cb0"><span class="folder">全选</span></label>
+        <ul>
+            <li v-for="r in dept">
+                <input type="checkbox" id="cb1" name="chkbox">
+                <label for="cb1"><span class="folder">{{r.deptName}}</span></label>
+                <ul :id="'employee-'+r.deptID">
+                    <li v-for="i in employee" v-if="i.dept.deptID==r.deptID"><input type="checkbox" :id="i.employeeID" name="chkbox">
+                        <label for="cb11"><span class="folder">{{i.job.jobName}}{{i.employeeName}}</span></label></li>
+                </ul>
+            </li>
+            <!-- <li>
+                <input type="checkbox" id="cb2" name="chkbox">
+                <label for="cb2"><span class="folder">部门管理</span></label>
+                <ul>
+                    <li><input type="checkbox" id="cb21" name="chkbox">
+                        <label for="cb21"><span class="folder">部门列表</span></label></li>
+                    <li><input type="checkbox" id="cb22" name="chkbox">
+                        <label for="cb22"><span class="folder">新增部门</span></label></li>
+                    <li><input type="checkbox" id="cb23" name="chkbox">
+                        <label for="cb23"><span class="folder">修改部门</span></label></li>
+                    <li><input type="checkbox" id="cb24" name="chkbox">
+                        <label for="cb24"><span class="folder">删除部门</span></label></li>
+                </ul>
+            </li>
+            <li>
+                <input type="checkbox" id="cb3" name="chkbox">
+                <label for="cb3"><span class="folder">岗位管理</span></label>
+                <ul>
+                    <li><input type="checkbox" id="cb31" name="chkbox">
+                        <label for="cb31"><span class="folder">岗位列表</span></label></li>
+                    <li><input type="checkbox" id="cb32" name="chkbox">
+                        <label for="cb32"><span class="folder">新增岗位</span></label></li>
+                    <li><input type="checkbox" id="cb33" name="chkbox">
+                        <label for="cb33"><span class="folder">修改岗位</span></label></li>
+                    <li><input type="checkbox" id="cb34" name="chkbox">
+                        <label for="cb34"><span class="folder">删除岗位</span></label></li>
+                </ul>
+            </li>
+            <li>
+                <input type="checkbox" id="cb4" name="chkbox">
+                <label for="cb4"><span class="folder">审批流转</span></label>
+            <ul>
+                <li><input type="checkbox" id="cb41" name="chkbox">
+                    <label for="cb41"><span class="folder">审批</span></label></li>
+            </ul>
+            </li> -->
+        </ul>
+        </li>
 
-			</div>
-			<div id="tabs-2">
-					<dl>
-						<dt>选择收件人:</dt>
-						<dd>
-							<select id="languages" class="multiselect" multiple="multiple">
-								<option value="UZB">Uzbekistan</option>
-								<option value="VAT">Vatican City</option>
-								<option value="VNM">Vietnam</option>
-							</select>
-						</dd>
-					</dl>
-			</div>
-		</div>
-		
-	</div> 
-</div> 
-<script type="text/javascript" src="../../indexstatic/multiselect/js/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="../../indexstatic/multiselect/js/jquery-ui-1.8.custom.min.js"></script>
-	<script type="text/javascript" src="../../indexstatic/multiselect/js/plugins/localisation/jquery.localisation-min.js"></script>
-	<script type="text/javascript" src="../../indexstatic/multiselect/js/plugins/tmpl/jquery.tmpl.1.1.1.js"></script>
-	<script type="text/javascript" src="../../indexstatic/multiselect/js/plugins/blockUI/jquery.blockUI.js"></script>
-	<script type="text/javascript" src="../../indexstatic/multiselect/js/ui.multiselect.js"></script>
-	<script type="text/javascript" src="../../indexstatic/multiselect/js/locale/ui.multiselect-zh-CN.js"></script>
-	<script type="text/javascript">
-		$(function(){
-			$.localise('ui.multiselect', {/*language: 'es',/* */ path: 'js/locale/'});
-			$("#countries").multiselect();
-			$("#languages").multiselect();
+    </ul>
 
-		});
-	</script>
-	<script type="text/javascript" src="../../indexstatic/multiselect/js/page.js"></script>
-<script>
+</div>
+
+</div>
+<script src="../../indexstatic/js/vue.js"></script>
+<script language="javascript">
+var app = new Vue({
+	el:"#app",
+	data:{
+		dept:[],
+		employee:[],
+		datas:[]
+	},
+	created:function(){
+		var self = this;
+		 $.ajax({                            
+	         type:'get',        
+	         url:'test_ajaxjson',                            
+	         async:false,//加上这个，要不是异步执行。 
+	         dataType:'json', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
+	         success: function(data) {    
+	        	 self.datas = data;
+	        	 self.dept = data.depe;
+	      	  	 self.employee = data.employee;
+	         },  
+	         error:function(){                                                  
+	            alert("上传失败");                                                     
+	         } 
+	    });
+		this.updateMessage();
+	},
+	methods:{
+		updateMessage: function (){
+			this.$nextTick(function () {
+				$("#tree").treeview();
+              })
+		}
+	}
+})
+var arrayObj = new Array();
 function findall(){
-	//alert($('.multiselect').find('option[selected]').length);
-	var data = $('.multiselect').find('option[selected]');
-		/* for(var i=0;i<data.length;i++)
-		{
-			var t = data.eq(i);
-			alert(t.text());
-		} */
-	parent.test(data);
+	var elements =  $("ul[id^='employee-']").find("input");
+	//parent.test(elements);
+	//alert(elements.length);
+	var num=elements.length;
+	for(var i=0;i<num;i++){
+        if(elements[i].checked==true){
+            //alert(elements[i].id);
+            arrayObj.push(elements[i].id);
+        }
+    }
+	parent.test(arrayObj);
 }
 </script>
-</body> 
+
+</body>
 </html>

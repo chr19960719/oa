@@ -77,6 +77,11 @@
 	<bean id="noticeAction" class="xcl.oa.notice.action.NoticeAction" scope="prototype">
 		<property name="noticeService" ref="noticeService"/>
 	</bean>
+	<bean id="receiveFileAction" class="xcl.oa.receivefile.action.ReceiveFileAction" scope="prototype">
+		<property name="employeeService" ref="employeeService"/>
+		<property name="receiveFileService" ref="receiveFileService"/>
+		<property name="sendFileService" ref="sendFileService"/>
+	</bean>
 	<bean id="testAction" class="xcl.oa.test.action.TestAction" scope="prototype">
 		<property name="deptService" ref="deptService"/>
 		<property name="employeeService" ref="employeeService"/>

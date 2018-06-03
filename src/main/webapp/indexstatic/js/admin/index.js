@@ -17,7 +17,8 @@ function loadToken(app) {
 var header_app = new Vue({
 	el: "#header-app",
 	data: {
-		newMessages: {}
+		newMessages: [],
+		num:[]
 	},
 	methods: {
 		logout: function() {
@@ -42,11 +43,12 @@ var header_app = new Vue({
 			var m = {};
 			$.ajax({
 				type:"get",
-				url: "/indexstatic/data/inboxData.json",
+				url: "test_getAllMessage",
 				async : true,
 				success: function(data){
  					if(data.num){
- 						app.newMessages = data;
+ 						app.newMessages = data.message;
+ 						app.num = data.num;
  					}
 				}
 			});
@@ -71,6 +73,10 @@ var header_app = new Vue({
 		},
 		settings:function(){
 			sidebar_app.go('settings.html','系统设置');
+		},
+		getmessage:function(id,rid){
+			localStorage.rid = rid; 
+			sidebar_app.go("details.html?id="+id,"详细消息");
 		}
 	},
 	computed :{
@@ -93,7 +99,8 @@ var sidebar_app = new Vue({
 			alert('修改信息成功')
 		},
 		go: function(p,tilte){
-			fillPage(p)
+			//fillPage(p)
+			loadpage(p);
 			this.title = tilte;
 		}
 	},
@@ -126,4 +133,21 @@ var fillPage = function(goal){
 			$("#page-container").html(content)
 		}
 	});
+}
+
+var loadpage = function(goal){
+	var id = geturl(goal,'id');
+	localStorage.id = id; 
+	$("#page-container").load(goal);
+}
+
+var geturl = function(goal,name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = goal.substr(goal.search('id')).match(reg);
+	if(r != null) return unescape(r[2]);
+	return null;
+};
+
+function millisecondsToDateTime(ms){
+	return new Date(ms).toLocaleString();
 }

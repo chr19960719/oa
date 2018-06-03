@@ -14,4 +14,14 @@ public class IReceiveFileDao extends HibernateDaoSupport implements ReceiveFileD
 		this.getHibernateTemplate().clear();
 	}
 
+	@Override
+	public ReceiveFile findById(Integer receiveID) {
+		return this.getHibernateTemplate().get(ReceiveFile.class, receiveID);
+	}
+
+	@Override
+	public void update(ReceiveFile file) {
+		this.getHibernateTemplate().update(file);
+	}
+
 }

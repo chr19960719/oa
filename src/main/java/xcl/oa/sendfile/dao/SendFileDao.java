@@ -4,4 +4,6 @@ import xcl.oa.sendfile.vo.SendFile;
 
 public interface SendFileDao {
 	public SendFile save(SendFile sendFile);
+
+	public SendFile findById(Integer fileID);
 }

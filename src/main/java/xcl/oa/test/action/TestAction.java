@@ -1,10 +1,16 @@
 package xcl.oa.test.action;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,10 +31,12 @@ import xcl.oa.dept.vo.Dept;
 import xcl.oa.employee.service.EmployeeService;
 import xcl.oa.employee.vo.Employee;
 import xcl.oa.receivefile.service.ReceiveFileService;
+import xcl.oa.receivefile.vo.ReceiveFile;
 import xcl.oa.sendfile.service.SendFileService;
 import xcl.oa.sendfile.vo.SendFile;
 
 public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
+	private static final long serialVersionUID = 1L;
 	
 	private SendFile sendFile = new SendFile();
 	public SendFile getModel() {
@@ -135,6 +143,8 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
 		/*System.out.println("文件内容：" + sendFile.getFileText());
 		System.out.println("数组：" + employees);*/
 		sendFile.setFilesrc(fileFileName);
+		//发件人
+		sendFile.setEmployee(employeeService.findById(2));
 		try {
 			sendFile = sendFileService.save(sendFile);
 			receiveFileService.save(sendFile, employees);
@@ -179,13 +189,6 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
         config.setExcludes(new String[]{"jobs","hibernateLazyInitializer"});  
         List<Dept> list = deptService.findAll();
         List<Employee> list1 = employeeService.findAll();
-        String json = JSONArray.fromObject(list, config).toString();
-        
-        JsonConfig config1 = new JsonConfig();
-        config1.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT); 
-        config1.setExcludes(new String[]{"dept","hibernateLazyInitializer"});  
-        config1.setExcludes(new String[]{"job","hibernateLazyInitializer"});  
-        String json1 = JSONArray.fromObject(list1,config1).toString();
         
         result = new HashMap<String, Object>();
         result.put("depe", list);
@@ -193,4 +196,48 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
     
 		return SUCCESS;
 	}
+	
+	public String getAllMessage() {
+		result = new HashMap<String, Object>();
+		Employee employee = employeeService.findById(1);
+		Set<ReceiveFile> set = employee.getReceiveFiles();
+		int num = 0;
+		for(ReceiveFile file: set) {
+			if(file.getIsLook()==0) {
+				num++;
+			}
+		}
+		result.put("num", num);
+		result.put("message", employee);
+		return SUCCESS;
+	}
+	
+	public String getMeassage() {
+		result = new HashMap<String, Object>();
+		SendFile sendFile1 = sendFileService.findById(sendFile.getFileID());
+		result.put("details", sendFile1);
+		return SUCCESS;
+	}
+	
+	public String download() throws Exception {
+		 return "download";
+	}
+	
+	//2.3：返回流的方法
+    public InputStream getAttrInputStream(){
+        return ServletActionContext.getServletContext().getResourceAsStream("/indexstatic/sendfile/"+sendFile.getFilesrc());
+    }
+    
+    //2.4:下载显示的中文名，（浏览器显示的文件名）
+    public String getDownFileName(){
+    	String fileName = sendFile.getFilesrc();
+        try{
+            //import java.net.URLEncoder;
+            fileName = URLEncoder.encode(fileName,"UTF-8");
+        }catch(Exception e){
+            throw new RuntimeException();
+        }
+        
+        return fileName;
+    }
 }

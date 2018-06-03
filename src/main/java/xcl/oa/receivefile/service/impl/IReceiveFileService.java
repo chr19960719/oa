@@ -38,4 +38,14 @@ public class IReceiveFileService implements ReceiveFileService{
 		
 	}
 
+	@Override
+	public ReceiveFile findById(Integer receiveID) {
+		return receiveFileDao.findById(receiveID);
+	}
+
+	@Override
+	public void isLook(ReceiveFile file) {
+		receiveFileDao.update(file);
+	}
+
 }

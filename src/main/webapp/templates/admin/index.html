@@ -41,26 +41,26 @@
                 <!--  notification start -->
                 <ul class="nav top-menu" id="header-app" v-cloak>
                     <!-- inbox dropdown start-->
-                    <li id="header_inbox_bar" :title="newMessages.num+'条消息'"  class="dropdown" >
+                    <li id="header_inbox_bar" :title="num+'条消息'"  class="dropdown" >
                         <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="badge bg-theme" v-html="numberFormat(newMessages.num)"></span>
+                            <span class="badge bg-theme" v-html="numberFormat(num)"></span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right extended inbox">
                             <div class="notify-arrow notify-arrow-green"></div>
                             <li>
-                                <p class="green" v-if="newMessages.num>0">您有 {{newMessages.num}} 条未读消息</p>
+                                <p class="green" v-if="num>0">您有 {{num}} 条未读消息</p>
                                 <p class="green" v-else="">暂无未读消息</p>
                             </li>
-                            <li v-for="message in newMessages.messages" >
-                                <a href="javascript:;">
-                                    <span class="photo"><img alt="avatar" :src="message.headerUrl"></span>
-                                    <span class="time">时间：{{timeFormat(message.timeStamp)}}</span>
+                            <li v-for="message in newMessages.receiveFiles" v-if="message.isLook!=1">
+                                <a href="javascript:;" @click="getmessage(message.sendFile.fileID,message.receiveID)">
+                                    <span class="photo"><img alt="avatar" src="../../indexstatic/assets/img/ui-danro.jpg"></span>
+                                    <span class="time">时间：{{timeFormat(message.sendFile.fileTime)}}</span>
                                     <span class="subject">
-                                    	<span class="from">来自：{{message.from}}</span>
+                                    	<span class="from">来自：{{message.sendFile.employee.dept.deptName}}{{message.sendFile.employee.job.jobName}}{{message.sendFile.employee.employeeName}}</span>
                                     </span>
                                     <span class="message">
-                                        	标题：{{titleFormat(message.title)}}
+                                        	标题：{{titleFormat(message.sendFile.fileName)}}
                                     </span>
                                 </a>
                             </li>
@@ -120,9 +120,9 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a  @click="go('file.html','订单流转')" href="javascript:;">
+                      <a  @click="go('details.html?id=1','我的消息')" href="javascript:;">
                           <i class="fa fa-cogs"></i>
-                          <span>订单流转</span>
+                          <span>我的消息</span>
                       </a>
                   </li>
                   <li class="sub-menu">
@@ -181,23 +181,10 @@
           </section>
       </section>
 
-
-      <!--main content end-->
-      <!--footer start-->
-      <!--<footer class="site-footer">
-          <div class="text-center">
-              &copy;肇庆学院图书共享平台
-              <a href="javascript:;" class="go-top">
-                  <i class="fa fa-angle-up"></i>
-              </a>
-          </div>
-      </footer>-->
-      <!--footer end-->
   </section>
 
     <script src="../../indexstatic/js/jquery-3.3.1.js"></script>
     <script src="../../indexstatic/js/plugins/bootstrap/js/bootstrap.js"></script>
-    <script src="../../indexstatic/js/plugins/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- 模板js -->
     <!--<script src="../../indexstatic/assets/js/jquery.js"></script>-->
