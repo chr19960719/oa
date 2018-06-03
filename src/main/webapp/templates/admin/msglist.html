@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <title>员工管理</title>
+	<link rel="stylesheet" href="../../indexstatic/js/plugins/bootstrap/css/bootstrap.css" />
+    <link href="../../indexstatic/css2/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="../../indexstatic/css2/dataTables.responsive.css" rel="stylesheet">
+    <link href="../../indexstatic/css2/sb-admin-2.css" rel="stylesheet">
+    <link href="../../indexstatic/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="../../indexstatic/assets/css/style.css" rel="stylesheet" />
+    <link href="../../indexstatic/assets/css/style-responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            消息表
+                        </div>
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="msg">
+                                <thead>
+                                    <tr>
+                                        <th>消息编号</th>
+										<th>主题</th>
+										<th>发件时间</th>
+										<th>发件人</th>
+										<th>状态</th>
+										<th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <tr v-for="message in newMessages.receiveFiles" v-if="message.isLook!=1">
+                                        <td><center>{{message.receiveID}}</center></td>
+					                    <td><center>{{titleFormat(message.sendFile.fileName)}}</center></td>
+					                    <td><center>{{timeFormat(message.sendFile.fileTime)}}</center></td>
+					                    <td>{{message.sendFile.employee.dept.deptName}}{{message.sendFile.employee.job.jobName}}{{message.sendFile.employee.employeeName}}</td>
+					                    <td><center>已读</center></td>
+					                    <td>
+						                    <button class="btn btn-success btn-xs">
+							                    <i class="fa fa-check"></i>
+						                    </button>
+						                    <button class="btn btn-primary btn-xs"  type = "button" data-toggle="modal" data-target="#myModal"  onclick="edit(this);">
+							                    <i class="fa fa-pencil"></i>
+						                    </button>
+						                    <button class="btn btn-danger btn-xs">
+							                    <i class="fa fa-trash-o "></i>
+						                    </button>
+					                    </td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <script src="../../indexstatic/js/jquery-3.3.1.js"></script>
+	<script src="../../indexstatic/js/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../indexstatic/js2/metisMenu.min.js"></script>
+    <script src="../../indexstatic/js2/jquery.dataTables.min.js"></script>
+    <script src="../../indexstatic/js2/dataTables.bootstrap.min.js"></script>
+    <script src="../../indexstatic/js2/dataTables.responsive.js"></script>
+    <script src="../../indexstatic/js2/sb-admin-2.js"></script>
+    <script src="../../indexstatic/js/vue.js"></script>
+    <script>
+    new Vue({
+		el : "#msg",
+		data: {
+			newMessages: [],
+			num:[]
+		},
+		methods:{
+			loadNewMessages: function() {
+				var app = this;
+				var m = {};
+				$.ajax({
+					type:"get",
+					url: "test_getAllMessage",
+					async : false,
+					dataType: 'json',
+					success: function(data){
+	 					if(data.num){
+	 						app.newMessages = data.message;
+	 						app.num = data.num;
+	 					}
+					}
+				});
+			},
+			timeFormat: function(ms){
+				// 毫秒转日期时间
+				return millisecondsToDateTime(ms);
+			},
+			titleFormat: function(msg){
+				// 长度超过12，截取12个字符
+				if(msg.length<=12){
+					return msg;
+				}				
+				return msg.substr(0,11)+"···";
+			}
+		},
+		created: function () {
+			this.loadNewMessages();
+		}
+	});
+    $(document).ready(function() {
+        $('#msg').DataTable({
+            responsive: true,
+            language: {
+                search: "搜索:",
+                sInfo: "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                sLengthMenu: "显示 _MENU_ 项结果",
+                sZeroRecords: "没有匹配结果",
+                sInfoEmpty: "显示第 0 至 0 项结果，共 0 项",
+                sInfoFiltered: "(由 _MAX_ 项结果过滤)",
+                sEmptyTable: "表中数据为空",
+                oPaginate: {
+                    sPrevious: "上页",
+                    sNext: "下页",
+                }
+            }
+        });
+    });
+    function millisecondsToDateTime(ms){
+    	return new Date(ms).toLocaleString();
+    }
+    </script>
+
+</body>
+</html>
