@@ -27,5 +27,9 @@ public class IEmployeeService implements EmployeeService {
 	public void delete(Employee employee) {
 		employeeDao.delete(employee);
 	}
+	//service层修改员工的方法
+	public void update(Employee employee) {
+		employeeDao.update(employee);
+	}
 
 }

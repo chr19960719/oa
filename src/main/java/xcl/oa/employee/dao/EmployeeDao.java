@@ -12,5 +12,7 @@ public interface EmployeeDao {
 	public Employee findById(Integer employeeID);
 	//dao层删除员工的方法
 	public void delete(Employee employee);
+	//dao层修改员工的方法
+	public void update(Employee employee);
 
 }

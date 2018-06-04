@@ -11,6 +11,7 @@ import xcl.oa.sendfile.vo.SendFile;
 
 public class Employee implements Serializable{
 	private Integer employeeID;//用户ID
+	private Integer isDelete;//删除状态
 	private String employeeName;//用户名字
 	private String sex;//用户性别
 	private String birthday;//用户生日
@@ -137,5 +138,12 @@ public class Employee implements Serializable{
 	public void setJob(Job job) {
 		this.job = job;
 	}
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
+	}
+	
 	
 }

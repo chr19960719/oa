@@ -20,6 +20,7 @@
 		<property name="agreement"/>
 		<property name="pwd"/>
 		<property name="userLevel"/>
+		<property name="isDelete"/>
 		<many-to-one name="dept" lazy="false" class="xcl.oa.dept.vo.Dept" column="deptID" cascade="delete"/>
 		<many-to-one name="job" lazy="false" class="xcl.oa.job.vo.Job" column="jobID" cascade="delete"/>
 		<set order-by="receiveID" name="receiveFiles" lazy="false" cascade="delete">

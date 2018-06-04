@@ -18,6 +18,8 @@ public class IEmployeeDao extends HibernateDaoSupport implements EmployeeDao{
 	//dao层添加员工的方法
 	public void save(Employee employee) {
 		this.getHibernateTemplate().save(employee);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
 	}
 	//dao层根据id查询员工的方法
 	public Employee findById(Integer employeeID) {
@@ -26,5 +28,13 @@ public class IEmployeeDao extends HibernateDaoSupport implements EmployeeDao{
 	//dao层删除员工的方法
 	public void delete(Employee employee) {
 		this.getHibernateTemplate().delete(employee);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+	}
+	//dao层修改员工的方法
+	public void update(Employee employee) {
+		this.getHibernateTemplate().update(employee);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
 	}
 }
