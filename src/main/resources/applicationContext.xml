@@ -88,6 +88,9 @@
 		<property name="sendFileService" ref="sendFileService"/>
 		<property name="receiveFileService" ref="receiveFileService"/>
 	</bean>
+	<bean id="taskAction" class="xcl.oa.task.action.TaskAction" scope="prototype">
+		<property name="taskService" ref="taskService"/>
+	</bean>
 	
 	
 	<!-- ==============================================Service的配置============================================== -->
@@ -109,6 +112,9 @@
 	<bean id="receiveFileService" class="xcl.oa.receivefile.service.impl.IReceiveFileService">
 		<property name="receiveFileDao" ref="receiveFileDao"/>
 		<property name="employeeDao" ref="employeeDao"/>
+	</bean>
+	<bean id="taskService" class="xcl.oa.task.service.impl.ITaskService">
+		<property name="taskDao" ref="taskDao"/>
 	</bean>
 	
 	
@@ -132,6 +138,9 @@
 	<bean id="receiveFileDao" class="xcl.oa.receivefile.dao.impl.IReceiveFileDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean> 
+	<bean id="taskDao" class="xcl.oa.task.dao.impl.ITaskDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 	
 	
 </beans>

@@ -11,6 +11,97 @@
     <link href="../../indexstatic/assets/css/style.css" rel="stylesheet" />
     <link href="../../indexstatic/assets/css/style-responsive.css" rel="stylesheet" />
 
+ 	<style>
+    	.back:hover{cursor: pointer;}
+    	.fixed-table-toolbar .btn-group>.btn-group:last-child>.btn {
+		    border-top-right-radius: 0px;
+		    border-bottom-right-radius: 0px;
+		}
+		.popup_de{
+			background-color:rgba(0,0,0,0.3);
+			width:100%;
+			height: 100%;
+			position:fixed;
+			z-index:999;
+			top:0;
+			left:0;
+			display:none;
+		}
+		.bbox{
+			display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+		    display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+		    display: -ms-flexbox;   /* 混合版本语法: IE 10 */   
+			display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+			display: -moz-flex;
+		    display: flex;          /* 新版本语法: Opera 12.1, Firefox 22+ */
+		}
+		.bbox.xycenter{
+			-moz-box-pack: center; /*Firefox*/
+		    -webkit-box-pack: center; /*Safari,Opera,Chrome*/
+		    box-pack: center;
+		    -moz-justify-content: center;
+		    -webkit-justify-content: center;
+		    justify-content: center;
+			-moz-box-align: center; /*Firefox*/
+		    -webkit-box-align:center; /*Safari,Opera,Chrome*/
+		    box-align: center;
+			-moz-align-items: center;
+		    -webkit-align-items: center;
+			align-items:center;
+		}
+		.popup_de .popup_box{
+			width:300px;
+			height:180px;
+			font-family: '微软雅黑';
+			background-color: #fff;
+			border-radius:5px;
+			color:#333;
+		}
+		.popup_de .popup_btn{
+			display: inline-block;
+			width:100px;
+			height:30px;
+			border-radius: 3px;
+			border:1px solid #1ab394;
+			font-size:15px;
+			text-align: center;
+			line-height: 30px;
+			margin-right:15px;
+			cursor: pointer;
+		}
+		.popup_de .show_msg{
+			display: block;
+			width:100%;
+			text-align: center;
+			font-size:18px;
+			margin-top:40px;
+			margin-bottom: 20px;
+			padding:10px;
+		}
+		.popup_de .popup_close{
+			width:30px;
+			height:30px;
+			font-size:25px;
+			text-align: center;
+			display: inline-block;
+	        cursor:pointer;
+	        float: right;
+	        border-top-right-radius: 5px;
+			line-height:30px;
+		}
+		.popup_de .popup_close:hover{
+			background-color: #1ab394;
+			color:#fff;
+		}
+		.popup_de .btn_submit{
+			background-color: #1ab394;
+			color:#fff;
+		}
+		.popup_de .btn_box{
+			text-align: center;
+		}
+	</style>
+
 </head>
 
 <body>
@@ -33,22 +124,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <tr v-for="message in newMessages.receiveFiles" v-if="message.isLook!=1">
-                                        <td><center>{{message.receiveID}}</center></td>
+                                     <tr v-for="message in newMessages.receiveFiles" v-if="message.isDelete==0">
+                                        <td><center>{{message.receiveID}}</center><label hidden="hidden">{{message.sendFile.fileID}}</label></td>
 					                    <td><center>{{titleFormat(message.sendFile.fileName)}}</center></td>
 					                    <td><center>{{timeFormat(message.sendFile.fileTime)}}</center></td>
 					                    <td>{{message.sendFile.employee.dept.deptName}}{{message.sendFile.employee.job.jobName}}{{message.sendFile.employee.employeeName}}</td>
-					                    <td><center>已读</center></td>
+					                    <td v-if="message.isLook==0"><center style="color: red">未读</center></td>
+					        			<td v-else><center>已读</center></td>
 					                    <td>
-						                    <button class="btn btn-success btn-xs">
-							                    <i class="fa fa-check"></i>
+					                    <center>
+						                    <button class="btn btn-primary btn-xs" type="button" data-toggle="tooltip"  title="查看" id="btn_look" onclick="look(this);">
+							                    <i class="fa fa-eye" aria-hidden="true"></i>
 						                    </button>
-						                    <button class="btn btn-primary btn-xs"  type = "button" data-toggle="modal" data-target="#myModal"  onclick="edit(this);">
-							                    <i class="fa fa-pencil"></i>
-						                    </button>
-						                    <button class="btn btn-danger btn-xs">
+						                    &nbsp;&nbsp;&nbsp;&nbsp;
+						                    <button class="btn btn-danger btn-xs" id="btn_delete" data-toggle="tooltip"  title="删除" onclick="deletemsg(this);">
 							                    <i class="fa fa-trash-o "></i>
 						                    </button>
+						                </center>
 					                    </td> 
                                     </tr>
                                 </tbody>
@@ -57,6 +149,16 @@
                     </div>
                 </div>
             </div>
+            <div class="popup_de xycenter">
+			<div class="popup_box">
+				<span class="popup_close" value="关闭">×</span>
+			    <span class="show_msg" id="show_msg"></span>
+			    <div class="btn_box">
+				    <div class="popup_btn btn-danger" value="确定">确定</div>
+					<div class="popup_btn btn_cancel" value="取消">取消</div>
+			    </div>
+			</div>	
+			</div>
 
     <script src="../../indexstatic/js/jquery-3.3.1.js"></script>
 	<script src="../../indexstatic/js/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -106,6 +208,25 @@
 			this.loadNewMessages();
 		}
 	});
+    $(function(){
+    	//删除事件按钮
+       /*  $('#btn_delete').click(function(){
+        	//var dataArr=$('#mytab').bootstrapTable('getSelections');
+        	document.getElementById('show_msg').innerHTML="确定要删除该消息吗?<br/>注意:消息为未读状态!!!";
+        	$('.popup_de').addClass('bbox');
+        	$('.popup_de .btn_submit').one('click',function(){
+        		
+        	})
+        }); */
+        //弹出框取消按钮事件
+	$('.popup_de .btn_cancel').click(function(){
+   	   $('.popup_de').removeClass('bbox');
+      　　});
+       //弹出框关闭按钮事件
+        $('.popup_de .popup_close').click(function(){
+   	   $('.popup_de').removeClass('bbox');
+      　　})
+    })
     $(document).ready(function() {
         $('#msg').DataTable({
             responsive: true,
@@ -126,6 +247,43 @@
     });
     function millisecondsToDateTime(ms){
     	return new Date(ms).toLocaleString();
+    };
+    function look(obj){
+    	var tds = $(obj).parent().parent().parent().find('td');
+    	var center = tds.eq(0).find('center');
+    	var rid = center.eq(0).text();
+    	var label = tds.eq(0).find('label');
+    	var sid = label.eq(0).text();
+    	localStorage.rid = rid; 
+    	localStorage.sid = sid; 
+    	sidebar_app.go('details.html','详细消息');
+    	//alert(rid+"    "+sid);
+    };
+    function deletemsg(obj){
+    	var tds = $(obj).parent().parent().parent().find('td');
+    	var center = tds.eq(0).find('center');
+    	var rid = center.eq(0).text();
+    	document.getElementById('show_msg').innerHTML="确定要删除该消息吗?<br/>注意:消息为未读状态!!!";
+    	$('.popup_de').addClass('bbox');
+    	$('.popup_de .btn-danger').one('click',function(){
+    		$.ajax({                            
+        		type:'GET',        
+                url:'receive_isDelete',   
+                data:{
+                	receiveID : rid
+                	}, 
+                dataType:'json',
+                success: function(data) {  
+        			alert(data.msg);
+        			header_app.loadNewMessages();
+        			sidebar_app.go('msglist.html','我的消息');
+                },  
+                error:function(){                                                  
+                   alert("删除失败");    
+                   $('.popup_de').removeClass('bbox');
+                } 
+           });
+    	})
     }
     </script>
 

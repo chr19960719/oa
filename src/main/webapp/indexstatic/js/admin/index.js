@@ -76,7 +76,11 @@ var header_app = new Vue({
 		},
 		getmessage:function(id,rid){
 			localStorage.rid = rid; 
-			sidebar_app.go("details.html?id="+id,"详细消息");
+			localStorage.sid = id; 
+			sidebar_app.go("details.html","详细消息");
+		},
+		msg:function(){
+			sidebar_app.go('msglist.html','我的消息');
 		}
 	},
 	computed :{
@@ -136,8 +140,7 @@ var fillPage = function(goal){
 }
 
 var loadpage = function(goal){
-	var id = geturl(goal,'id');
-	localStorage.id = id; 
+	//var id = geturl(goal,'id');
 	$("#page-container").load(goal);
 }
 

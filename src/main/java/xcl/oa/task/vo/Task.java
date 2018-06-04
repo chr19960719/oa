@@ -11,6 +11,8 @@ public class Task implements Serializable{
 	private String getTime;//添加任务时间
 	private String taskState;//任务状态
 	private Employee employee;//外键任务添加人
+	private String startTime;
+	private String endTime;
 	public Integer getTaskID() {
 		return taskID;
 	}
@@ -46,6 +48,18 @@ public class Task implements Serializable{
 	}
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	public String getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 	
 }

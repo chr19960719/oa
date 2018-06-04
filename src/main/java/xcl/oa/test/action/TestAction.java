@@ -203,7 +203,7 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
 		Set<ReceiveFile> set = employee.getReceiveFiles();
 		int num = 0;
 		for(ReceiveFile file: set) {
-			if(file.getIsLook()==0) {
+			if(file.getIsLook()==0&&file.getIsDelete()==0) {
 				num++;
 			}
 		}

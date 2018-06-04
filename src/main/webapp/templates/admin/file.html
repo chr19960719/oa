@@ -14,8 +14,7 @@
 {
 text-align:center;
 border:2px solid #a1a1a1;
-padding:10px 40px; 
-width:350px;
+padding:10px 50px; 
 border-radius:25px;
 -moz-border-radius:25px; /* 老的 Firefox */
 }
@@ -26,7 +25,7 @@ border-radius:25px;
 	<form action="#" class="form-horizontal" role="form">
 		<div id="app" v-cloak>
 		
-			<div style="width:1300px;height:400px;float:left;">
+			<div style="width:80%;height:400px;float:left;">
 				<div class="form-group">
 					<label for="firstname" class="col-sm-1 control-label">主题</label>
 					<div class="col-sm-10">
@@ -63,8 +62,10 @@ border-radius:25px;
 					</div>
 				</div>
 			</div>
-			<div style="width:300px;height:800px;float:left;" id="employee">
-				<iframe id="ifram1" align="center" width="100%" height="100%" src="tree.html"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
+			<div id="employee" style="width:19%;height:800px;float:left;overflow:auto;">
+				<iframe id="ifram1" align="center" width="100%" height="100%" src="tree.html" style="display: block;" frameborder="no" border="0" marginwidth="0" marginheight="0" ></iframe>
+			</div>
+			<div style="width:1%;">
 			</div>
 
 		</div>

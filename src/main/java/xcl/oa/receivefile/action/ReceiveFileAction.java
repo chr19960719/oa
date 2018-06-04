@@ -80,6 +80,16 @@ public class ReceiveFileAction extends ActionSupport implements ModelDriven<Rece
 		return SUCCESS;
 	}
 	
+	//设置消息为删除
+	public String isDelete() {
+		ReceiveFile file = receiveFileService.findById(receivefile.getReceiveID());
+		file.setIsDelete(1);
+		receiveFileService.isLook(file);
+		result = new HashMap<String, Object>();
+		result.put("msg", "删除成功");
+		return SUCCESS;
+	}
+	
 	
 	private String fileName;
 	public void setFileName(String fileName) {

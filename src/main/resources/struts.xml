@@ -60,6 +60,12 @@
 			<interceptor-ref name="defaultStack"/>
 		</action>
 		
+		<action name="task_*" class="taskAction" method="{1}">
+			<result type="json" name="success">  
+                <param name="root">result</param>     <!-- 这里的jsonData对应action里要返回的map对象 -->  
+            </result>
+		</action>
+		
     </package>
  
     

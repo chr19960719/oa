@@ -11,6 +11,8 @@
 		<property name="taskInfo"/>
 		<property name="getTime"/>
 		<property name="taskState"/>
+		<property name="startTime"/>
+		<property name="endTime"/>
 		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="employeeID" cascade="delete"/>
 	</class>
 </hibernate-mapping>

@@ -33,7 +33,7 @@
 	<dt></dt>
 	<dd>
 		<a onclick="updatemsg();"><button type="button" class="btn btn-info">已阅</button></a>&nbsp;&nbsp;&nbsp;
-		<a><button type="button" class="btn btn-warning">返回</button></a>
+		<a><button type="button" class="btn btn-warning" onclick="back();">返回</button></a>
 	</dd>
 </dl>
 </div>
@@ -41,7 +41,7 @@
 <script src="../../indexstatic/js/commons/common.js"></script>
 <script src="../../indexstatic/js/vue.js"></script>
 <script>
-var id = localStorage.id;
+var sid = localStorage.sid;
 var rid = localStorage.rid;
 var mes = "123";
 var app = new Vue({
@@ -52,7 +52,7 @@ var app = new Vue({
 	created:function(){
 		var self = this;
 		var formData = new FormData();  
-		formData.append("fileID", id); 
+		formData.append("fileID", sid); 
 		$.ajax({                            
 			 type:'post',        
 	         url:'test_getMeassage',   
@@ -91,12 +91,15 @@ function updatemsg(){
         success: function(data) {  
 			alert(data.msg);
 			header_app.loadNewMessages();
-			sidebar_app.go('1.html','主页');
+			sidebar_app.go('msglist.html','我的消息');
         },  
         error:function(){                                                  
            alert("设置已读失败");                                                     
         } 
    });
+}
+function back(){
+	sidebar_app.go('msglist.html','我的消息');
 }
 </script>
 </body>

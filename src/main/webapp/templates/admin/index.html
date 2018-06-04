@@ -52,7 +52,7 @@
                                 <p class="green" v-if="num>0">您有 {{num}} 条未读消息</p>
                                 <p class="green" v-else="">暂无未读消息</p>
                             </li>
-                            <li v-for="message in newMessages.receiveFiles" v-if="message.isLook!=1">
+                            <li v-for="(message,index) in newMessages.receiveFiles" v-if="message.isLook==0&&message.isDelete==0&&index<5">
                                 <a href="javascript:;" @click="getmessage(message.sendFile.fileID,message.receiveID)">
                                     <span class="photo"><img alt="avatar" src="../../indexstatic/assets/img/ui-danro.jpg"></span>
                                     <span class="time">时间：{{timeFormat(message.sendFile.fileTime)}}</span>
@@ -65,7 +65,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:;">查看所有消息</a>
+                                <a href="javascript:;" @click="msg">查看所有消息</a>
                             </li>
                         </ul>
                     </li>
@@ -120,7 +120,7 @@
                   </li>
 
                   <li class="sub-menu">
-                      <a  @click="go('details.html?id=1','我的消息')" href="javascript:;">
+                      <a  @click="go('msglist.html','我的消息')" href="javascript:;">
                           <i class="fa fa-cogs"></i>
                           <span>我的消息</span>
                       </a>
