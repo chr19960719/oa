@@ -90,6 +90,7 @@
 	</bean>
 	<bean id="taskAction" class="xcl.oa.task.action.TaskAction" scope="prototype">
 		<property name="taskService" ref="taskService"/>
+		<property name="employeeService" ref="employeeService"/>
 	</bean>
 	
 	

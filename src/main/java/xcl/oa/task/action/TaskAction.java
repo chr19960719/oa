@@ -7,6 +7,7 @@ import java.util.Map;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+import xcl.oa.employee.service.EmployeeService;
 import xcl.oa.task.service.TaskService;
 import xcl.oa.task.vo.Task;
 
@@ -29,6 +30,10 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 	public void setTaskService(TaskService taskService) {
 		this.taskService = taskService;
 	}
+	private EmployeeService employeeService;
+	public void setEmployeeService(EmployeeService employeeService) {
+		this.employeeService = employeeService;
+	}
 	
 	public String getAllTask() {
 		result = new HashMap<String, Object>();
@@ -39,6 +44,10 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 			e.printStackTrace();
 			result.put("msg", "查找失败");
 		}
+		return SUCCESS;
+	}
+	
+	public String addTask() {
 		return SUCCESS;
 	}
 

@@ -4,15 +4,17 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="xcl.oa.task.vo.Task" table="task">
-		<id name="taskID">
+		<id name="id">
 			<generator class="native"/>
 		</id>
-		<property name="taskName"/>
+		<property name="title"/>
 		<property name="taskInfo"/>
 		<property name="getTime"/>
 		<property name="taskState"/>
-		<property name="startTime"/>
-		<property name="endTime"/>
+		<property name="start"/>
+		<property name="end"/>
+		<property name="allDay"/>
+		<property name="color"/>
 		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="employeeID" cascade="delete"/>
 	</class>
 </hibernate-mapping>

@@ -77,6 +77,31 @@
 	</style>
 	<script>
 	$(function(){
+		var datajson;
+		$.ajax({
+			url:'task_getAllTask',
+				type:'GET',
+				dataType:'json',
+				async:false,
+				success:function(data){
+					datajson = data.task;
+					/* for (var i = 0; i < data.length; i++) {
+                        var obj = new Object();
+                        obj.id = data[i].taskID;
+                        // obj.color = "red";
+                        obj.title = data[i].taskName;
+                        obj.description = data[i].taskInfo;
+                        obj.start = $.fullCalendar.parseDate(data[i].startTime);
+                        obj.end = $.fullCalendar.parseDate(data[i].endTime);
+                        $("#calendar").fullCalendar('renderEvent', obj, true);
+                    } */
+				},
+				error:function(){
+					alert("Failed");
+				}
+				
+		});
+		
 		$("#calendar").fullCalendar({
 			theme: true,
 			customButtons:{
@@ -111,37 +136,8 @@
 								$("#enddate").hide();
 							};
 						});
-						$("#repeat").click(function(){
-							if($("#repeat").prop("checked") == true){
-								$("#repeattype,#repeattime").show();
-							}else{
-								$("#repeattype,#repeattime").hide();
-							};
-						});
-						$("#repeatselect").change(function(){
-							switch($("#repeatselect").val()){
-								case "1":
-									$("#repeatclock").show();
-									$("#repeatmonth,#repeatweek,#repeatday").hide();
-									break;
-								case "2":
-									$("#repeatmonth,#repeatday").hide();
-									$("#repeatweek,#repeatclock").show();
-									break;
-								case "3":
-									$("#repeatmonth,#repeatweek").hide();
-									$("#repeatday,#repeatclock").show();
-									break;
-								case "4":
-									$("#repeatweek").hide();
-									$("#repeatmonth,#repeatday,#repeatclock").show();
-									break;
-								case "5":
-									$("#repeatclock").show();
-									$("#repeatmonth,#repeatweek,#repeatday").hide();
-									break;
-							}
-						});
+
+		
 						dialog({
 							title:"新建日程",
 							content:$("#dialog-form"),
@@ -176,7 +172,7 @@
 						}).showModal();
 					}
 				},
-				button2:{
+				/* button2:{
 					text:"查询",
 					click:function(){
 						$(".datepicker").datepicker({
@@ -203,7 +199,7 @@
 						}).showModal();
 
 					}
-				},
+				}, */
 				button3:{
 					text:"设置",
 					click:function(){
@@ -252,6 +248,33 @@
 				day: "天",
 				listMonth:"列表"
 			},
+			/* viewDisplay : function(view){
+				alert("初始化");
+				var viewStart = $.fullCalendar.formatDate(view.start, "YYYY-MM-DD HH:mm:ss");
+                var viewEnd = $.fullCalendar.formatDate(view.end, "YYYY-MM-DD HH:mm:ss");
+                $("#calendar").fullCalendar('removeEvents');
+                $.ajax({
+					url:'task_getAllTask',
+						type:'GET',
+						dataType:'json',
+						success:function(data){
+							for (var i = 0; i < data.length; i++) {
+                                var obj = new Object();
+                                obj.id = data[i].taskID;
+                                // obj.color = "red";
+                                obj.title = data[i].taskName;
+                                obj.description = data[i].taskInfo;
+                                obj.start = $.fullCalendar.parseDate(data[i].startTime);
+                                obj.end = $.fullCalendar.parseDate(data[i].endTime);
+                                $("#calendar").fullCalendar('renderEvent', obj, true);
+                            }
+						},
+						error:function(){
+							alert("Failed");
+						}
+						
+				});
+			}, */
 			allDayDefault:false,
 			slotLabelFormat:"H",
 			businessHours: {
@@ -278,12 +301,19 @@
 			dayClick: function(date,allDay,jsEvent,view){
 				var selDate = $.fullCalendar.formatDate(date,"YYYY-MM-DD");
 				var d = dialog({
-					title:"新建事件",
-					content:"<textarea rows=5 class='taxt' placeholder='内容' id='eventall'></textarea><p>"+selDate+"</p>",
+					title:"新建简单事件",
+					content:"<textarea rows=5 class='taxt' placeholder='事件标题' id='eventall'></textarea><p>"+selDate+"</p>",
 					width:460,
 					button:[{
 						value:"完整编辑",
 						callback:function(){
+							
+							$("#title").val("");
+							$("#taskInfo").val("");							
+							$("#isallday").prop("checked",false);
+							$("#starttime,#endtime").show();
+							$("#startdate").val("");
+
 							$(".datepicker").datepicker({
 								language:"zh-CN",
 								format:"yyyy-mm-dd",
@@ -312,50 +342,22 @@
 									$("#enddate").hide();
 								};
 							});
-							$("#repeat").click(function(){
-								if($("#repeat").prop("checked") == true){
-									$("#repeattype,#repeattime").show();
-								}else{
-									$("#repeattype,#repeattime").hide();
-								};
-							});
-							$("#repeatselect").change(function(){
-								switch($("#repeatselect").val()){
-									case "1":
-										$("#repeatclock").show();
-										$("#repeatmonth,#repeatweek,#repeatday").hide();
-										break;
-									case "2":
-										$("#repeatmonth,#repeatday").hide();
-										$("#repeatweek,#repeatclock").show();
-										break;
-									case "3":
-										$("#repeatmonth,#repeatweek").hide();
-										$("#repeatday,#repeatclock").show();
-										break;
-									case "4":
-										$("#repeatweek").hide();
-										$("#repeatmonth,#repeatday,#repeatclock").show();
-										break;
-									case "5":
-										$("#repeatclock").show();
-										$("#repeatmonth,#repeatweek,#repeatday").hide();
-										break;
-								}
-							});
+						
+						
 							dialog({
 								title:"新建日程",
 								content:$("#dialog-form"),
 								okValue:"确定",
 								ok:function(){
-									var titledetail = $("#titledetail").val();
+									var title = $("#title").val();
+									var taskInfo = $("#taskInfo").val();
 									var startdate = $("#startdate").val();
 									var starttime = $("#starttime").val().split(" ").join("");
 									var enddate = $("#stopdate").val();
 									var endtime = $("#endtime").val().split(" ").join("");
 									var allDay = $("#isallday").val();
-									if(titledetail){
-										$.ajax({
+									if(taskInfo||title){
+										/* $.ajax({
 											url:'../../indexstatic/fullcalendar/detail.php',
 					   						data:{title:titledetail,sdate:startdate,stime:starttime,edate:enddate,etime:endtime,allDay:allDay},
 					   						type:'POST',
@@ -367,8 +369,11 @@
 					  							alert("Failed");
 					  						}
 					   						
-										});
-									};
+										}); */
+									}
+									else{
+										alert("事务标签或事务标题不能为空");
+									}
 								},
 								cancelValue:"关闭",
 								cancel:function(){}
@@ -403,20 +408,43 @@
 			},
 			eventClick:function(event,jsEvent,view){
 				var editstarttime = $.fullCalendar.formatDate(event.start,"YYYY-MM-DD HH:mm:ss");
-				$("#edittitle").html(event.title);
-				var eventtitle = event.title;
+				var title = event.title;//任务编号
+				var taskInfo = event.description;//任务描述
+				var eventid = event.id;//任务id编号
+				var taskState = event.state;//任务状态
+				var allDay = event.allDay;//任务是否全天的状态
+				var start = event.start;//任务开启时间
+				var end = event.end;//任务结束时间
+				
+				//设置显示内容
+				$("#edittitle").html(event.description);//点击任务后显示的任务内容
 				if(event.end){
 					var editendtime = $.fullCalendar.formatDate(event.end,"YYYY-MM-DD HH:mm:ss");
 					$("#edittime").html(editstarttime+"  至  "+editendtime);
 				}else{
 					$("#edittime").html(editstarttime);
 				};
+				if(taskState == 1){
+					$("#edittype").val("1");
+				}else{
+					$("#edittype").val("0");
+				}
+				
 				// var time = '19:00:00';
 				dialog({
 					title:"编辑日程",
 					content:$("#edit"),
 					okValue:"编辑",
 					ok:function(){
+						$("#title").val(title);
+						$("#taskInfo").val(taskInfo);
+						if(allDay == 1){
+							$("#isallday").prop("checked",true);
+							$("#starttime,#endtime").hide();
+							$("#startdate").val(start);
+						}else{
+							$("#isallday").prop("checked",false);
+						}
 						$(".datepicker").datepicker({
 							language:"zh-CN",
 							format:"yyyy-mm-dd",
@@ -446,50 +474,22 @@
 								$("#enddate").hide();
 							};
 						});
-						$("#repeat").click(function(){
-							if($("#repeat").prop("checked") == true){
-								$("#repeattype,#repeattime").show();
-							}else{
-								$("#repeattype,#repeattime").hide();
-							};
-						});
-						$("#repeatselect").change(function(){
-							switch($("#repeatselect").val()){
-								case "1":
-									$("#repeatclock").show();
-									$("#repeatmonth,#repeatweek,#repeatday").hide();
-									break;
-								case "2":
-									$("#repeatmonth,#repeatday").hide();
-									$("#repeatweek,#repeatclock").show();
-									break;
-								case "3":
-									$("#repeatmonth,#repeatweek").hide();
-									$("#repeatday,#repeatclock").show();
-									break;
-								case "4":
-									$("#repeatweek").hide();
-									$("#repeatmonth,#repeatday,#repeatclock").show();
-									break;
-								case "5":
-									$("#repeatclock").show();
-									$("#repeatmonth,#repeatweek,#repeatday").hide();
-									break;
-							}
-						});
+						
+						
 						dialog({
 							title:"新建日程",
 							content:$("#dialog-form"),
 							okValue:"确定",
 							ok:function(){
-								var titledetail = $("#titledetail").val();
+								var title = $("#title").val();
+								var taskInfo = $("#taskInfo").val();
 								var startdate = $("#startdate").val();
 								var starttime = $("#starttime").val().split(" ").join("");
 								var enddate = $("#stopdate").val();
 								var endtime = $("#endtime").val().split(" ").join("");
 								var allDay = $("#isallday").val();
-								if(titledetail){
-									$.ajax({
+								if(taskInfo||title){
+									/* $.ajax({
 										url:'../../indexstatic/fullcalendar/detail.php',
 				   						data:{title:titledetail,sdate:startdate,stime:starttime,edate:enddate,etime:endtime,allDay:allDay},
 				   						type:'POST',
@@ -501,32 +501,25 @@
 				  							alert("Failed");
 				  						}
 				   						
-									});
-								};
+									}); */
+								}
+								else{
+									alert("事务标签或事务标题不能为空");
+								}
 							},
 							cancelValue:"关闭",
 							cancel:function(){
-								//$("#ui-datepicker-div").remove();
 							}
 						}).showModal();
 						$("#calendar").fullCalendar("removeEvents",function(event){
-									if(event.title==eventtitle){
-										return true;
-									}else{
-										return false;
-									}
+									
 						});
 					},
+					//删除任务
 					button:[{
 						value:"删除",
 						callback:function(){
-							$("#calendar").fullCalendar("removeEvents",function(event){
-									if(event.title==eventtitle){
-										return true;
-									}else{
-										return false;
-									}
-							});
+							$('#calendar').fullCalendar('removeEvents',eventid);							
 						}
 					}],
 					cancelValue:"取消",
@@ -535,6 +528,24 @@
 			}
 		
 		});
+		
+		var obj = new Object();
+		for (var i = 0; i < datajson.length; i++) {            
+            obj.id = datajson[i].id;
+            // obj.color = "red";
+            obj.title = datajson[i].title;
+            obj.description = datajson[i].taskInfo;
+            obj.start = datajson[i].start;
+            obj.end = datajson[i].end;
+            obj.state = datajson[i].taskState;
+            if(datajson[i].allDay)
+            	obj.allDay = true;
+            else
+            	obj.allDay = false;
+            //alert(obj.id+"  "+obj.title+"  "+obj.description+"  "+obj.start+"  "+obj.end);
+            $("#calendar").fullCalendar('renderEvent', obj, true);
+        }
+	
 	});
 	</script> 
 </head>
@@ -549,10 +560,8 @@
 	<div id="edit" style="display: none">
 		<p id="edittitle"></p>
 		<select id="edittype">
-			<option value="">未进行</option>
-			<option value="">进行中</option>
-			<option value="">已完成</option>
-			<option value="">已超时</option>
+			<option value="0">未完成</option>
+			<option value="1">已完成</option>
 		</select>
 		<p id="edittime"></p>
 	</div>
@@ -560,20 +569,20 @@
 		<form class="form-inline">
 			<p>
 				<label>事务标题：</label>
-				<input type="text" class="form-control">
+				<input type="text" class="form-control" id="title">
 			</p>
 			<p>
 				<label>事务内容：</label>
-				<textarea class="textarea" rows="4" placeholder="内容" id="titledetail"></textarea>
+				<textarea class="textarea" rows="4" placeholder="内容" id="taskInfo"></textarea>
 				<span>（必填）</span>
 			</p>
-			<p>
+			<!--<p>
 				<label>事务类型：</label>
 				<select class="select">
 					<option>工作事务</option>
 					<option>个人事务</option>
 				</select>
-			</p>
+			</p> -->
 			<p>
 				<label>开始时间：</label>
 				<input type="text" class="time datepicker" id="startdate">
@@ -587,9 +596,9 @@
 			<p class="checkbox check">
 				<label class="checkbox-inline"><input type="checkbox" id="isallday">全天</label>
 				<label class="checkbox-inline"><input type="checkbox" id="end">结束时间</label>
-				<label class="checkbox-inline"><input type="checkbox" id="repeat">重复</label>
+				<!-- <label class="checkbox-inline"><input type="checkbox" id="repeat">重复</label> -->
 			</p>
-			<p id="repeattype" style="display: none">
+			<!-- <p id="repeattype" style="display: none">
 				<label>重复类型：</label>
 				<select class="select" id="repeatselect">
 					<option value="1">按天重复</option>
@@ -598,8 +607,8 @@
 					<option value="4">按年重复</option>
 					<option value="5">按工作日重复</option>
 				</select>
-			</p>
-			<p id="repeattime" style="display: none">
+			</p> -->
+			<!-- <p id="repeattime" style="display: none">
 				<label>重复时间：</label>
 				<select class="time" id="repeatmonth" style="display:none">
 					<option value="">1月</option>
@@ -658,16 +667,16 @@
 					<option value="">星期日</option>
 				</select>
 				<input type="text" class="time timepicki" id="repeatclock">
-			</p>
-			<p>
+			</p> -->
+			<!-- <p>
 				<label>&nbsp;&nbsp;&nbsp;参与者：</label>
 				<textarea rows="3"></textarea>
-			</p>
+			</p> -->
 			<p></p>
 		</form>
 	</div>
 	
-	<div id="search" style="display:none">
+	<!-- <div id="search" style="display:none">
 		<form class="form-inline">
 			<p>
 				<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日期：</label>
@@ -696,6 +705,6 @@
 				<input type="text">
 			</p>
 		</form>
-	</div>
+	</div> -->
 </body>
 </html>

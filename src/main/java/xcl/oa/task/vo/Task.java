@@ -5,26 +5,17 @@ import java.io.Serializable;
 import xcl.oa.employee.vo.Employee;
 
 public class Task implements Serializable{
-	private Integer taskID;//任务ID
-	private String taskName;//任务名称
+	private Integer id;//任务ID
+	private String title;//任务名称
 	private String taskInfo;//任务介绍
 	private String getTime;//添加任务时间
 	private String taskState;//任务状态
 	private Employee employee;//外键任务添加人
-	private String startTime;
-	private String endTime;
-	public Integer getTaskID() {
-		return taskID;
-	}
-	public void setTaskID(Integer taskID) {
-		this.taskID = taskID;
-	}
-	public String getTaskName() {
-		return taskName;
-	}
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
+	private String start;
+	private String end;
+	private Integer allDay;
+	private String color;
+
 	public String getTaskInfo() {
 		return taskInfo;
 	}
@@ -49,17 +40,42 @@ public class Task implements Serializable{
 	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
-	public String getStartTime() {
-		return startTime;
+	public Integer getId() {
+		return id;
 	}
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public String getEndTime() {
-		return endTime;
+	public String getTitle() {
+		return title;
 	}
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+	public void setTitle(String title) {
+		this.title = title;
 	}
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
+	public String getEnd() {
+		return end;
+	}
+	public void setEnd(String end) {
+		this.end = end;
+	}
+	public Integer getAllDay() {
+		return allDay;
+	}
+	public void setAllDay(Integer allDay) {
+		this.allDay = allDay;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
 	
 }
