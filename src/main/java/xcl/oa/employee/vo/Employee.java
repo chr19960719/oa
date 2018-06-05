@@ -8,6 +8,7 @@ import xcl.oa.dept.vo.Dept;
 import xcl.oa.job.vo.Job;
 import xcl.oa.receivefile.vo.ReceiveFile;
 import xcl.oa.sendfile.vo.SendFile;
+import xcl.oa.task.vo.Task;
 
 public class Employee implements Serializable{
 	private Integer employeeID;//用户ID
@@ -29,7 +30,14 @@ public class Employee implements Serializable{
 	private Dept dept;//外键部门
 	private Set<SendFile> sendFiles = new HashSet<SendFile>();
 	private Set<ReceiveFile> receiveFiles = new HashSet<ReceiveFile>();
+	private Set<Task> tasks = new HashSet<Task>();
 	
+	public Set<Task> getTasks() {
+		return tasks;
+	}
+	public void setTasks(Set<Task> tasks) {
+		this.tasks = tasks;
+	}
 	public Set<SendFile> getSendFiles() {
 		return sendFiles;
 	}

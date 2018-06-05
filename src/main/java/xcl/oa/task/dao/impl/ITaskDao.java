@@ -15,4 +15,12 @@ public class ITaskDao extends HibernateDaoSupport implements TaskDao {
 		return this.getHibernateTemplate().find(hql);
 	}
 
+	@Override
+	public Task addTask(Task task) {
+		this.getHibernateTemplate().save(task);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear(); 
+		return task;
+	}
+
 }

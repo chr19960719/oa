@@ -6,4 +6,6 @@ import xcl.oa.task.vo.Task;
 
 public interface TaskDao {
 	List<Task> findAll();
+
+	Task addTask(Task task);
 }

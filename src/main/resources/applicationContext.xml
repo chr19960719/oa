@@ -116,6 +116,7 @@
 	</bean>
 	<bean id="taskService" class="xcl.oa.task.service.impl.ITaskService">
 		<property name="taskDao" ref="taskDao"/>
+		<property name="employeeDao" ref="employeeDao"/>
 	</bean>
 	
 	

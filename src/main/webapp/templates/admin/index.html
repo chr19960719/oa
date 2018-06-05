@@ -125,17 +125,11 @@
                           <span>我的消息</span>
                       </a>
                   </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-book"></i>
-                          <span>异常订单</span>
+                   <li class="sub-menu">
+                      <a  @click="go('test.html','任务表')" href="javascript:;">
+                          <i class="fa fa-cogs"></i>
+                          <span>我的任务</span>
                       </a>
-                      <ul class="sub">
-                          <li><a @click="go('1.html','异常订单-逾期未送达运营方')" href="javascript:;">借出方逾期未送达运营方</a></li>
-                          <li><a @click="go('1.html','异常订单-逾期未取走')" href="javascript:;">借入方逾期未取书</a></li>
-                          <li><a @click="go('1.html','异常订单-逾期未还')" href="javascript:;">借入方逾期未还</a></li>
-                          <li><a @click="go('1.html','异常订单-逾期未取回')" href="javascript:;">借出方逾期未取回</a></li>
-                      </ul>
                   </li>
                   <li class="sub-menu">
                       <a @click="go('1.html','历史订单')" href="javascript:;">

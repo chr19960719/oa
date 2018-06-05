@@ -9,7 +9,7 @@ public class Task implements Serializable{
 	private String title;//任务名称
 	private String taskInfo;//任务介绍
 	private String getTime;//添加任务时间
-	private String taskState;//任务状态
+	private Integer taskState;//任务状态
 	private Employee employee;//外键任务添加人
 	private String start;
 	private String end;
@@ -28,10 +28,10 @@ public class Task implements Serializable{
 	public void setGetTime(String getTime) {
 		this.getTime = getTime;
 	}
-	public String getTaskState() {
+	public Integer getTaskState() {
 		return taskState;
 	}
-	public void setTaskState(String taskState) {
+	public void setTaskState(Integer taskState) {
 		this.taskState = taskState;
 	}
 	public Employee getEmployee() {

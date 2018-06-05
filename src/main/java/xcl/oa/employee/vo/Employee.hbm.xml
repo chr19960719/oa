@@ -31,5 +31,9 @@
 			<key column="employeeID"/>
 			<one-to-many class="xcl.oa.sendfile.vo.SendFile"/>
 		</set>
+		<set order-by="id" name="tasks" lazy="false" cascade="delete">
+			<key column="employeeID"/>
+			<one-to-many class="xcl.oa.task.vo.Task"/>
+		</set>
 	</class>
 </hibernate-mapping>
