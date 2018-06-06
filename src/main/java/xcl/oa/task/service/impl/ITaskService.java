@@ -33,11 +33,27 @@ public class ITaskService implements TaskService{
 	@Override
 	public Task addTask(Task task) {	
 		task.setEmployee(employeeDao.findById(1));
-		task.setTaskState(1);
+		task.setTaskState(0);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String date = df.format(new Date());
 		task.setGetTime(date);
 		return taskDao.addTask(task);
+	}
+
+	@Override
+	public void deleteTask(Integer id) {
+		Task task = taskDao.findById(id);
+		taskDao.deleteTask(task);
+	}
+
+	@Override
+	public Task updataTask(Task task) {
+		return taskDao.updataTask(task);
+	}
+
+	@Override
+	public Task findById(Integer id) {
+		return taskDao.findById(id);
 	}
 
 }

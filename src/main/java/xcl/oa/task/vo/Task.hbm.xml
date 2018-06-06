@@ -15,6 +15,6 @@
 		<property name="end"/>
 		<property name="allDay"/>
 		<property name="color"/>
-		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="employeeID" cascade="delete"/>
+		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="employeeID"/>
 	</class>
 </hibernate-mapping>

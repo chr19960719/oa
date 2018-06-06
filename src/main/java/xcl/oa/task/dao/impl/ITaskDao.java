@@ -23,4 +23,22 @@ public class ITaskDao extends HibernateDaoSupport implements TaskDao {
 		return task;
 	}
 
+	@Override
+	public void deleteTask(Task task) {
+		this.getHibernateTemplate().delete(task);
+	}
+
+	@Override
+	public Task findById(Integer id) {
+		return this.getHibernateTemplate().get(Task.class, id);
+	}
+
+	@Override
+	public Task updataTask(Task task) {
+		this.getHibernateTemplate().update(task);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear(); 
+		return task;
+	}
+
 }

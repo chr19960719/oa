@@ -40,7 +40,14 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 		result = new HashMap<String, Object>();
 		try {
 			Employee employee = employeeService.findById(1);
-			Set<Task> set = employee.getTasks();
+			Set<Task> set = employee.getTasks();			
+			int num = 0;
+			for(Task t:set) {
+				if(t.getTaskState()==0) {
+					num++;
+				}
+			}
+			result.put("num", num);
 			result.put("task", set);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,6 +64,37 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 		}catch (Exception e) {
 			e.printStackTrace();
 			result.put("msg", "添加失败");
+		}
+		return SUCCESS;
+	}
+	
+	public String deleteTask() {
+		result = new HashMap<String, Object>();
+		try {
+			taskService.deleteTask(task.getId());
+			result.put("msg", "删除成功");
+		}catch (Exception e) {
+			e.printStackTrace();
+			result.put("msg", "删除失败");
+		}
+		return SUCCESS;
+	}
+	
+	public String updataTask() {
+		result = new HashMap<String, Object>();
+		try {
+			Task t = taskService.findById(task.getId());
+			t.setAllDay(task.getAllDay());
+			t.setEnd(task.getEnd());
+			t.setStart(task.getStart());
+			t.setTaskInfo(task.getTaskInfo());
+			t.setTaskState(task.getTaskState());
+			t.setTitle(task.getTitle());
+			task = taskService.updataTask(t);
+			result.put("a_task", task);
+		}catch (Exception e) {
+			e.printStackTrace();
+			result.put("msg", "更新失败");
 		}
 		return SUCCESS;
 	}

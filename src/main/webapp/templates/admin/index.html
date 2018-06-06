@@ -70,6 +70,41 @@
                         </ul>
                     </li>
                     <!-- inbox dropdown end -->
+                    
+                    
+                    <li class="dropdown">
+                    	 <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:;">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span class="badge bg-theme" v-html="numberFormat(tasknum)"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right extended inbox">
+                            <div class="notify-arrow notify-arrow-green"></div>
+                            <li>
+                                <p class="green" v-if="tasknum>0">您有 {{tasknum}} 个未完成事务</p>
+                                <p class="green" v-else="">暂无未完成事务</p>
+                            </li>
+                            <li v-for="(task,index1) in newTask" v-if="task.taskState==0&&index1<5">
+                                <a href="javascript:;" @click="tasks">
+                                    <span class="photo"><img alt="avatar" src="../../indexstatic/assets/img/calendar.jpg"></span>
+                                    <span class="time">开始时间：{{timeFormat(task.start)}}</span><br/>
+                                    <span class="time" v-if="task.end">结束时间：{{timeFormat(task.end)}}<br/></span>
+                                    <span v-if="task.allDay==1">全天事件</span>
+                                    
+                                    <span class="subject" v-if="task.title">
+                                    	<span class="from">标题：{{task.title}}</span>
+                                    </span>
+                                    <span class="message" v-if="task.taskInfo">
+                                        	内容：{{titleFormat(task.taskInfo)}}
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" @click="tasks">查看所有事务</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    
                     <!-- settings start -->
                     <li class="dropdown">
                         <a class="dropdown-toggle" @click="settings" title="系统设置" href="javascript:;">

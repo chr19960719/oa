@@ -86,6 +86,11 @@ border-radius:25px;
 	var employees = new Array();
 	function sendall(){
 		document.getElementById("ifram1").contentWindow.findall();
+		if(employees==null){
+			alert("请选择至少一个发送人");
+			
+			return false;
+		}
 		var formData = new FormData();  
 		var sendFile = $('#exampleInputFile').get(0).files[0];
 		if(typeof(sendFile) != "undefined"){
@@ -105,7 +110,7 @@ border-radius:25px;
 				contentType : false,
 				dataType : 'text', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
 				success : function(data) {
-					alert(data);
+					alert("发送成功");
 					header_app.loadNewMessages();
 					sidebar_app.go('1.html', '主页');
 				},
@@ -115,10 +120,9 @@ border-radius:25px;
 			});
 			return false;
 		}
-		function test(elements) {
-			employees = elements;
-			//alert("测试"+employees);
-		}
+	function test(elements) {
+		employees = elements;			
+	}
 	</script>
 </body>
 </html>

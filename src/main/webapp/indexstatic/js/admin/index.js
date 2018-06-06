@@ -18,7 +18,9 @@ var header_app = new Vue({
 	el: "#header-app",
 	data: {
 		newMessages: [],
-		num:[]
+		num:[],
+		tasknum:[],
+		newTask:[]
 	},
 	methods: {
 		logout: function() {
@@ -53,6 +55,22 @@ var header_app = new Vue({
 				}
 			});
 		},
+		loadNewTask:function(){
+			var app = this;
+			var m = {};
+			$.ajax({
+				url:'task_getAllTask',
+				type:'GET',
+				dataType:'json',
+				async:true,
+				success: function(data){
+ 					if(data.num){
+ 						app.newTask = data.task;
+ 						app.tasknum = data.num;
+ 					}
+				}
+			});
+		},
 		timeFormat: function(ms){
 			// 毫秒转日期时间
 			return millisecondsToDateTime(ms);
@@ -66,6 +84,8 @@ var header_app = new Vue({
 		},
 		numberFormat: function(num){
 			// 消息数量角标，大于99显示99+
+			if(num=="")
+				return 0;
 			if(num<=99){
 				return num;
 			}
@@ -81,6 +101,9 @@ var header_app = new Vue({
 		},
 		msg:function(){
 			sidebar_app.go('msglist.html','我的消息');
+		},
+		tasks:function(){
+			sidebar_app.go('test.html','任务表');
 		}
 	},
 	computed :{
@@ -89,6 +112,8 @@ var header_app = new Vue({
 	created: function(){
 		// 创建实例时获取未读消息
 		this.loadNewMessages();
+		// 创建实时事务
+		this.loadNewTask(); 
 	}
 })
 
@@ -134,7 +159,7 @@ var fillPage = function(goal){
         async : true,
 		url: goal,
 		success: function(content) {
-			$("#page-container").html(content)
+			$("#page-container").load(content);
 		}
 	});
 }

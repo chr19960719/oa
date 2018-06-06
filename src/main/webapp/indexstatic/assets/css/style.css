@@ -498,7 +498,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     max-width: 300px !important;
     min-width: 160px !important;
     top: 42px;
-    width: 235px !important;
+    width: 280px !important;
     padding: 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.176) !important;
     border: none !important;
@@ -571,9 +571,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .dropdown-menu.inbox li a .photo img {
     border-radius: 2px 2px 2px 2px;
     float: left;
-    height: 40px;
+    height: 70px;
     margin-right: 4px;
-    width: 40px;
+    width: 70px;
 }
 
 .dropdown-menu.inbox li a .subject {

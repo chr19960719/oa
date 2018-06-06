@@ -11,10 +11,10 @@ public class Task implements Serializable{
 	private String getTime;//添加任务时间
 	private Integer taskState;//任务状态
 	private Employee employee;//外键任务添加人
-	private String start;
-	private String end;
-	private Integer allDay;
-	private String color;
+	private String start;//任务开启时间
+	private String end;//任务结束时间
+	private Integer allDay;//是否是全天任务
+	private String color;//任务颜色
 
 	public String getTaskInfo() {
 		return taskInfo;

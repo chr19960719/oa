@@ -165,13 +165,17 @@ function findall(){
 	//parent.test(elements);
 	//alert(elements.length);
 	var num=elements.length;
+	var flag=false;
 	for(var i=0;i<num;i++){
         if(elements[i].checked==true){
-            //alert(elements[i].id);
+            flag = true;
             arrayObj.push(elements[i].id);
         }
     }
-	parent.test(arrayObj);
+	if(flag)
+		parent.test(arrayObj);
+	else
+		parent.test(null);
 }
 </script>
 
