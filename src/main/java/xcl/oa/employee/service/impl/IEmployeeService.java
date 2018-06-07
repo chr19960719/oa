@@ -4,6 +4,7 @@ import java.util.List;
 import xcl.oa.employee.dao.EmployeeDao;
 import xcl.oa.employee.service.EmployeeService;
 import xcl.oa.employee.vo.Employee;
+import xcl.oa.job.vo.Job;
 
 public class IEmployeeService implements EmployeeService {
 	
@@ -30,6 +31,10 @@ public class IEmployeeService implements EmployeeService {
 	//service层修改员工的方法
 	public void update(Employee employee) {
 		employeeDao.update(employee);
+	}
+	//service层根据职位id查找员工
+	public List<Employee> findByJid(Integer jobID){
+		return employeeDao.findByJid(jobID);
 	}
 
 }

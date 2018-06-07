@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <title>员工管理</title>
+    <link href="../../indexstatic/css2/bootstrap.css" rel="stylesheet">
+    <link href="../../indexstatic/css2/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="../../indexstatic/css2/dataTables.responsive.css" rel="stylesheet">
+    <link href="../../indexstatic/css2/sb-admin-2.css" rel="stylesheet">
+    <link href="../../indexstatic/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="../../indexstatic/assets/css/style.css" rel="stylesheet" />
+    <link href="../../indexstatic/assets/css/style-responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            员工表
+                        </div>
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="employees">
+                                <thead>
+                                    <tr>
+                                        <th>员工工号</th>
+										<th>员工姓名</th>
+										<th>员工类型</th>
+										<th>部门</th>
+										<th>职位</th>
+										<th>性别</th>
+										<th>出生日期</th>
+										<th>身份证号码</th>
+										<th>学历</th>
+										<th>电话</th>
+										<th>邮箱</th>
+										<th>状态</th>
+										<th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <tr v-for = "user in datas" v-if="user.isDelete==0&&user.userLevel==0">
+                                        <td><center>{{user.employeeID}}</center></td>
+					                    <td><center>{{user.employeeName}}</center></td>
+					                    <td><center>普通用户</center></td>
+					                    <td><center>{{user.dept.deptName}}</center></td>
+					                    <td><center>{{user.job.jobName}}</center></td>
+					                    <td><center><span class="label label-info label-mini">{{user.sex}}</span></center></td>
+					                    <td><center>{{user.birthday}}</center></td>
+					                    <td><center>{{user.NOcode}}</center></td>
+					                    <td><center>{{user.learn}}</center></td>
+					                    <td><center>{{user.mobile}}</center></td>
+					                    <td><center>{{user.email}}</center></td>
+					                    <td><center>{{user.workState}}</center></td>
+					                    <td><center>
+						                    <button class="btn btn-primary btn-xs"  type = "button" data-toggle="modal" data-target="#myModal"  @click="edit(user.employeeID)">
+							                    <i class="fa fa-pencil"></i>
+						                    </button>
+						                    <button class="btn btn-danger btn-xs" @click="del(user.employeeID)">
+							                    <i class="fa fa-trash-o "></i>
+						                    </button></center>
+					                    </td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					个人信息
+				</h4>
+			</div>
+			<div class="modal-body">
+                      <form class="form-horizontal style-form"  id="editsuccess">
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">姓名</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="employeeName" name="employeeName">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">性别</label>
+                              <div class="col-sm-10">
+                               <select class="form-control round-form" id="sex" name="sex">
+						  			<option>男</option>
+						  			<option>女</option>
+						       </select>
+						       </div>
+                          </div>
+						<div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">出生日期</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="birthday" name="birthday">
+                              </div>
+                          </div>
+						<div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">家庭住址</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="address" name="address">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">身份证号码</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="NOcode" name="NOcode">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">学历</label>
+                              <div class="col-sm-10">
+                                  <select class="form-control round-form" id="learn" name="learn">
+						  			<option>博士</option>
+						  			<option>硕士</option>
+						  			<option>本科</option>
+						  			<option>大专</option>
+						  			<option>高中</option>
+						  			<option>初中</option>
+						       </select>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">电话</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="mobile" name="mobile">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">邮箱</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="email" name="email">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">工作状态</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="workState" name="workState">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">密码</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="pwd" name="pwd">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">员工级别</label>
+                              <div class="col-sm-10">
+                                  <input type="text" class="form-control round-form" id="Level" name="Level">
+                              </div>
+                          </div>
+                           <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">所属部门</label>
+                              <div class="col-sm-10">
+                                  <select class="form-control round-form" id="deptID" name="deptID">
+						       	</select>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">职位</label>
+                              <div class="col-sm-10">
+                                  <select class="form-control round-form" id="jobID" name="jobID">
+                                  </select>
+                              </div>
+                          </div> 
+                          <input type="text"  id="employeeID" name="employeeID" hidden="hidden">
+                          <input type="text"  id="photo" name="photo" hidden="hidden">
+                          <input type="text"  id="agreement" name="agreement" hidden="hidden">
+                          <input type="text"  id="isDelete" name="isDelete" hidden="hidden" >
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary" onclick="upd()">更改</button>
+						</div>
+						
+					</form>
+                  </div>
+		</div>
+	</div>
+</div>
+    <script src="../../indexstatic/js/jquery-3.3.1.js"></script>
+    <script src="../../indexstatic/js/admin/index.js"></script>
+    <script src="../../indexstatic/js2/bootstrap.min.js"></script> 
+    <script src="../../indexstatic/js2/metisMenu.min.js"></script>
+    <script src="../../indexstatic/js2/jquery.dataTables.min.js"></script>
+    <script src="../../indexstatic/js2/dataTables.bootstrap.min.js"></script>
+    <script src="../../indexstatic/js2/dataTables.responsive.js"></script>
+    <script src="../../indexstatic/js2/sb-admin-2.js"></script>
+    <script src="../../indexstatic/js/vue.js"></script>
+    <script>
+    new Vue({
+		el : "#employees",
+		data : {
+			datas : []
+		},
+		methods:{
+			del:function(id){
+				$.ajax({
+				    type: 'GET',//请求方式				 
+				    url: 'employee_delete.action',//地址，就是json文件的请求路径
+				    data:{ employeeID: id},
+				    dataType: 'json',
+				    success: function(result){
+				    	alert("删除成功");
+				    	sidebar_app.go('normalUser.html','用户管理>普通用户');
+				    	return;
+				 },
+				 error: function(){
+					 alert("删除失败");
+				 }
+				})
+			},
+		 edit:function(id){
+			$.ajax({
+			    type: 'get',//请求方式				 
+			    url: 'employee_edit.action',//地址，就是json文件的请求路径
+			    data:{employeeID:id},
+			    async : false,
+			    datetype: "json",
+			    success: function(result){
+			    	 var select= document.getElementById("deptID"); 
+				    	for(var i=0;i<result.deptlist.length;i++){ 
+				    		select.options[i]=new Option(result.deptlist[i].deptName,result.deptlist[i].deptID);
+				    		if(result.deptlist[i].deptName==result.employee.dept.deptName)
+				    			document.getElementById("deptID").options[i].selected=true;
+				     } 
+				    var select1= document.getElementById("jobID"); 
+				    for(var i=0;i<result.joblist.length;i++){ 
+				    	select1.options[i]=new Option(result.joblist[i].jobName,result.joblist[i].jobID);
+				    	if(result.joblist[i].jobName==result.employee.job.jobName)
+			    			document.getElementById("jobID").options[i].selected=true;
+				     }
+			    	
+			    	$('#employeeID').val(result.employee.employeeID);
+			    	$('#employeeName').val(result.employee.employeeName);
+			    	if(result.employee.userLevel==0)
+			    		$('#Level').val("普通用户");
+			    	else if(result.employee.userLevel==1)
+			    		$('#Level').val("中级用户");
+			    	else
+			    	    $('#Level').val("高级用户");
+			    	$('#sex').val(result.employee.sex);
+			    	$('#birthday').val(result.employee.birthday);
+			    	$('#NOcode').val(result.employee.NOcode);
+			    	$('#learn').val(result.employee.learn);
+			    	$('#mobile').val(result.employee.mobile);
+			    	$('#email').val(result.employee.email);
+			    	$('#workState').val(result.employee.workState);
+			    	$('#address').val(result.employee.address);
+			    	$('#pwd').val(result.employee.pwd);
+			    	$('#photo').val(result.employee.photo);
+			    	$('#agreement').val(result.employee.agreement);
+			    	$('#isDelete').val(result.employee.isDelete);
+			    	
+			 },
+			 error: function(){
+				 alert("加载个人信息失败！");
+			 }
+			});
+		}
+		}, 
+		created: function () {
+			var self = this;
+			$.ajax({
+			    type: 'get',//请求方式				 
+			    url: 'employee_findAll',//地址，就是json文件的请求路径
+			    async: false,
+			    dataType: 'json',//数据类型可以为 text xml json  script  jsonp
+			    success: function(result){
+		        self.datas = result.employee;
+			 },
+			 error: function(){
+				 alert("页面初始化失败");
+			 }
+			})
+		}
+	});
+    function upd(){
+			$.ajax({
+			    type: 'post',//请求方式				 
+			    url: 'employee_update.action',//地址，就是json文件的请求路径
+			    data: $('#editsuccess').serialize(),
+			    async : false,
+			    datetype: "json",
+			    success: function(result){
+			    	alert("修改成功");
+			    	$('.modal-backdrop').remove();
+			    	 $('body').removeClass('modal-open');
+			    	sidebar_app.go('normalUser.html','用户管理>普通用户');
+			    	return;
+			 },
+			 error: function(){
+				 alert("修改失败");
+			 }
+			});
+		};
+		$(document).ready(function(){
+			  $("#deptID").change(function(){
+			      var selected=$(this).children('option:selected').val();
+			       $.ajax({
+			  	    type: 'post',//请求方式	
+			  	    url: 'employee_findJobByDeptID',
+			  	    data: {deptID:selected},
+			  	  	async: false,
+				    dataType: 'json',
+			  	    success: function(result){
+			  	    	var select1= document.getElementById("jobID"); 
+			  	    	select1.options.length=0;
+					    for(var i=0;i<result.joblist.length;i++){
+					    	select1.options[i]=new Option(result.joblist[i].jobName,result.joblist[i].jobID);
+					     } 
+			  	    	return;
+			  	 },
+			  	 error: function(){
+			  		 alert("查找职位失败");
+			  	 }
+			  	}); 
+			  });
+			}); 
+    $(document).ready(function() {
+        $('#employees').DataTable({
+            responsive: true,
+            language: {
+                search: "搜索:",
+                sInfo: "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                sLengthMenu: "显示 _MENU_ 项结果",
+                sZeroRecords: "没有匹配结果",
+                sInfoEmpty: "显示第 0 至 0 项结果，共 0 项",
+                sInfoFiltered: "(由 _MAX_ 项结果过滤)",
+                sEmptyTable: "表中数据为空",
+                oPaginate: {
+                    sPrevious: "上页",
+                    sNext: "下页",
+                }
+            }
+        });
+    });
+    
+    
+    </script>
+
+</body>
+</html>

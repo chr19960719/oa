@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <title>部门管理</title>
+    <link href="../../indexstatic/css2/bootstrap.css" rel="stylesheet">
+    <link href="../../indexstatic/css2/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="../../indexstatic/css2/dataTables.responsive.css" rel="stylesheet">
+    <link href="../../indexstatic/css2/sb-admin-2.css" rel="stylesheet">
+    <link href="../../indexstatic/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="../../indexstatic/assets/css/style.css" rel="stylesheet" />
+    <link href="../../indexstatic/assets/css/style-responsive.css" rel="stylesheet" />
+
+</head>
+
+<body>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            部门表
+                        </div>
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="depts">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+										<th>部门名称</th>
+										<th>部门介绍</th>
+										<th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     <tr v-for = "dept in datas" v-if="dept.isDelete==0">
+                                        <td><center>{{dept.deptID}}</center></td>
+					                    <td><center>{{dept.deptName}}</center></td>
+					                    <td><center>{{dept.deptText}}</center></td>
+					                    <td><center>
+						                    <button class="btn btn-primary btn-xs"  type = "button" data-toggle="modal" data-target="#myModal"  @click="edit(dept.deptID)">
+							                    <i class="fa fa-pencil"></i>
+						                    </button>
+						                    <button class="btn btn-danger btn-xs" @click="del(dept.deptID)">
+							                    <i class="fa fa-trash-o "></i>
+						                    </button></center>
+					                    </td> 
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					部门信息
+				</h4>
+			</div>
+			<div class="modal-body">
+                      <form class="form-horizontal style-form"  id="editsuccess">
+                           <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">部门名称</label>
+                              <div class="col-sm-10">
+                              	<input type="text" class="form-control round-form" id="deptName" name="deptName">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 col-sm-2 control-label">部门介绍</label>
+                              <div class="col-sm-10">
+						       	<textarea class="form-control" rows="3" name="deptText" id="deptText"></textarea>
+                              </div>
+                          </div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary" onclick="upd()">更改</button>
+						</div>
+						       	<input type="text" id="isDelete" name="isDelete" value=0 hidden="hidden">
+						       	<input type="text" id="deptID" name="deptID" hidden="hidden">
+						
+					</form>
+                  </div>
+		</div>
+	</div>
+</div>
+    <script src="../../indexstatic/js/jquery-3.3.1.js"></script>
+    <script src="../../indexstatic/js2/bootstrap.min.js"></script> 
+    <script src="../../indexstatic/js2/metisMenu.min.js"></script>
+    <script src="../../indexstatic/js2/jquery.dataTables.min.js"></script>
+    <script src="../../indexstatic/js2/dataTables.bootstrap.min.js"></script>
+    <script src="../../indexstatic/js2/dataTables.responsive.js"></script>
+    <script src="../../indexstatic/js2/sb-admin-2.js"></script>
+    <script src="../../indexstatic/js/vue.js"></script>
+    <script>
+    new Vue({
+		el : "#depts",
+		data : {
+			datas : []
+		},
+		methods:{
+			del:function(id){
+				$.ajax({
+				    type: 'get',//请求方式				 
+				    url: 'dept_delete',//地址，就是json文件的请求路径
+				    data:{ deptID: id},
+				    dataType: 'json',
+				    success: function(result){
+				    	alert("删除成功");
+				    	sidebar_app.go('dept.html','部门管理');
+				    	return;
+				 },
+				 error: function(){
+					 alert("删除失败");
+				 }
+				})
+			},
+		 edit:function(id){
+			$.ajax({
+			    type: 'get',//请求方式				 
+			    url: 'dept_edit',//地址，就是json文件的请求路径
+			    data:{deptID:id},
+			    async : false,
+			    datetype: "json",
+			    success: function(result){
+				     $('#deptName').val(result.dept.deptName);
+				     $('#deptID').val(result.dept.deptID);
+				     $('#deptText').val(result.dept.deptText);
+			 	},
+			 	error: function(){
+				 	alert("加载部门信息失败！");
+			 	}
+			});
+		}
+		}, 
+		created: function () {
+			var self = this;
+			$.ajax({
+			    type: 'get',//请求方式				 
+			    url: 'dept_findAll',//地址，就是json文件的请求路径
+			    async: false,
+			    dataType: 'json',//数据类型可以为 text xml json  script  jsonp
+			    success: function(result){
+		        self.datas = result.deptlist;
+			 },
+			 error: function(){
+				 alert("页面初始化失败");
+			 }
+			})
+		}
+	});
+     function upd(){
+			$.ajax({
+			    type: 'post',//请求方式				 
+			    url: 'dept_update',//地址，就是json文件的请求路径
+			    data: $('#editsuccess').serialize(),
+			    async : false,
+			    datetype: "json",
+			    success: function(result){
+			    	alert("修改成功");
+			    	 $('.modal-backdrop').remove();
+			    	 $('body').removeClass('modal-open');
+			    	 sidebar_app.go('dept.html','部门管理');
+			    	return;
+			 },
+			 error: function(){
+				 alert("修改失败");
+			 }
+			});
+		};  
+    $(document).ready(function() {
+        $('#depts').DataTable({
+            responsive: true,
+            language: {
+                search: "搜索:",
+                sInfo: "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                sLengthMenu: "显示 _MENU_ 项结果",
+                sZeroRecords: "没有匹配结果",
+                sInfoEmpty: "显示第 0 至 0 项结果，共 0 项",
+                sInfoFiltered: "(由 _MAX_ 项结果过滤)",
+                sEmptyTable: "表中数据为空",
+                oPaginate: {
+                    sPrevious: "上页",
+                    sNext: "下页",
+                }
+            }
+        });
+    });
+    
+    </script>
+
+</body>
+</html>

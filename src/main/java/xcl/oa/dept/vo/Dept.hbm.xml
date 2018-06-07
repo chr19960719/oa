@@ -9,11 +9,12 @@
 		</id>
 		<property name="deptName"/>
 		<property name="deptText"/>
-		<set order-by="employeeID" name="employees" lazy="false" cascade="delete">
+		<property name="isDelete"/>
+		<set order-by="employeeID" name="employees" lazy="false" inverse="true" cascade="save-update">
 			<key column="deptID"/>
 			<one-to-many class="xcl.oa.employee.vo.Employee"/>
 		</set>
-		<set order-by="jobID" name="jobs" lazy="false" cascade="delete">
+		<set order-by="jobID" name="jobs" lazy="false" inverse="true" cascade="save-update">
 			<key column="deptID"/>
 			<one-to-many class="xcl.oa.job.vo.Job"/>
 		</set>

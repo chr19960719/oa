@@ -8,9 +8,10 @@
 			<generator class="native"/>
 		</id>
 		<property name="jobName"/>
+		<property name="isDelete"/>
 		<property name="jobText"/>
-		<many-to-one name="dept" lazy="false" class="xcl.oa.dept.vo.Dept" column="deptID" cascade="delete"/>
-		<set order-by="employeeID" name="employees" lazy="false" cascade="delete">
+		<many-to-one name="dept" lazy="false" class="xcl.oa.dept.vo.Dept" column="deptID" />
+		<set order-by="employeeID" inverse="true" name="employees" lazy="false" cascade="save-update">
 			<key column="jobID"/>
 			<one-to-many class="xcl.oa.employee.vo.Employee"/>
 		</set>

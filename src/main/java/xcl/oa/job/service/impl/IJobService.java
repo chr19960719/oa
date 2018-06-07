@@ -29,5 +29,13 @@ public class IJobService implements JobService {
 	public void delete(Job job) {
 		jobDao.delete(job);
 	}
+	//service层根据部门id查找职位的方法
+	public List<Job> findByDid(Integer deptID){
+		return jobDao.findByDid(deptID);
+	}
+	//service层修改职位的方法
+	public void update(Job job) {
+		jobDao.update(job);
+	}
 
 }

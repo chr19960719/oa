@@ -14,5 +14,7 @@ public interface EmployeeService {
 	public void delete(Employee employee);
 	//service层修改员工的方法
 	public void update(Employee employee);
+	//service层根据职位id查找员工
+	public List<Employee> findByJid(Integer jobID);
 
 }

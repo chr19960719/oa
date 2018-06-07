@@ -14,5 +14,7 @@ public interface EmployeeDao {
 	public void delete(Employee employee);
 	//dao层修改员工的方法
 	public void update(Employee employee);
+	//dao层根据职位id查找员工的方法
+	public List<Employee> findByJid(Integer jobID);
 
 }

@@ -167,16 +167,24 @@
                       </a>
                   </li>
                   <li class="sub-menu">
-                      <a @click="go('1.html','历史订单')" href="javascript:;">
-                          <i class="fa fa-tasks"></i>
-                          <span>历史订单</span>
+                      <a href="javascript:;">
+                          <i class="fa fa-th"></i>
+                          <span>部门管理</span>
                       </a>
+                      <ul class="sub">
+                          <li><a @click="go('dept.html','部门管理')" href="javascript:;">部门管理</a></li>
+                          <li><a @click="go('adddept.html','部门管理>添加部门')" href="javascript:;">添加部门</a></li>
+                      </ul>
                   </li>
                   <li class="sub-menu">
-                      <a @click="go('1.html','捐赠')" href="javascript:;">
+                      <a href="javascript:;">
                           <i class="fa fa-th"></i>
-                          <span>捐赠</span>
+                          <span>职位管理</span>
                       </a>
+                      <ul class="sub">
+                          <li><a @click="go('job.html','职位管理')" href="javascript:;">职位管理</a></li>
+                          <li><a @click="go('addjob.html','职位管理>添加职位')" href="javascript:;">添加职位</a></li>
+                      </ul>
                   </li>
                   <li class="sub-menu">
                       <a href="javascript:;" >
@@ -184,8 +192,9 @@
                           <span>用户管理</span>
                       </a>
                       <ul class="sub">
-                          <li><a @click="go('1.html','用户管理-普通用户')" href="javascript:;">普通用户</a></li>
-                          <li><a @click="go('1.html','用户管理-管理员')" href="javascript:;">管理员</a></li>
+                          <li><a @click="go('normalUser.html','用户管理>普通用户')" href="javascript:;">普通用户</a></li>
+                          <li><a @click="go('mediumUser.html','用户管理>中级用户')" href="javascript:;">中级用户</a></li>
+                          <li><a @click="go('addemployee.html','用户管理>添加用户')" href="javascript:;">添加用户</a></li>
                       </ul>
                   </li>
               </div>

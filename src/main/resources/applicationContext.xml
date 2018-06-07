@@ -74,6 +74,7 @@
 	<bean id="jobAction" class="xcl.oa.job.action.JobAction" scope="prototype">
 		<property name="jobService" ref="jobService"/>
 		<property name="deptService" ref="deptService"/>
+		<property name="employeeService" ref="employeeService"/>
 	</bean>
 	<bean id="noticeAction" class="xcl.oa.notice.action.NoticeAction" scope="prototype">
 		<property name="noticeService" ref="noticeService"/>

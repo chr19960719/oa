@@ -4,12 +4,15 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import xcl.oa.employee.dao.EmployeeDao;
 import xcl.oa.employee.vo.Employee;
+import xcl.oa.job.vo.Job;
 
 public class IEmployeeDao extends HibernateDaoSupport implements EmployeeDao{
 	//dao层查询所有员工的方法
 	public List<Employee> findAll(){
 		String hql = "from Employee";
 		List<Employee> list = this.getHibernateTemplate().find(hql);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
 		if (list != null && list.size() > 0) {
 			return list;
 		}
@@ -36,5 +39,16 @@ public class IEmployeeDao extends HibernateDaoSupport implements EmployeeDao{
 		this.getHibernateTemplate().update(employee);
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
+	}
+	//dao层根据职位id查找员工的方法
+	public List<Employee> findByJid(Integer jobID){
+		String hql = "from Employee e where e.job.jobID=?";
+		List<Employee> list = this.getHibernateTemplate().find(hql, jobID);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
+		if (list != null && list.size() > 0) {
+			return list;
+		}
+		return null;
 	}
 }

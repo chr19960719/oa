@@ -12,6 +12,13 @@ public class Job implements Serializable{
 	private String jobName;//职位名称
 	private String jobText;//职位介绍
 	private Dept dept;//外键部门
+	private Integer isDelete;//删除状态
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
+	}
 	private Set<Employee> employees = new HashSet<Employee>();
 	public Integer getJobID() {
 		return jobID;

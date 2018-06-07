@@ -9,6 +9,7 @@ import xcl.oa.job.vo.Job;
 
 public class Dept implements Serializable{
 	private Integer deptID;//部门id
+	private Integer isDelete;//部门删除状态
 	private String deptName;//部门名称
 	private String deptText;//部分描述
 	private Set<Employee> employees = new HashSet<Employee>();
@@ -48,5 +49,12 @@ public class Dept implements Serializable{
 	public void setJobs(Set<Job> jobs) {
 		this.jobs = jobs;
 	}
+	public Integer getIsDelete() {
+		return isDelete;
+	}
+	public void setIsDelete(Integer isDelete) {
+		this.isDelete = isDelete;
+	}
+	
 	
 }
