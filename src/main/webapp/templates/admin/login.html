@@ -3,7 +3,7 @@
   <head>
 	<meta charset="utf-8">
 
-    <title>图书共享平台后台管理</title>
+    <title>OA办公自动化管理系统</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../../indexstatic/assets/css/bootstrap.css" rel="stylesheet">
@@ -31,45 +31,17 @@
 	  	<div class="container">
 	  	
 		  <div class="form-login">
-			<h2 class="form-login-heading">管理员登录</h2>
+			<h2 class="form-login-heading">系统登录</h2>
 			<div class="login-wrap">
-				<input v-model="username" type="text" class="form-control" placeholder="用户名" autofocus>
+				<input v-model="username" type="text" class="form-control" placeholder="用户编号" autofocus>
 				<br>
 				<input v-model="password" type="password" class="form-control" placeholder="密码">
-				<br>
-				<input v-model="vcode" type="text"class="form-control" id="vcode" placeholder="验证码" style="width: 75px;display: inline-block" />
-				<img id="codeImg" src="/verifyCode" onclick="javascript:_change();" />
+				<br>	
 				<label class="checkbox">
-					<span class="text-danger" v-html="msg"></span>
-					<span class="pull-right">
-						<a data-toggle="modal" href="login.html#myModal">忘记密码?</a>
-					</span>
-				</label>
+                    <span class="text-danger" v-html="msg"></span>
+                </label>					
 				<button class="btn btn-theme btn-block" @click="login"><i class="fa fa-lock"></i>&nbsp;登录</button>
-			</div>
-
-			  <!-- Modal -->
-			  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
-				  <div class="modal-dialog">
-					  <div class="modal-content">
-						  <div class="modal-header">
-							  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							  <h4 class="modal-title">密码找回</h4>
-						  </div>
-						  <div class="modal-body">
-							  <p>请输入邮箱号找回密码</p>
-							  <input type="text" name="email" placeholder="邮箱" autocomplete="off" class="form-control placeholder-no-fix">
-
-						  </div>
-						  <div class="modal-footer">
-							  <button class="btn btn-theme" type="button">确认</button>
-							  <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-						  </div>
-					  </div>
-				  </div>
-			  </div>
-			  <!-- modal -->
-
+			</div>		
 		  </div>
 	  	
 	  	</div>

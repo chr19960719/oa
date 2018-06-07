@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -39,7 +41,8 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 	public String getAllTask() {
 		result = new HashMap<String, Object>();
 		try {
-			Employee employee = employeeService.findById(1);
+			Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+			Employee employee = employeeService.findById(e.getEmployeeID());
 			Set<Task> set = employee.getTasks();			
 			int num = 0;
 			for(Task t:set) {

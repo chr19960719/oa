@@ -103,7 +103,7 @@ var header_app = new Vue({
 			sidebar_app.go('msglist.html','我的消息');
 		},
 		tasks:function(){
-			sidebar_app.go('test.html','任务表');
+			sidebar_app.go('calendar.html','任务表');
 		}
 	},
 	computed :{

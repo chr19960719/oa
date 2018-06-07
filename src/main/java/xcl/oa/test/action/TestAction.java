@@ -144,7 +144,8 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
 		System.out.println("数组：" + employees);*/
 		sendFile.setFilesrc(fileFileName);
 		//发件人
-		sendFile.setEmployee(employeeService.findById(2));
+		Employee e1  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+		sendFile.setEmployee(employeeService.findById(e1.getEmployeeID()));
 		try {
 			sendFile = sendFileService.save(sendFile);
 			receiveFileService.save(sendFile, employees);

@@ -92,6 +92,9 @@
 		<property name="taskService" ref="taskService"/>
 		<property name="employeeService" ref="employeeService"/>
 	</bean>
+	<bean id="indexAction" class="xcl.oa.index.action.IndexAction" scope="prototype">
+		<property name="employeeService" ref="employeeService"/>
+	</bean>
 	
 	
 	<!-- ==============================================Service的配置============================================== -->
