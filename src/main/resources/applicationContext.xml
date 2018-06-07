@@ -64,6 +64,7 @@
 	<!-- ==============================================Action的配置============================================== -->
 	<bean id="deptAction" class="xcl.oa.dept.action.DeptAction" scope="prototype">
 		<property name="deptService" ref="deptService"/>
+		<property name="jobService" ref="jobService"/> 
 	</bean>
 	<bean id="employeeAction" class="xcl.oa.employee.action.EmployeeAction" scope="prototype">
 		<property name="employeeService" ref="employeeService"/> 
