@@ -200,7 +200,8 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
 	
 	public String getAllMessage() {
 		result = new HashMap<String, Object>();
-		Employee employee = employeeService.findById(1);
+		Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+		Employee employee = employeeService.findById(e.getEmployeeID());
 		Set<ReceiveFile> set = employee.getReceiveFiles();
 		int num = 0;
 		for(ReceiveFile file: set) {
