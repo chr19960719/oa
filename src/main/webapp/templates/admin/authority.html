@@ -28,10 +28,20 @@
 
                 //当选中或取消一个权限时，也同时选中或取消所有的下级权限
                 $(this).siblings("ul").find("input").prop("checked",this.checked);
+                
+                //alert($(this).val());
 
                 if(($(this).val()=="2"||$(this).val()=="3"||$(this).val()=="10")&&$(this).parent("li").find("input")[0].checked==true){
                 	$('#1').prop("checked",true);
-                }
+                };
+                
+                if(($(this).val()=="11"||$(this).val()=="12")&&$(this).parent("li").find("input")[0].checked==true){
+                	$('#4').prop("checked",true);
+                };
+                
+                if(($(this).val()=="13"||$(this).val()=="14")&&$(this).parent("li").find("input")[0].checked==true){
+                	$('#5').prop("checked",true);
+                };
            
 
                 //当某一个父权限下的子权限都不选中时，该父权限也不选中
@@ -87,13 +97,25 @@
                         <label for="cb12"><span class="folder">添加用户</span></label></li>                     
                 </ul>
             </li>
-            <li id="4">
+            <li>
                 <input type="checkbox" id="4" name="chkbox" value="4">
-                <label for="cb2"><span class="folder">部门管理</span></label>                
+                <label for="cb2"><span class="folder">部门管理</span></label> 
+                <ul> 
+	                <li><input type="checkbox" id="11" name="chkbox" value="11">
+	                    <label for="cb12"><span class="folder">部门管理</span></label></li>   
+	                <li><input type="checkbox" id="12" name="chkbox" value="12">
+	                    <label for="cb12"><span class="folder">添加部门</span></label></li> 
+                </ul>                   
             </li>
-            <li id="5">
+            <li>
                 <input type="checkbox" id="5" name="chkbox" value="5">
-                <label for="cb3"><span class="folder">职位管理</span></label>               
+                <label for="cb3"><span class="folder">职位管理</span></label> 
+                <ul>  
+	                <li><input type="checkbox" id="13" name="chkbox" value="13">
+	                    <label for="cb12"><span class="folder">职位管理</span></label></li>   
+	                <li><input type="checkbox" id="14" name="chkbox" value="14">
+	                    <label for="cb12"><span class="folder">添加职位</span></label></li> 
+                </ul>              
             </li>
             <li id="6">
                 <input type="checkbox" id="6" name="chkbox" value="6">
