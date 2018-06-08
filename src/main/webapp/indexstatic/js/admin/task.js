@@ -72,27 +72,7 @@ $(function(){
 							content:$("#dialog-form"),
 							okValue:"确定",
 							ok:function(){
-								var titledetail = $("#titledetail").val();
-								var startdate = $("#startdate").val();
-								var starttime = $("#starttime").val().split(" ").join("");
-								var enddate = $("#stopdate").val();
-								var endtime = $("#endtime").val().split(" ").join("");
-								var allDay = $("#isallday").val();
-								if(titledetail){
-									$.ajax({
-										url:'../../indexstatic/fullcalendar/detail.php',
-				   						data:{title:titledetail,sdate:startdate,stime:starttime,edate:enddate,etime:endtime,allDay:allDay},
-				   						type:'POST',
-				   						dataType:'json',
-				  						success:function(data){
-				  							$("#calendar").fullCalendar("renderEvent",data,true);
-				  						},
-				  						error:function(){
-				  							alert("Failed");
-				  						}
-				   						
-									});
-								};
+								add();
 							},
 							cancelValue:"关闭",
 							cancel:function(){
