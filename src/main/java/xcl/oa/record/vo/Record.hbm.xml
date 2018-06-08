@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="xcl.oa.record.vo.Record" table="record">
+		<id name="recordID">
+			<generator class="native"/>
+		</id>
+		<many-to-one name="type" lazy="false" class="xcl.oa.type.vo.Type" column="typeID"/>
+		<many-to-one name="function" lazy="false" class="xcl.oa.function.vo.Function" column="functionID"/>
+	</class>
+</hibernate-mapping>

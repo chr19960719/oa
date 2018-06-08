@@ -6,59 +6,168 @@
 
 </head>
 <body>
-<div id="details">
-<dl class="dl-horizontal" contenteditable="false">
-	<dt>主题</dt>
-	<dd>{{details.fileName}}</dd>
-	<dd>
-	<hr></dd>
-	<dt>正文</dt>
-	<dd><code>{{details.fileText}}</code></dd>
-	<dd>
-	<hr></dd>
-	<dt>附件</dt>
-	<dd>{{details.filesrc}}</dd>
-	<dd>
-	<hr></dd>
-	<dt>发件人</dt>
-	<dd>{{details.employee.dept.deptName}}{{details.employee.job.jobName}}{{details.employee.employeeName}}</dd>
-</dl>
+<div id="header-app">
+<!-- <ul>
+<li v-for="(message,index) in newMessages.receiveFiles" v-if="message.isLook==0&&message.isDelete==0&&index<5">
+                                <a href="javascript:;" @click="getmessage(message.sendFile.fileID,message.receiveID)">
+                                    <span class="photo"><img alt="avatar" src="../../indexstatic/assets/img/ui-danro.jpg"></span>
+                                    <span class="time">时间：{{timeFormat(message.sendFile.fileTime)}}</span>
+                                    <span class="subject">
+                                    	<span class="from">来自：{{message.sendFile.employee.dept.deptName}}{{message.sendFile.employee.job.jobName}}{{message.sendFile.employee.employeeName}}</span>
+                                    </span>
+                                    <span class="message">
+                                        	标题：{{titleFormat(message.sendFile.fileName)}}
+                                    </span>
+                                </a>
+                            </li>
+</ul> -->
 
+<ul>
+<div v-for="r in func">
+<li class="sub-menu" v-if="r.function.functionID==1">
+                     <a href="javascript:;" >
+                          <i class="fa fa-book"></i>
+                          <span>{{r.function.functionName}}</span>
+                      </a>
+                      <ul class="sub">
+                          <li v-for="t in func" v-if="t.function.multilevel==1"><a :onclick="t.function.url">{{t.function.functionName}}</a></li>                        
+                      </ul>
+</li>
+<li class="sub-menu" v-else-if="r.function.multilevel==0">
+	 <a  @click="r.function.url" href="javascript:;">
+                          <i class="fa fa-cogs"></i>
+                          <span>{{r.function.functionName}}</span>
+     </a>
+</li>
+</div>
+</ul>
+
+<ul>
+	<li v-for="r in func" v-if="r.function.multilevel!=0">
+		{{r.function}}
+	</li>
+</ul>
 </div>
 <script src="../../indexstatic/js/jquery-3.3.1.js"></script>
 <script src="../../indexstatic/js/commons/common.js"></script>
 <script src="../../indexstatic/js/vue.js"></script>
 <script>
-var id = localStorage.id;
-var app = new Vue({
-	el:"#details",
-	data:{
-		details:[]
+var header_app = new Vue({
+	el: "#header-app",
+	data: {
+		newMessages: [],
+		num:[],
+		tasknum:[],
+		newTask:[],
+		func:[]
 	},
-	created:function(){
-		var self = this;
-		alert("fileID:"+id);
-		var formData = new FormData();  
-		formData.append("fileID", id); 
-		$.ajax({                            
-			 type:'post',        
-	         url:'test_getAllMessage',   
-	         cache: false,
-	         data:formData, 
-	         processData: false,
-	         contentType: false,
-	         dataType:'json',
-	         success: function(data) {  
-	        	 alert("234");
-	        	 self.details = data.details;
-	        	 alert("data.details");
-	         },  
-	         error:function(){                                                  
-	            alert("上传失败");                                                     
-	         } 
-	    });
+	methods: {
+		logout: function() {
+			confirm('确定退出登录？', function(id){
+				$.ajax({
+					type:"get",
+					url: "/logout",
+					async : true,
+					success: function(data){
+						if(data.code === 0){
+							window.location.href='/login';
+						}
+						else{
+							alert('系统异常，请联系管理员');
+						}
+					}
+				});
+			});
+		},
+		loadNewMessages: function() {
+			var app = this;
+			var m = {};
+			$.ajax({
+				type:"get",
+				url: "test_getAllMessage",
+				async:false,
+				success: function(data){
+					alert(data.num);
+ 					if(data.num){
+ 						app.newMessages = data.message;
+ 						app.num = data.num;
+ 					}
+				}
+			});
+		},
+		loadNewTask:function(){
+			var app = this;
+			var m = {};
+			$.ajax({
+				url:'task_getAllTask',
+				type:'GET',
+				dataType:'json',
+				async:false,
+				success: function(data){
+ 					if(data.num){
+ 						app.newTask = data.task;
+ 						app.tasknum = data.num;
+ 					}
+				}
+			});
+		},
+		loadFunction:function(){
+			var app = this;
+			$.ajax({
+				url:'type_getFunction',
+				type:'GET',
+				dataType:'json',
+				async:false,
+				success: function(data){
+ 					app.func = data.power;
+				}
+			});
+		},
+		timeFormat: function(ms){
+			// 毫秒转日期时间
+			return millisecondsToDateTime(ms);
+		},
+		titleFormat: function(msg){
+			// 长度超过12，截取12个字符
+			if(msg.length<=12){
+				return msg;
+			}				
+			return msg.substr(0,11)+"···";
+		},
+		numberFormat: function(num){
+			// 消息数量角标，大于99显示99+
+			if(num=="")
+				return 0;
+			if(num<=99){
+				return num;
+			}
+			return '&middot;&middot;';
+		},
+		settings:function(){
+			sidebar_app.go('settings.html','系统设置');
+		},
+		getmessage:function(id,rid){
+			localStorage.rid = rid; 
+			localStorage.sid = id; 
+			sidebar_app.go("details.html","详细消息");
+		},
+		msg:function(){
+			sidebar_app.go('msglist.html','我的消息');
+		},
+		tasks:function(){
+			sidebar_app.go('calendar.html','任务表');
+		}
+	},
+	computed :{
+		
+	},
+	created: function(){
+		this.loadFunction();
 	}
 })
+function go(p,tilte){
+	alert(tilte);
+}
 </script>
 </body>
 </html>

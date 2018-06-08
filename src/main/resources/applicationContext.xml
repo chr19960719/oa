@@ -48,6 +48,9 @@
 				<value>xcl/oa/task/vo/Task.hbm.xml</value>
 				<value>xcl/oa/sendfile/vo/SendFile.hbm.xml</value>
 				<value>xcl/oa/receivefile/vo/ReceiveFile.hbm.xml</value>
+				<value>xcl/oa/function/vo/Function.hbm.xml</value>
+				<value>xcl/oa/record/vo/Record.hbm.xml</value>
+				<value>xcl/oa/type/vo/Type.hbm.xml</value>
 			</list>
 		</property>
 	</bean>	 
@@ -97,6 +100,9 @@
 	<bean id="indexAction" class="xcl.oa.index.action.IndexAction" scope="prototype">
 		<property name="employeeService" ref="employeeService"/>
 	</bean>
+	<bean id="typeAction" class="xcl.oa.type.action.TypeAction" scope="prototype">
+		<property name="typeService" ref="typeService"/>
+	</bean>
 	
 	
 	<!-- ==============================================Service的配置============================================== -->
@@ -123,6 +129,9 @@
 		<property name="taskDao" ref="taskDao"/>
 		<property name="employeeDao" ref="employeeDao"/>
 	</bean>
+	<bean id="typeService" class="xcl.oa.type.service.impl.ITypeService">
+		<property name="typeDao" ref="typeDao"/>
+	</bean>
 	
 	
 	
@@ -146,6 +155,9 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean> 
 	<bean id="taskDao" class="xcl.oa.task.dao.impl.ITaskDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="typeDao" class="xcl.oa.type.dao.impl.ITypeDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	

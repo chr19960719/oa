@@ -19,7 +19,6 @@ var doLogin = function () {
             pwd: upassword,
         },
         success: function (data) {
-        	alert(data.code);
             if (data.code==0) {
                 app.msg='<span class="pull-left text-success">登录成功，正在跳转...</span>';
                 window.location.href='http://localhost:8083/templates/admin/index.html';

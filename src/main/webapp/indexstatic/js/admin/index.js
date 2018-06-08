@@ -121,7 +121,8 @@ var sidebar_app = new Vue({
 	el: "#sidebar-app",
 	data:{
 		title: '主页',
-		user: {}
+		user: {},
+		power:[]
 	},
 	methods: {
 		profileEdit: function(){
@@ -131,12 +132,52 @@ var sidebar_app = new Vue({
 			//fillPage(p)
 			loadpage(p);
 			this.title = tilte;
+		},
+		loadFunction:function(){
+			var app = this;
+			$.ajax({
+				url:'type_getFunction',
+				type:'GET',
+				dataType:'json',
+				async:true,
+				success: function(data){
+ 					app.power = data.power;
+				}
+			});
 		}
 	},
 	created: function () {
-		//loadToken(this);
+		this.loadFunction();
     }
 })
+
+var menu = new Vue({
+	el: "#menu",
+	data:{
+		power:[]
+	},
+	methods:{
+		loadFunction:function(){
+			var app = this;
+			$.ajax({
+				url:'type_getFunction',
+				type:'GET',
+				dataType:'json',
+				async:false,
+				success: function(data){
+ 					app.power = data.power;
+				}
+			});
+		}
+	},
+	created: function () {
+		this.loadFunction();
+    }
+})
+
+function go(p,tilte){
+	sidebar_app.go(p,tilte);
+}
 
 var title_app = new Vue({
 	el: "#title-app",

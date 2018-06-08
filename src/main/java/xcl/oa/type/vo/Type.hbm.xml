@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="xcl.oa.type.vo.Type" table="type">
+		<id name="typeID"></id>
+		<property name="typeName"/>
+		<property name="typeInfo"/>
+		<set order-by="recordID" name="records" lazy="false" cascade="delete">
+			<key column="typeID"/>
+			<one-to-many class="xcl.oa.record.vo.Record"/>
+		</set>
+	</class>
+</hibernate-mapping>
