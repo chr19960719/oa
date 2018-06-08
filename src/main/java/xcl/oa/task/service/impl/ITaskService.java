@@ -45,6 +45,9 @@ public class ITaskService implements TaskService{
 	@Override
 	public void deleteTask(Integer id) {
 		Task task = taskDao.findById(id);
+		Employee e = employeeDao.findById(task.getEmployee().getEmployeeID());
+		e.getTasks().remove(task);
+		task.setEmployee(null);
 		taskDao.deleteTask(task);
 	}
 

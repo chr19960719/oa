@@ -1,5 +1,6 @@
 package xcl.oa.receivefile.service.impl;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import xcl.oa.employee.dao.EmployeeDao;
@@ -30,6 +31,9 @@ public class IReceiveFileService implements ReceiveFileService{
 		String[] empid = employees.split(",");
 		for(int i=0;i<empid.length;i++) {
 			Integer employeeID = Integer.valueOf(empid[i]);
+			Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+			if(e.getEmployeeID()==employeeID)
+				continue;
 			System.out.println("用户id"+employeeID);
 			Employee employee = employeeDao.findById(employeeID);
 			receiveFile.setEmployee(employee);

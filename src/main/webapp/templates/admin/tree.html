@@ -15,6 +15,9 @@
             padding-left: 20px;
             height: 17px;
         }
+        body {
+  			background-color: #f3f3f4 !important;
+		}
 
         /*ul li{
             list-style: none;
@@ -67,15 +70,15 @@
 <div id=MainArea>
 
 
-    <ul id="tree">
+    <ul id="tree" style="background-color: #f3f3f4 !important;">
         <li>
             <input type="checkbox" id="cb0" name="chkbox">
             <label for="cb0"><span class="folder">全选</span></label>
-        <ul>
+        <ul style="background-color: #f3f3f4 !important;">
             <li v-for="r in dept">
                 <input type="checkbox" id="cb1" name="chkbox">
                 <label for="cb1"><span class="folder">{{r.deptName}}</span></label>
-                <ul :id="'employee-'+r.deptID">
+                <ul :id="'employee-'+r.deptID" style="background-color: #f3f3f4 !important;">
                     <li v-for="i in employee" v-if="i.dept.deptID==r.deptID"><input type="checkbox" :id="i.employeeID" name="chkbox">
                         <label for="cb11"><span class="folder">{{i.job.jobName}}{{i.employeeName}}</span></label></li>
                 </ul>

@@ -23,16 +23,16 @@
 		<property name="isDelete"/>
 		<many-to-one name="dept" lazy="false" class="xcl.oa.dept.vo.Dept" column="deptID" cascade="delete"/>
 		<many-to-one name="job" lazy="false" class="xcl.oa.job.vo.Job" column="jobID" cascade="delete"/>
-		<set order-by="receiveID" name="receiveFiles" lazy="false" cascade="delete">
-			<key column="employeeID"/>
+		<set order-by="receiveID" name="receiveFiles" lazy="false" cascade="all">
+			<key column="employeeID" not-null="true"/>
 			<one-to-many class="xcl.oa.receivefile.vo.ReceiveFile"/>
 		</set>
-		<set order-by="fileID" name="sendFiles" lazy="false" cascade="delete">
-			<key column="employeeID"/>
+		<set order-by="fileID" name="sendFiles" lazy="false" cascade="all">
+			<key column="employeeID" not-null="true"/>
 			<one-to-many class="xcl.oa.sendfile.vo.SendFile"/>
 		</set>
-		<set order-by="id" name="tasks" lazy="false" cascade="delete">
-			<key column="employeeID"/>
+		<set order-by="id" name="tasks" lazy="false" cascade="all">
+			<key column="employeeID" not-null="true"/>
 			<one-to-many class="xcl.oa.task.vo.Task"/>
 		</set>
 	</class>

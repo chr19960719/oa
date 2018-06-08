@@ -7,101 +7,119 @@
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport">
-<link rel="stylesheet" href="../../indexstatic/js/plugins/bootstrap/css/bootstrap.css" />
-<link href="../../indexstatic/summernote/dist/summernote.css" rel="stylesheet">
-<style> 
-#employee
-{
-text-align:center;
-border:2px solid #a1a1a1;
-padding:10px 50px; 
-border-radius:25px;
--moz-border-radius:25px; /* 老的 Firefox */
-}
-</style>
+<link rel="stylesheet"
+	href="../../indexstatic/js/plugins/bootstrap/css/bootstrap.css" />
+<link href="../../indexstatic/summernote/dist/summernote.css"
+	rel="stylesheet">
+<link href="../../indexstatic/assets/css/file.css" rel="stylesheet">
 </head>
 
 <body>
 	<form action="#" class="form-horizontal" role="form">
-		<div id="app" v-cloak>
-		
-			<div style="width:80%;height:400px;float:left;">
-				<div class="form-group">
-					<label for="firstname" class="col-sm-1 control-label">主题</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" id="fileName"
-							placeholder="请输入消息名称">
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="exampleInputFile" class="col-sm-1 control-label">正文</label>
-					<div class="col-sm-10">
-						<div class="summernote">
-							<p>正文</p>
+		<div class="wrapper-content" id="app">
+			<div class="row">
+
+				<div class="col-lg-3">
+					<div class="ibox float-e-margins">
+						<div class="ibox-content mailbox-content">
+							<div class="file-manager">
+								<a class="btn btn-block btn-primary compose-mail" href="#">选择收件人</a>
+								<div class="space-25"></div>
+								<div id="employee"
+									style="width: 100%; height: 800px; float: left; overflow: auto;">
+									<iframe id="ifram1" align="center" width="100%" height="100%"
+										src="tree.html" frameborder="no" border="0" marginwidth="0"
+										marginheight="0"></iframe>
+								</div>
+								<div class="clearfix"></div>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="exampleInputFile" class="col-sm-1 control-label">附件</label>
-					<div class="col-sm-14">
-						<input type="file" id="exampleInputFile">
-					</div>
-				</div>
-<!-- 				<div class="form-group">
+
+				<div class="col-lg-9 animated fadeInRight">
+
+
+					<div class="mail-box">
+
+						<div class="mail-body">
+							发送内容
+						</div>
+						<div class="mail-text h-200">
+
+							<div class="form-group">
+								<label for="firstname" class="col-sm-1 control-label">主题</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="fileName"
+										placeholder="请输入消息名称">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputFile" class="col-sm-1 control-label">正文</label>
+								<div class="col-sm-10">
+									<div class="summernote">
+										<p>正文</p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="exampleInputFile" class="col-sm-1 control-label">附件</label>
+								<div class="col-sm-14">
+									<input type="file" id="exampleInputFile">
+								</div>
+							</div>
+							<!-- 				<div class="form-group">
 					<label for="exampleInputFile" class="col-sm-1 control-label">选择收件人</label>
 					<div id="tree" class="col-sm-11">
 						<iframe id="ifram1" align="center" width="100%" height="300" src="tree.html"  frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
 					</div>
 				</div> -->
-				<div class="form-group">
-					<div class="col-sm-1" style="margin-left: 50px;">
-						<button class="btn btn-info" onclick="sendall();return false;">发送</button>
+							<div class="form-group">
+								<div class="col-sm-1" style="margin-left: 50px;">
+									<button class="btn btn-info" onclick="sendall();return false;">发送</button>
+								</div>
+							</div>
+
+						</div>
+
 					</div>
-					<div class="col-sm-14">
-						<button type="submit" class="btn btn-warning">作为草稿</button>
-					</div>
+
 				</div>
 			</div>
-			<div id="employee" style="width:19%;height:800px;float:left;overflow:auto;">
-				<iframe id="ifram1" align="center" width="100%" height="100%" src="tree.html" style="display: block;" frameborder="no" border="0" marginwidth="0" marginheight="0" ></iframe>
-			</div>
-			<div style="width:1%;">
-			</div>
-
 		</div>
-
 	</form>
 
 	<script src="../../indexstatic/js/jquery-3.3.1.js"></script>
-	<script src="../../indexstatic/js/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script
+		src="../../indexstatic/js/plugins/bootstrap/js/bootstrap.min.js"></script>
 	<script src="../../indexstatic/js/plugins/downtree/dropdowntree.js"></script>
 	<script src="../../indexstatic/summernote/dist/summernote.js"></script>
 	<script
 		src="../../indexstatic/summernote/dist/lang/summernote-zh-CN.js"></script>
 	<!-- 中文-->
-		
+
 	<script src="../../indexstatic/js/vue.js"></script>
 	<script src="../../indexstatic/js/admin/file.js"></script>
 	<script type="text/javascript">
-	var employees = new Array();
-	function sendall(){
-		document.getElementById("ifram1").contentWindow.findall();
-		if(employees==null){
-			alert("请选择至少一个发送人");
-			
-			return false;
-		}
-		var formData = new FormData();  
-		var sendFile = $('#exampleInputFile').get(0).files[0];
-		if(typeof(sendFile) != "undefined"){
-			formData.append("file", sendFile); 
-		}
-		var fileText = $('.summernote').summernote('code');
-		formData.append("fileText", fileText); 
-		var fileName = $('#fileName').val();
-		formData.append("fileName", fileName); 
-		formData.append("employees", employees);	
-		$.ajax({
+		var employees = new Array();
+		function sendall() {
+			document.getElementById("ifram1").contentWindow.findall();
+			if (employees == null) {
+				alert("请选择至少一个发送人");
+
+				return false;
+			}
+			var formData = new FormData();
+			var sendFile = $('#exampleInputFile').get(0).files[0];
+			if (typeof (sendFile) != "undefined") {
+				formData.append("file", sendFile);
+			}
+			var fileText = $('.summernote').summernote('code');
+			formData.append("fileText", fileText);
+			var fileName = $('#fileName').val();
+			formData.append("fileName", fileName);
+			formData.append("employees", employees);
+			$.ajax({
 				type : 'post',
 				url : 'test_file',
 				cache : false,
@@ -120,9 +138,9 @@ border-radius:25px;
 			});
 			return false;
 		}
-	function test(elements) {
-		employees = elements;			
-	}
+		function test(elements) {
+			employees = elements;
+		}
 	</script>
 </body>
 </html>

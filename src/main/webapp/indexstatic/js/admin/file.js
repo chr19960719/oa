@@ -1,6 +1,6 @@
 $(function(){
  $('.summernote').summernote({
-        height: 200,
+        height: 250,
         tabsize: 2,
         lang: 'zh-CN',
         toolbar: [
