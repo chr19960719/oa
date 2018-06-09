@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +24,7 @@ import xcl.oa.employee.service.EmployeeService;
 import xcl.oa.employee.vo.Employee;
 import xcl.oa.job.service.JobService;
 import xcl.oa.job.vo.Job;
+import xcl.oa.receivefile.vo.ReceiveFile;
 
 public class EmployeeAction extends ActionSupport implements ModelDriven<Employee>{
 	
@@ -57,7 +59,7 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 	public void setLevel(String level) {
 		Level = level;
 	}
-	
+
 	private File pho;
 	private String phoFileName;
 	public void setPho(File pho) {
@@ -138,7 +140,20 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 		return SUCCESS;
 	}
 	//修改员工的方法
-	public String update() {
+	public String update() throws IOException {
+		if(pho != null){
+			// 将商品图片上传到服务器上.
+			// 获得上传图片的服务器端路径.
+			/*String path = ServletActionContext.getServletContext().getRealPath(
+					"/employeeImg");*/
+			String path = "D:\\eclipse-workspace\\oa\\src\\main\\webapp\\employeeImg";
+			// 创建文件类型对象:
+			File diskFile = new File(path + "//" + phoFileName);
+			// 文件上传:
+			FileUtils.copyFile(pho, diskFile);
+	
+			employee.setPhoto("employeeImg/" + phoFileName);
+		}
 		//根据部门id查找部门
 		Dept dept = deptService.findById(deptID);
 		//根据职位id查找职位
@@ -173,6 +188,20 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 		List<Job> joblist = jobService.findByDid(deptID);
 		result = new HashMap<String, Object>();
         result.put("joblist", joblist);
+		return SUCCESS;
+	}
+	//获取已登录用户的个人信息
+	public String getinfo() {
+		result = new HashMap<String, Object>();
+		Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+		Employee employee = employeeService.findById(e.getEmployeeID());
+		// 查询所有职位
+		List<Job> joblist = jobService.findByDid(employee.getDept().getDeptID());
+		//查询所有部门
+		List<Dept> deptlist = deptService.findAll();
+		result.put("joblist", joblist);
+        result.put("deptlist", deptlist);
+		result.put("employee", employee);
 		return SUCCESS;
 	}
 }

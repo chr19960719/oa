@@ -54,7 +54,7 @@
 					                    <td><center>{{user.email}}</center></td>
 					                    <td><center>{{user.workState}}</center></td>
 					                    <td><center>
-						                    <button class="btn btn-primary btn-xs"  type = "button" data-toggle="modal" data-target="#myModal"  @click="edit(user.employeeID)">
+						                    <button class="btn btn-primary btn-xs"  type = "button" data-toggle="modal" data-target="#Modal"  @click="edit(user.employeeID)">
 							                    <i class="fa fa-pencil"></i>
 						                    </button>
 						                    <button class="btn btn-danger btn-xs" @click="del(user.employeeID)">
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">

@@ -107,7 +107,7 @@
                     
                     <!-- settings start -->
                     <li class="dropdown">
-                        <a class="dropdown-toggle" @click="settings" title="系统设置" href="javascript:;">
+                        <a class="dropdown-toggle" @click="go('info-setting.html','个人信息')" title="个人信息" href="javascript:;">
                             <i class="fa fa-cog"></i>
                         </a>
                     </li>
@@ -193,6 +193,7 @@
                           <li><a @click="go('normalUser.html','用户管理>普通用户')" href="javascript:;">普通用户</a></li>
                           <li><a @click="go('mediumUser.html','用户管理>中级用户')" href="javascript:;">中级用户</a></li>
                           <li><a @click="go('addemployee.html','用户管理>添加用户')" href="javascript:;">添加用户</a></li>
+                          <li><a @click="go('info-setting.html','个人信息')" href="javascript:;">个人信息</a></li>
                       </ul>
                   </li>
                </div>
@@ -203,6 +204,7 @@
            <div id="menu">
 			</div>
       </aside>
+      
       <!--sidebar end-->
       <!-- sidebar app end -->
 
@@ -240,7 +242,6 @@
     <script src="../../indexstatic/assets/js/gritter-conf.js"></script>
     <!-- layer -->
     <script src="../../indexstatic/js/plugins/layer/layer.js"></script>
-
     <!-- 欢迎提醒 -->
 		<script type="text/javascript">
 		 $(document).ready(function () {
@@ -260,6 +261,7 @@
 
 		        return false;
 		        });
+		 
 		</script>
 <!--     <script src="../../indexstatic/js/commons/common.js"></script> -->
   	<script src="../../indexstatic/js/vue.js"></script>
