@@ -103,6 +103,10 @@
 	<bean id="typeAction" class="xcl.oa.type.action.TypeAction" scope="prototype">
 		<property name="typeService" ref="typeService"/>
 	</bean>
+	<bean id="recordAction" class="xcl.oa.record.action.RecordAction" scope="prototype">
+		<property name="recordService" ref="recordService"/>
+	</bean>
+
 	
 	
 	<!-- ==============================================Service的配置============================================== -->
@@ -132,6 +136,12 @@
 	<bean id="typeService" class="xcl.oa.type.service.impl.ITypeService">
 		<property name="typeDao" ref="typeDao"/>
 	</bean>
+	<bean id="recordService" class="xcl.oa.record.service.impl.IRecordService">
+		<property name="recordDao" ref="recordDao"/>
+		<property name="functionDao" ref="functionDao"/>
+		<property name="typeDao" ref="typeDao"/>
+	</bean>
+
 	
 	
 	
@@ -158,6 +168,12 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	<bean id="typeDao" class="xcl.oa.type.dao.impl.ITypeDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="recordDao" class="xcl.oa.record.dao.impl.IRecordDao">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	<bean id="functionDao" class="xcl.oa.function.dao.impl.IFunctionDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	

@@ -97,6 +97,9 @@
             </result>
 		</action>
 		
+		<action name="record_*" class="recordAction" method="{1}">
+		</action>
+		
     </package>
  
     
