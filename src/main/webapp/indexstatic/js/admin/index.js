@@ -92,7 +92,7 @@ var header_app = new Vue({
 			return '&middot;&middot;';
 		},
 		settings:function(){
-			sidebar_app.go('settings.html','系统设置');
+			sidebar_app.go('info-setting.html','个人信息')
 		},
 		getmessage:function(id,rid){
 			localStorage.rid = rid; 

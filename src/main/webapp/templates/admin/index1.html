@@ -179,7 +179,7 @@
 								</li>
 							</ul>
 						</li>
-						<li class="sub-menu" v-if="r.function.multilevel!=1&&r.function.multilevel!=4&&r.function.multilevel!=5">
+						<li class="sub-menu" v-if="r.function.multilevel!=1&&r.function.multilevel!=4&&r.function.multilevel!=5&&r.function.functionID!=1&&r.function.functionID!=4&&r.function.functionID!=5">
 							<a :onclick="r.function.url" href="javascript:;"> 
 							<i class="fa fa-cogs"></i> <span>{{r.function.functionName}}</span>
 							</a>
