@@ -1,6 +1,7 @@
 package xcl.oa.type.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -42,6 +43,13 @@ public class TypeAction extends ActionSupport implements ModelDriven<Type>{
 		Set<Record> set = t.getRecords();
 		result.put("power", set);
 		result.put("type", t);
+		return SUCCESS;
+	}
+	//查找所有角色
+	public String findAll() {
+		List<Type> typelist = typeService.findAll();
+		result = new HashMap<String, Object>();
+		result.put("typelist", typelist);
 		return SUCCESS;
 	}
 
