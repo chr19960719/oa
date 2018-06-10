@@ -18,18 +18,20 @@ public class RecordAction extends ActionSupport implements ModelDriven<Record>{
 		this.recordService = recordService;
 	}
 	
-	private String typeID;
-	public void setTypeID(String typeID) {
+	private Integer typeID;
+	public void setTypeID(Integer typeID) {
 		this.typeID = typeID;
 	}
-	private String function;
-	public void setFunction(String function) {
-		this.function = function;
+	private String array;
+	public void setArray(String array) {
+		this.array = array;
 	}
 	
 	public String updata() {
-		recordService.updata(Integer.valueOf(typeID));
-		recordService.add(Integer.valueOf(typeID), function);
+		System.out.println("typeID: "+typeID);
+		System.out.println("array: "+array);
+		recordService.updata(typeID);
+		recordService.add(typeID, array);
 		return null;
 	}
 	

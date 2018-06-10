@@ -101,7 +101,7 @@ span.folder {
 								<td><center>{{role.typeInfo}}</center></td>
 								<td><center>
 										<button class="btn btn-primary btn-xs" type="button"
-											data-toggle="modal" data-target="#Modal" onclick="authority(role.typeID)">分配权限</button></td>
+											data-toggle="modal" data-target="#Modal" @click="authority(role.typeID)">分配权限</button></td>
 							</tr>
 						</tbody>
 					</table>
@@ -196,10 +196,17 @@ span.folder {
 	<script src="../../indexstatic/js/plugins/downtree/jquery.treeview.js"
 		type="text/javascript"></script>
 	<script>
-    new Vue({
+	var typeID;
+    var roles = new Vue({
 		el : "#roles",
 		data : {
 			datas : []
+		},
+		methods:{
+			authority:function(id){
+				//alert("id:"+id);
+				typeID = id;
+			}
 		},
 		created: function () {
 			var self = this;
@@ -236,6 +243,39 @@ span.folder {
         });
     });
     $("#tree").treeview();
+    function add(){
+    	//alert(typeID);
+		var elements = $("#choice").find("input");
+    	var num=elements.length;
+    	var flag=false;
+    	var arrayObj = new Array();
+    	for(var i=0;i<num;i++){
+            if(elements[i].checked==true){
+                flag = true;
+                arrayObj.push(elements[i].id);
+                //alert(elements[i].id);
+            }
+        }
+    	alert(arrayObj);
+    	var formData = new FormData();
+    	formData.append("typeID", typeID);
+    	formData.append("array", arrayObj);
+    	$.ajax({
+			type : 'post',
+			url : 'record_updata',
+			cache : false,
+			data : formData,
+			processData : false,
+			contentType : false,
+			dataType : 'text', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
+			success : function(data) {
+				alert("发送成功");
+			},
+			error : function() {
+				alert("上传失败");
+			}
+		});
+    }
     
     </script>
 

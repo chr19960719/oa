@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
@@ -100,12 +101,14 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 	}
 	//添加员工的方法
 	public String save() throws IOException {
+		HttpServletResponse response = ServletActionContext.getResponse();
+        response.setContentType("text/html;charset=utf-8");
 		if(pho != null){
 			// 将商品图片上传到服务器上.
 			// 获得上传图片的服务器端路径.
-			/*String path = ServletActionContext.getServletContext().getRealPath(
-					"/employeeImg");*/
-			String path = "D:\\eclipse-workspace\\oa\\src\\main\\webapp\\employeeImg";
+			String path = ServletActionContext.getServletContext().getRealPath(
+					"/employeeImg");
+			//String path = "D:\\eclipse-workspace\\oa\\src\\main\\webapp\\employeeImg";
 			// 创建文件类型对象:
 			File diskFile = new File(path + "//" + phoFileName);
 			// 文件上传:

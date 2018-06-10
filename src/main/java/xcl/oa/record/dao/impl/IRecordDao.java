@@ -24,6 +24,8 @@ public class IRecordDao extends HibernateDaoSupport implements RecordDao{
 	@Override
 	public void save(Record record) {
 		this.getHibernateTemplate().save(record);
+		this.getHibernateTemplate().flush();
+		this.getHibernateTemplate().clear();
 	}
 	
 }

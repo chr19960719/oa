@@ -151,7 +151,7 @@
 					<div v-for="r in power">
 						<li class="sub-menu" v-if="r.function.functionID==1">
 							<a href="javascript:;">
-								 <i class="fa fa-book"></i> <span>{{r.function.functionName}}</span>
+								 <i class="fa fa-user"></i> <span>{{r.function.functionName}}</span>
 							</a>
 							<ul class="sub">
 								<li v-for="t in power" v-if="t.function.multilevel==1">
@@ -161,7 +161,7 @@
 						</li>
 						<li class="sub-menu" v-if="r.function.functionID==4">
 							<a href="javascript:;">
-								 <i class="fa fa-book"></i> <span>{{r.function.functionName}}</span>
+								 <i class="fa fa-building-o"></i> <span>{{r.function.functionName}}</span>
 							</a>
 							<ul class="sub">
 								<li v-for="t in power" v-if="t.function.multilevel==4">
@@ -171,7 +171,7 @@
 						</li>
 						<li class="sub-menu" v-if="r.function.functionID==5">
 							<a href="javascript:;">
-								 <i class="fa fa-book"></i> <span>{{r.function.functionName}}</span>
+								 <i class="fa fa-briefcase"></i> <span>{{r.function.functionName}}</span>
 							</a>
 							<ul class="sub">
 								<li v-for="t in power" v-if="t.function.multilevel==5">
@@ -181,7 +181,11 @@
 						</li>
 						<li class="sub-menu" v-if="r.function.multilevel!=1&&r.function.multilevel!=4&&r.function.multilevel!=5&&r.function.functionID!=1&&r.function.functionID!=4&&r.function.functionID!=5">
 							<a :onclick="r.function.url" href="javascript:;"> 
-							<i class="fa fa-cogs"></i> <span>{{r.function.functionName}}</span>
+							<i v-if="r.function.functionID==6" class="fa fa-bell"></i> 
+							<i v-if="r.function.functionID==7" class="fa fa-comment"></i> 
+							<i v-if="r.function.functionID==8" class="fa fa-tasks"></i> 
+							<i v-if="r.function.functionID==9" class="fa fa-lock"></i> 
+							<span>{{r.function.functionName}}</span>
 							</a>
 						</li>
 					</div>
