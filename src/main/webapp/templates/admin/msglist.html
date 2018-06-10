@@ -128,7 +128,7 @@
                                         <td><center>{{message.receiveID}}</center><label hidden="hidden">{{message.sendFile.fileID}}</label></td>
 					                    <td><center>{{titleFormat(message.sendFile.fileName)}}</center></td>
 					                    <td><center>{{timeFormat(message.sendFile.fileTime)}}</center></td>
-					                    <td>{{message.sendFile.employee.dept.deptName}}{{message.sendFile.employee.job.jobName}}{{message.sendFile.employee.employeeName}}</td>
+					                    <td>{{message.sendFile.employee.job.jobName}}{{message.sendFile.employee.employeeName}}</td>
 					                    <td v-if="message.isLook==0"><center style="color: red">未读</center></td>
 					        			<td v-else><center>已读</center></td>
 					                    <td>
@@ -263,7 +263,14 @@
     	var tds = $(obj).parent().parent().parent().find('td');
     	var center = tds.eq(0).find('center');
     	var rid = center.eq(0).text();
-    	document.getElementById('show_msg').innerHTML="确定要删除该消息吗?<br/>注意:消息为未读状态!!!";
+    	var text;
+    	var state = tds.eq(4).find('center').eq(0).text();
+    	//alert(state);
+    	if(state=="未读")
+    		text="确定要删除该消息吗?<br/>注意:消息为未读状态!!!";
+    	else
+    		text="确定要删除已读该消息吗?";
+    	document.getElementById('show_msg').innerHTML=text;
     	$('.popup_de').addClass('bbox');
     	$('.popup_de .btn-danger').one('click',function(){
     		$.ajax({                            

@@ -15,9 +15,9 @@
 			<result type="json" name="success">
                 <param name="root">result</param>
             </result>	
-            <result name="delete">/html/index/dept.html</result>
-            <result name="update">/html/index/dept.html</result>
-            <result name="save">/html/index/dept.html</result>		
+            <result type="json" name="delete">/html/index/dept.html</result>
+            <result type="json" name="update">/html/index/dept.html</result>
+            <result type="json" name="save">/html/index/dept.html</result>		
 		</action>
 		
 		<!-- 配置职位模块的Action -->
@@ -25,9 +25,9 @@
 			<result type="json" name="success">
                 <param name="root">result</param>
             </result>	
-			<result name="save">/html/index/job.html</result>	
-			<result name="delete">/html/index/job.html</result>
-			<result name="update">/html/index/job.html</result>			
+			<result type="json"  name="save">/html/index/job.html</result>	
+			<result type="json"  name="delete">/html/index/job.html</result>
+			<result type="json"  name="update">/html/index/job.html</result>			
 		</action>
 		
 		<!-- 配置员工模块的Action -->
@@ -35,9 +35,9 @@
 			<result type="json" name="success">
                 <param name="root">result</param>
             </result>
-            <result name="update">/html/index/normalUser.html</result>
-            <result name="save">/html/index/addemployee.html</result>
-            <result name="delete">/html/index/normalUser.html</result>	
+            <result type="json" name="update">/html/index/normalUser.html</result>
+            <result type="json" name="save">/html/index/addemployee.html</result>
+            <result type="json" name="delete">/html/index/normalUser.html</result>	
 		</action>
 		
 		<!-- 配置接收消息的Action -->
