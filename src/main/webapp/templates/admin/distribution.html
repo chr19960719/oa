@@ -256,7 +256,7 @@ span.folder {
                 //alert(elements[i].id);
             }
         }
-    	alert(arrayObj);
+    	//alert(arrayObj);
     	var formData = new FormData();
     	formData.append("typeID", typeID);
     	formData.append("array", arrayObj);
@@ -269,10 +269,10 @@ span.folder {
 			contentType : false,
 			dataType : 'text', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
 			success : function(data) {
-				alert("发送成功");
+				alert("分配成功");
 			},
 			error : function() {
-				alert("上传失败");
+				alert("分配失败");
 			}
 		});
     }

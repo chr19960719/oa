@@ -24,21 +24,10 @@ var header_app = new Vue({
 	},
 	methods: {
 		logout: function() {
-			confirm('确定退出登录？', function(id){
-				$.ajax({
-					type:"get",
-					url: "/logout",
-					async : true,
-					success: function(data){
-						if(data.code === 0){
-							window.location.href='/login';
-						}
-						else{
-							alert('系统异常，请联系管理员');
-						}
-					}
-				});
-			});
+			var r=confirm("确定退出登录？");
+			if (r==true){
+				window.location.href='login.html';
+			}			
 		},
 		loadNewMessages: function() {
 			var app = this;
