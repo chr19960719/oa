@@ -40,6 +40,8 @@ var header_app = new Vue({
  					if(data.num){
  						app.newMessages = data.message;
  						app.num = data.num;
+ 					}else{
+ 						app.num = 0;
  					}
 				}
 			});

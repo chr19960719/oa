@@ -242,4 +242,9 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
         
         return fileName;
     }
+    
+    public String savefile() {
+    	
+    	return null;
+    }
 }

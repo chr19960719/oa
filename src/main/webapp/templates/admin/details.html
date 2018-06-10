@@ -92,6 +92,7 @@ function updatemsg(){
 			alert(data.msg);
 			header_app.loadNewMessages();
 			sidebar_app.go('msglist.html','我的消息');
+			header_app.loadNewMessages();
         },  
         error:function(){                                                  
            alert("设置已读失败");                                                     

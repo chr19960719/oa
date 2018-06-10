@@ -9,7 +9,7 @@
 		</id>
 		<property name="isLook"/>
 		<property name="isDelete"/>
-		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="employeeID" insert="false" update="false"/>
-		<many-to-one name="sendFile" lazy="false" class="xcl.oa.sendfile.vo.SendFile" column="fileID" insert="false" update="false"/>
+		<many-to-one name="employee" lazy="false" class="xcl.oa.employee.vo.Employee" column="employeeID" cascade="save-update"/>
+		<many-to-one name="sendFile" lazy="false" class="xcl.oa.sendfile.vo.SendFile" column="fileID" cascade="save-update"/>
 	</class>
 </hibernate-mapping>

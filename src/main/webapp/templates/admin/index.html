@@ -50,7 +50,7 @@
                             <div class="notify-arrow notify-arrow-green"></div>
                             <li>
                                 <p class="green" v-if="num>0">您有 {{num}} 条未读消息</p>
-                                <p class="green" v-else="">暂无未读消息</p>
+                                <p class="green" v-else>暂无未读消息</p>
                             </li>
                             <li v-for="(message,index) in newMessages.receiveFiles" v-if="message.isLook==0&&message.isDelete==0&&index<5">
                                 <a href="javascript:;" @click="getmessage(message.sendFile.fileID,message.receiveID)">

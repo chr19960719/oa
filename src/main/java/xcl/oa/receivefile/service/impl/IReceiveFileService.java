@@ -24,20 +24,20 @@ public class IReceiveFileService implements ReceiveFileService{
 	
 	@Override
 	public void save(SendFile sendFile, String employees) {
-		ReceiveFile receiveFile = new ReceiveFile();
-		receiveFile.setIsLook(0);
-		receiveFile.setIsDelete(0);
-		receiveFile.setSendFile(sendFile);
 		String[] empid = employees.split(",");
 		for(int i=0;i<empid.length;i++) {
+			ReceiveFile receiveFile = new ReceiveFile();
+			receiveFile.setIsLook(0);
+			receiveFile.setIsDelete(0);
+			receiveFile.setSendFile(sendFile);			
 			Integer employeeID = Integer.valueOf(empid[i]);
 			Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
 			if(e.getEmployeeID()==employeeID)
 				continue;
-			System.out.println("用户id"+employeeID);
 			Employee employee = employeeDao.findById(employeeID);
 			receiveFile.setEmployee(employee);
-			receiveFileDao.save(receiveFile);
+			ReceiveFile r = receiveFileDao.save(receiveFile);
+			System.out.println("============================================================================================================================================================"+r.getSendFile().getFileName()+r.getReceiveID());
 		}
 		
 	}
