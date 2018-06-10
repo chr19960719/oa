@@ -270,6 +270,9 @@ span.folder {
 			dataType : 'text', //请求成功后，后台返回图片访问地址字符串，故此以text格式获取，而不是json格式
 			success : function(data) {
 				alert("分配成功");
+				$('.modal-backdrop').remove();
+		    	 $('body').removeClass('modal-open');
+		    	 sidebar_app.go('distribution.html','权限分配');
 			},
 			error : function() {
 				alert("分配失败");
