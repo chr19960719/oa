@@ -138,7 +138,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               <div  id="sidebar-app" v-cloak>
-              	  <p class="centered"><a href="profile.html"><img src="../../indexstatic/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+              	  <p class="centered"><a id="a" href="profile.html"><img src="../../indexstatic/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
               	  <h5 class="centered" title="账户信息"><a @click="profileEdit" href="javascript:;"><span>{{user.aId}}</span></a></h5>
                   <li class="mt">
                       <a class="active" @click="go('1.html','主页')" href="javascript:;">
@@ -242,25 +242,50 @@
     <script src="../../indexstatic/assets/js/gritter-conf.js"></script>
     <!-- layer -->
     <script src="../../indexstatic/js/plugins/layer/layer.js"></script>
+    <script src="../../indexstatic/js/vue.js"></script>
     <!-- 欢迎提醒 -->
 		<script type="text/javascript">
-		 $(document).ready(function () {
-		        var unique_id = $.gritter.add({
-		            // (string | mandatory) the heading of the notification
-		            title: '欢迎使用OA办公自动化!',
-		            // (string | mandatory) the text inside the notification
-		 			text: '上次登录时间：'+new Date(),            // (string | optional) the image to display on the left
-		            image: '../../indexstatic/assets/img/ui-sam.jpg',
-		            // (bool | optional) if you want it to fade out on its own or just sit there
-		            sticky: true,
-		            // (int | optional) the time you want it to be alive for before fading out
-		            time: '',
-		            // (string | optional) the class name you want to apply to that specific message
-		            class_name: 'my-sticky-class'
-		        });
-
-		        return false;
-		        });
+		 new Vue({
+				el : "#a",
+				data : {
+					datas:{}
+				},
+				methods:{
+				initialization: function () {
+					var self = this;
+					$.ajax({
+					    type: 'get',//请求方式				 
+					    url: 'employee_getinfo',//地址，就是json文件的请求路径
+					    async: false,
+					    dataType: 'json',//数据类型可以为 text xml json  script  jsonp
+					    success: function(result){
+					        self.datas=result.employee;
+					    	if(result.employee.photo)
+							      $("img").prop("src","../../"+result.employee.photo);   
+					    	var unique_id = $.gritter.add({
+					            // (string | mandatory) the heading of the notification
+					            title: '欢迎使用OA办公自动化!',
+					            // (string | mandatory) the text inside the notification
+					 			text: '登录时间：'+new Date(),            // (string | optional) the image to display on the left
+					            image: '../../'+result.employee.photo,
+					            // (bool | optional) if you want it to fade out on its own or just sit there
+					            sticky: true,
+					            // (int | optional) the time you want it to be alive for before fading out
+					            time: '',
+					            // (string | optional) the class name you want to apply to that specific message
+					            class_name: 'my-sticky-class'
+					        });
+					 },
+					 error: function(){
+						 alert("获取个人信息失败");
+					 }
+					})
+				}
+				},
+				created: function () {
+					this.initialization();
+				}
+			});
 		 
 		</script>
 <!--     <script src="../../indexstatic/js/commons/common.js"></script> -->
