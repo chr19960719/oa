@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,6 +145,9 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
 		/*System.out.println("文件内容：" + sendFile.getFileText());
 		System.out.println("数组：" + employees);*/
 		sendFile.setFilesrc(fileFileName);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+		String date = df.format(new Date());
+		sendFile.setFileTime(date);
 		//发件人
 		Employee e1  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
 		sendFile.setEmployee(employeeService.findById(e1.getEmployeeID()));
