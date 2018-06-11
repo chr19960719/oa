@@ -117,5 +117,13 @@ public class ReceiveFileAction extends ActionSupport implements ModelDriven<Rece
        
        return fileName;
    }
+   
+   public String updata() {
+	   ReceiveFile file = receiveFileService.findById(46);
+	   file.setIsDelete(1);
+	   file.setEmployee(employeeService.findById(8));
+	   receiveFileService.isLook(file);
+	   return null;
+   }
 
 }

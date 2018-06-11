@@ -58,6 +58,8 @@ var header_app = new Vue({
  					if(data.num){
  						app.newTask = data.task;
  						app.tasknum = data.num;
+ 					}else{
+ 						app.tasknum = 0;
  					}
 				}
 			});

@@ -1,5 +1,8 @@
 package xcl.oa.receivefile.dao.impl;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import xcl.oa.receivefile.dao.ReceiveFileDao;
@@ -9,8 +12,19 @@ public class IReceiveFileDao extends HibernateDaoSupport implements ReceiveFileD
 
 	@Override
 	public ReceiveFile save(ReceiveFile receiveFile) {
-		//System.out.println("存入文件的用户"+receiveFile.getEmployee().getEmployeeID());
-		this.getHibernateTemplate().save(receiveFile);
+		System.out.println("存入文件的用户" + receiveFile.getEmployee().getEmployeeID());
+
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+			session.clear();
+			session.merge(receiveFile);
+			System.out.println("============================================================================"
+					+ receiveFile.getReceiveID());
+		} catch (HibernateException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+
 		this.getHibernateTemplate().flush();
 		return receiveFile;
 	}
@@ -22,7 +36,13 @@ public class IReceiveFileDao extends HibernateDaoSupport implements ReceiveFileD
 
 	@Override
 	public void update(ReceiveFile file) {
-		this.getHibernateTemplate().update(file);
+		try {
+			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+			session.clear();
+			session.update(file);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
 	}
