@@ -1,5 +1,7 @@
 package xcl.oa.receivefile.service.impl;
 
+import java.util.List;
+
 import org.apache.struts2.ServletActionContext;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +52,11 @@ public class IReceiveFileService implements ReceiveFileService{
 	@Override
 	public void isLook(ReceiveFile file) {
 		receiveFileDao.update(file);
+	}
+
+	@Override
+	public List<ReceiveFile> list(Integer eID) {
+		return receiveFileDao.list(eID);
 	}
 
 }

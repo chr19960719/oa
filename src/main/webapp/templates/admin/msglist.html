@@ -124,7 +124,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <tr v-for="message in newMessages.receiveFiles" v-if="message.isDelete==0">
+                                     <tr v-for="message in newMessages" v-if="message.isDelete==0">
                                         <td><center>{{message.receiveID}}</center><label hidden="hidden">{{message.sendFile.fileID}}</label></td>
 					                    <td><center>{{titleFormat(message.sendFile.fileName)}}</center></td>
 					                    <td><center>{{timeFormat(message.sendFile.fileTime)}}</center></td>
@@ -181,7 +181,7 @@
 				var m = {};
 				$.ajax({
 					type:"get",
-					url: "test_getAllMessage",
+					url: "test_savefile",
 					async : false,
 					dataType: 'json',
 					success: function(data){

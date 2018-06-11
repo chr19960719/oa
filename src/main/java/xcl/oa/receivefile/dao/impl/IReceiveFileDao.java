@@ -1,5 +1,8 @@
 package xcl.oa.receivefile.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.FlushMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.dao.DataAccessException;
@@ -16,8 +19,10 @@ public class IReceiveFileDao extends HibernateDaoSupport implements ReceiveFileD
 
 		try {
 			Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
+			session.setFlushMode(FlushMode.AUTO);
 			session.clear();
 			session.merge(receiveFile);
+			session.flush();
 			System.out.println("============================================================================"
 					+ receiveFile.getReceiveID());
 		} catch (HibernateException e) {
@@ -45,6 +50,12 @@ public class IReceiveFileDao extends HibernateDaoSupport implements ReceiveFileD
 		}
 		this.getHibernateTemplate().flush();
 		this.getHibernateTemplate().clear();
+	}
+
+	@Override
+	public List<ReceiveFile> list(Integer eID) {
+		String hql = "from ReceiveFile r where r.employee.employeeID = ?";	
+		return this.getHibernateTemplate().find(hql,eID);
 	}
 
 }

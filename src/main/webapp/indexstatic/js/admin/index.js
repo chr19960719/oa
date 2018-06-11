@@ -34,7 +34,7 @@ var header_app = new Vue({
 			var m = {};
 			$.ajax({
 				type:"get",
-				url: "test_getAllMessage",
+				url: "test_savefile",
 				async : true,
 				success: function(data){
  					if(data.num){

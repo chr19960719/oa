@@ -244,7 +244,17 @@ public class TestAction extends ActionSupport implements ModelDriven<SendFile>{
     }
     
     public String savefile() {
-    	
-    	return null;
+    	result = new HashMap<String, Object>();
+    	Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+    	List<ReceiveFile> list = receiveFileService.list(Integer.valueOf(e.getEmployeeID()));
+		int num = 0;
+		for(ReceiveFile file: list) {
+			if(file.getIsLook()==0&&file.getIsDelete()==0) {
+				num++;
+			}
+		}	
+		result.put("num", num);
+		result.put("message", list);
+		return SUCCESS;
     }
 }

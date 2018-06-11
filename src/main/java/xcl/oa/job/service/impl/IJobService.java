@@ -2,10 +2,13 @@ package xcl.oa.job.service.impl;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import xcl.oa.job.dao.JobDao;
 import xcl.oa.job.service.JobService;
 import xcl.oa.job.vo.Job;
 
+@Transactional
 public class IJobService implements JobService {
 	
 	//注入职位Dao

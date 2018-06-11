@@ -1,11 +1,15 @@
 package xcl.oa.employee.service.impl;
 
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import xcl.oa.employee.dao.EmployeeDao;
 import xcl.oa.employee.service.EmployeeService;
 import xcl.oa.employee.vo.Employee;
 import xcl.oa.job.vo.Job;
 
+@Transactional
 public class IEmployeeService implements EmployeeService {
 	
 	private EmployeeDao employeeDao;
