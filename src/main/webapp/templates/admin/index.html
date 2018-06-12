@@ -112,6 +112,11 @@
                         </a>
                     </li>
                     <li class="dropdown">
+                        <a class="dropdown-toggle" @click="help" title="帮助文档" href="javascript:;">
+                            <i class="fa fa-question-circle"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
                         <a class="dropdown-toggle" @click="logout" title="退出登录" href="javascript:;">
                             <i class="fa fa-sign-out"></i>
                         </a>
@@ -138,7 +143,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               <div  id="sidebar-app" v-cloak>
-              	  <p class="centered"><a href="profile.html"><img src="../../indexstatic/img/default-avatar.png" class="img-circle" width="60" id="img"></a></p>
+              	  <p class="centered"><a href="index.html"><img src="../../indexstatic/img/default-avatar.png" class="img-circle" width="60" id="img"></a></p>
               	  <h5 class="centered" title="账户信息"><a @click="profileEdit" href="javascript:;"><span>{{user.aId}}</span></a></h5>
                   <li class="mt">
                       <a class="active" @click="go('1.html','首页')" href="javascript:;">
@@ -147,7 +152,7 @@
                       </a>
                   </li>  
                </div>
-				<div id="menu">
+				<div id="menu" v-cloak>
 					<div v-for="r in power">
 						<li class="sub-menu" v-if="r.function.functionID==1">
 							<a href="javascript:;">
@@ -242,43 +247,60 @@
 					datas:{}
 				},
 				methods:{
-				initialization: function () {
-					var self = this;
-					$.ajax({
-					    type: 'get',//请求方式				 
-					    url: 'employee_getinfo',//地址，就是json文件的请求路径
-					    async: false,
-					    dataType: 'json',//数据类型可以为 text xml json  script  jsonp
-					    success: function(result){
-					        self.datas=result.employee;
-					        var img;
-					    	if(result.employee.photo){
-							      $("#img").prop("src","../../"+result.employee.photo);  
-							      img='../../'+result.employee.photo;
-					    	}
-					    	else
-					    		img='../../indexstatic/img/default-avatar.png';
-					    	var unique_id = $.gritter.add({
-					            // (string | mandatory) the heading of the notification
-					            title: '欢迎使用OA办公自动化!',
-					            // (string | mandatory) the text inside the notification
-					 			text: '登录时间：'+new Date(),            // (string | optional) the image to display on the left
-					            image: img,
-					            // (bool | optional) if you want it to fade out on its own or just sit there
-					            sticky: true,
-					            // (int | optional) the time you want it to be alive for before fading out
-					            time: '',
-					            // (string | optional) the class name you want to apply to that specific message
-					            class_name: 'my-sticky-class'
-					        });
-					 },
-					 error: function(){
-						 alert("获取个人信息失败");
-					 }
-					})
-				}
+					interceptor:function(){
+						$.ajax({
+							type:'get',//请求方式				 
+						    url: 'index_interceptor',//地址，就是json文件的请求路径
+						    dataType: 'json',
+						    success: function(result){
+						    	if(result.code==0){
+						    		alert("未登录，请登录！");
+						    		window.location.href='login.html';
+						    	}
+						    },
+						    error: function(){
+								 alert("系统出错，请联系管理员");
+							 }
+						})
+					},
+					initialization: function () {
+						var self = this;
+						$.ajax({
+						    type: 'get',//请求方式				 
+						    url: 'employee_getinfo',//地址，就是json文件的请求路径
+						    async: false,
+						    dataType: 'json',//数据类型可以为 text xml json  script  jsonp
+						    success: function(result){
+						        self.datas=result.employee;
+						        var img;
+						    	if(result.employee.photo){
+								      $("#img").prop("src","../../"+result.employee.photo);  
+								      img='../../'+result.employee.photo;
+						    	}
+						    	else
+						    		img='../../indexstatic/img/default-avatar.png';
+						    	var unique_id = $.gritter.add({
+						            // (string | mandatory) the heading of the notification
+						            title: '欢迎使用OA办公自动化!',
+						            // (string | mandatory) the text inside the notification
+						 			text: '登录时间：'+new Date(),            // (string | optional) the image to display on the left
+						            image: img,
+						            // (bool | optional) if you want it to fade out on its own or just sit there
+						            sticky: true,
+						            // (int | optional) the time you want it to be alive for before fading out
+						            time: '',
+						            // (string | optional) the class name you want to apply to that specific message
+						            class_name: 'my-sticky-class'
+						        });
+						 },
+						 error: function(){
+							 alert("获取个人信息失败");
+						 }
+						})
+					}					
 				},
 				created: function () {
+					this.interceptor();
 					this.initialization();
 				}
 			});

@@ -61,5 +61,16 @@ public class IndexAction extends ActionSupport implements ModelDriven<Employee>{
 		System.out.println("用户ID："+e.getEmployeeID());
 		return SUCCESS;
 	}
+	
+	public String interceptor() {
+		Employee employee  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+		result = new HashMap<String, Object>();
+		if(employee!=null) {
+			result.put("code", 1);
+		}else {
+			result.put("code", 0);
+		}
+		return SUCCESS;
+	}
 
 }

@@ -97,6 +97,9 @@ var header_app = new Vue({
 		},
 		tasks:function(){
 			sidebar_app.go('calendar.html','任务表');
+		},
+		help:function(){
+			window.location.href='help.html';
 		}
 	},
 	computed :{
@@ -113,7 +116,7 @@ var header_app = new Vue({
 var sidebar_app = new Vue({
 	el: "#sidebar-app",
 	data:{
-		title: '主页',
+		title: '首页',
 		user: {},
 		power:[]
 	},
