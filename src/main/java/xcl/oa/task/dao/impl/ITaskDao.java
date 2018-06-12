@@ -41,4 +41,10 @@ public class ITaskDao extends HibernateDaoSupport implements TaskDao {
 		return task;
 	}
 
+	@Override
+	public List<Task> getListTask(Integer eID) {
+		String hql = "from Task t where t.employee.employeeID = ?";
+		return this.getHibernateTemplate().find(hql,eID);
+	}
+
 }

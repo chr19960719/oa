@@ -18,4 +18,6 @@ public interface TaskDao {
 	
 	//更新事务
 	Task updataTask(Task task);
+
+	List<Task> getListTask(Integer eID);
 }

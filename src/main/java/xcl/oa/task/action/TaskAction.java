@@ -1,6 +1,7 @@
 package xcl.oa.task.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,6 +39,7 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 		this.employeeService = employeeService;
 	}
 	
+	//获取所有任务
 	public String getAllTask() {
 		result = new HashMap<String, Object>();
 		try {
@@ -59,6 +61,28 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 		return SUCCESS;
 	}
 	
+	//获取所有任务
+	public String getListTask() {
+		result = new HashMap<String, Object>();
+		try {
+			Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+			List<Task> list = taskService.getListTask(Integer.valueOf(e.getEmployeeID()));			
+			int num = 0;
+			for(Task t:list) {
+				if(t.getTaskState()==0) {
+					num++;
+				}
+			}
+			result.put("num", num);
+			result.put("task", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("msg", "查找失败");
+		}
+		return SUCCESS;
+	}
+	
+	//添加任务
 	public String addTask() {
 		result = new HashMap<String, Object>();
 		try {
@@ -71,6 +95,7 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 		return SUCCESS;
 	}
 	
+	//删除任务
 	public String deleteTask() {
 		result = new HashMap<String, Object>();
 		try {
@@ -83,6 +108,7 @@ public class TaskAction extends ActionSupport implements ModelDriven<Task>{
 		return SUCCESS;
 	}
 	
+	//更新任务
 	public String updataTask() {
 		result = new HashMap<String, Object>();
 		try {

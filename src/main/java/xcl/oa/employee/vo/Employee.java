@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.struts2.json.annotations.JSON;
+
 import xcl.oa.dept.vo.Dept;
 import xcl.oa.job.vo.Job;
 import xcl.oa.receivefile.vo.ReceiveFile;
@@ -32,18 +34,21 @@ public class Employee implements Serializable{
 	private Set<ReceiveFile> receiveFiles = new HashSet<ReceiveFile>();
 	private Set<Task> tasks = new HashSet<Task>();
 	
+	@JSON(serialize=false)
 	public Set<Task> getTasks() {
 		return tasks;
 	}
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
 	}
+	@JSON(serialize=false)
 	public Set<SendFile> getSendFiles() {
 		return sendFiles;
 	}
 	public void setSendFiles(Set<SendFile> sendFiles) {
 		this.sendFiles = sendFiles;
 	}
+	@JSON(serialize=false)
 	public Set<ReceiveFile> getReceiveFiles() {
 		return receiveFiles;
 	}

@@ -3,7 +3,7 @@ $(function(){
 		//加载数据库数据
 		var datajson;
 		$.ajax({
-			url:'task_getAllTask',
+			url:'task_getListTask',
 				type:'GET',
 				dataType:'json',
 				async:false,

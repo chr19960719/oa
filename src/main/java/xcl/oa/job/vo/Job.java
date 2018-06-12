@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.struts2.json.annotations.JSON;
+
 import xcl.oa.dept.vo.Dept;
 import xcl.oa.employee.vo.Employee;
 
@@ -44,6 +46,7 @@ public class Job implements Serializable{
 	public void setDept(Dept dept) {
 		this.dept = dept;
 	}
+	@JSON(serialize=false)
 	public Set<Employee> getEmployees() {
 		return employees;
 	}

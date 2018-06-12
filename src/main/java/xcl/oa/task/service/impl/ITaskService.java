@@ -61,4 +61,9 @@ public class ITaskService implements TaskService{
 		return taskDao.findById(id);
 	}
 
+	@Override
+	public List<Task> getListTask(Integer eID) {
+		return taskDao.getListTask(eID);
+	}
+
 }

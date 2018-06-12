@@ -19,5 +19,8 @@ public interface TaskService {
 	
 	//根据事务id查找事务
 	Task findById(Integer id);
+
+	//获取list集合
+	List<Task> getListTask(Integer eID);
 	
 }

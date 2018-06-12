@@ -50,7 +50,7 @@ var header_app = new Vue({
 			var app = this;
 			var m = {};
 			$.ajax({
-				url:'task_getAllTask',
+				url:'task_getListTask',
 				type:'GET',
 				dataType:'json',
 				async:true,
