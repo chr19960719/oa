@@ -87,6 +87,8 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 	}
 	//查询所有员工的方法
 	public String findAll() {
+		Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+		Employee employee = employeeService.findById(e.getEmployeeID());
 		List<Employee> employeelist = employeeService.findAll();
 		// 查询所有职位
 		List<Job> joblist = jobService.findAll();
@@ -94,6 +96,7 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 		List<Dept> deptlist = deptService.findAll();
 		
 		result = new HashMap<String, Object>();
+		result.put("e", employee);
         result.put("employee", employeelist);
         result.put("joblist", joblist);
         result.put("deptlist", deptlist);
