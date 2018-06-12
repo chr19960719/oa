@@ -53,14 +53,25 @@
 					                    <td><center>{{user.mobile}}</center></td>
 					                    <td><center>{{user.email}}</center></td>
 					                    <td><center>{{user.workState}}</center></td>
-					                    <td><center>
+					                    <td v-if ="user.dept.deptID==e.dept.deptID"><center>
 						                    <button class="btn btn-primary btn-xs"  type = "button" data-toggle="modal" data-target="#Modal"  @click="edit(user.employeeID)">
 							                    <i class="fa fa-pencil"></i>
 						                    </button>
 						                    <button class="btn btn-danger btn-xs" @click="del(user.employeeID)">
 							                    <i class="fa fa-trash-o "></i>
 						                    </button></center>
+					                    </td>
+					                    <td v-else-if ="e.userLevel==2&&user.dept.deptID!=e.dept.deptID"><center>	
+					                    	<button class="btn btn-primary btn-xs"  type = "button" data-toggle="modal" data-target="#Modal"  @click="edit(user.employeeID)">
+							                    <i class="fa fa-pencil"></i>
+						                    </button>
+						                    <button class="btn btn-danger btn-xs" @click="del(user.employeeID)">
+							                    <i class="fa fa-trash-o "></i>
+						                    </button></center>
 					                    </td> 
+					                    <td v-else>
+					                    	<center><label>无权操作</label></center>
+					                    </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -197,7 +208,8 @@
     new Vue({
 		el : "#employees",
 		data : {
-			datas : []
+			datas : [],
+			e:{}
 		},
 		methods:{
 			del:function(id){
@@ -274,6 +286,7 @@
 			    dataType: 'json',//数据类型可以为 text xml json  script  jsonp
 			    success: function(result){
 		        self.datas = result.employee;
+		        self.e=result.e;
 			 },
 			 error: function(){
 				 alert("页面初始化失败");

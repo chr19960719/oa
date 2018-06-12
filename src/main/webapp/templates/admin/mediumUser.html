@@ -60,7 +60,7 @@
 						                    <button class="btn btn-danger btn-xs" @click="del(user.employeeID)">
 							                    <i class="fa fa-trash-o "></i>
 						                    </button></center>
-					                    </td> 
+					                    </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -197,7 +197,8 @@
     new Vue({
 		el : "#employees",
 		data : {
-			datas : []
+			datas : [],
+			e:{}
 		},
 		methods:{
 			del:function(id){
@@ -274,6 +275,7 @@
 			    dataType: 'json',//数据类型可以为 text xml json  script  jsonp
 			    success: function(result){
 		        self.datas = result.employee;
+		        self.e=result.e;
 			 },
 			 error: function(){
 				 alert("页面初始化失败");
