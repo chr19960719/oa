@@ -35,7 +35,6 @@ public class ITaskService implements TaskService{
 	public Task addTask(Task task) {	
 		Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
 		task.setEmployee(employeeDao.findById(e.getEmployeeID()));
-		task.setTaskState(0);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
 		String date = df.format(new Date());
 		task.setGetTime(date);

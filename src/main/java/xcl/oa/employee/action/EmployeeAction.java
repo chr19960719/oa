@@ -159,6 +159,10 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 			FileUtils.copyFile(pho, diskFile);
 	
 			employee.setPhoto("employeeImg/" + phoFileName);
+		}else {
+			Employee e  = (Employee) ServletActionContext.getRequest().getSession().getAttribute("existUser");
+			Employee e1 = employeeService.findById(e.getEmployeeID());
+			employee.setPhoto(e1.getPhoto());
 		}
 		//根据部门id查找部门
 		Dept dept = deptService.findById(deptID);
