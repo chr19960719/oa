@@ -42,7 +42,7 @@ public class IndexAction extends ActionSupport implements ModelDriven<Employee>{
 		result = new HashMap<String, Object>();
 		try {
 			Employee e = employeeService.findById(userId);
-			if(!e.getPwd().equals(employee.getPwd())) {
+			if(!e.getPwd().equals(employee.getPwd())&&e.getIsDelete()!=1) {
 				result.put("msg", "用户名或密码不正确");
 				result.put("code", 404);
 			}else {
